@@ -115,22 +115,23 @@
   .gate-card{
     background:#FFFFFF;
     border:4px solid var(--cubs-red);
-    max-width:400px;width:100%;
-    padding:36px 32px 30px;
+    max-width:360px;width:100%;
+    padding:22px 20px 18px;
     text-align:center;
     color:var(--cubs-blue);
-    box-shadow:10px 10px 0 var(--cubs-blue);
+    box-shadow:8px 8px 0 var(--cubs-blue);
   }
-  .gate-card h2{font-family:var(--font-chalk);font-size:38px;color:#0E3386;line-height:1.05;}
-  .gate-card p{margin-top:12px;font-size:14.5px;color:#3D5A99;}
+  .gate-card h2{font-family:var(--font-bang);font-size:28px;color:#0E3386;line-height:1.05;text-transform:uppercase;}
+  .gate-card p{margin-top:8px;font-size:13px;color:#3D5A99;}
   .gate-card::before{
     content:attr(data-pass);
     font-family:var(--font-type);
     font-size:11px;letter-spacing:1.5px;
     color:var(--cubs-red);
-    display:block;margin-bottom:14px;
+    display:block;margin-bottom:10px;
   }
-  .gate-actions{display:flex;gap:10px;margin-top:24px;}
+  .gate-actions{display:flex;flex-direction:column;gap:8px;margin-top:16px;}
+  .gate-actions .btn{min-height:48px;}
   .btn{
     font-family:var(--font-type);
     font-size:13px;
@@ -736,9 +737,24 @@
     color:var(--cubs-blue);background:#fff;border:2px solid #fff;text-transform:none;letter-spacing:0;
   }
   .auth-slot{display:flex;align-items:center;flex-shrink:0;}
-  .auth-card{max-width:440px;margin:0 auto;padding:40px 20px 64px;}
-  .auth-card h1{font-family:var(--font-bang);font-size:clamp(32px,7vw,48px);text-transform:uppercase;margin-bottom:8px;}
-  .auth-tabs{display:grid;grid-template-columns:1fr 1fr;margin:0 0 22px;border:2px solid var(--cubs-blue);border-radius:6px;overflow:hidden;}
+  .auth-overlay{
+    position:fixed;inset:0;z-index:195;
+    background:rgba(10,39,104,.78);
+    display:flex;align-items:flex-start;justify-content:center;
+    padding:64px 16px 32px;overflow:auto;
+  }
+  .auth-overlay.hidden{display:none;}
+  .auth-overlay .auth-card{
+    background:#fff;width:min(420px,100%);margin:0;padding:28px 20px 22px;
+    border:3px solid var(--cubs-blue);box-shadow:10px 10px 0 var(--cubs-red);
+    position:relative;
+  }
+  .auth-close{
+    position:absolute;top:8px;right:8px;border:none;background:transparent;
+    color:var(--cubs-blue);font-size:28px;line-height:1;padding:6px 10px;cursor:pointer;
+  }
+  .auth-card h1{font-family:var(--font-bang);font-size:clamp(28px,6vw,40px);text-transform:uppercase;margin-bottom:8px;}
+  .auth-tabs{display:grid;grid-template-columns:1fr 1fr;margin:0 0 18px;border:2px solid var(--cubs-blue);border-radius:6px;overflow:hidden;}
   .auth-tabs a{
     text-align:center;padding:12px 8px;font-family:var(--font-type);font-size:12px;font-weight:800;
     letter-spacing:.08em;text-transform:uppercase;color:var(--cubs-blue);text-decoration:none;
@@ -1050,6 +1066,7 @@
   <div class="more-links" id="more-links"></div>
   <div class="more-tools" id="more-tools"></div>
 </aside>
+<div id="auth-overlay" class="auth-overlay hidden" hidden></div>
 <div class="hud" id="hud"></div>
 <div class="nowbar" id="nowbar"></div>
 
@@ -1815,6 +1832,7 @@
   var unveilRec = null;
   var unveilChunks = [];
   var giftReturnTo = "";
+  var lastContentRoute = "/";
   var nowPlayingId = "cork";
   var jukeQueue = [
     {id:"wrigley", by:"Mei.HK", pts:40},
@@ -2185,12 +2203,6 @@
   }
   function addGiftToCart(){
     var g = giftDraft;
-    if (g.who==="friend" && !currentUser){
-      giftReturnTo = currentRoute();
-      showToast("Log in to send a gift.");
-      navigate("/login");
-      return;
-    }
     if (g.who==="friend" && !(g.to||"").trim()){
       showToast("Who is this for? Add their name.");
       return;
@@ -2209,12 +2221,6 @@
     renderHud();
   }
   function sendGiftNow(){
-    if (giftDraft.who==="friend" && !currentUser){
-      giftReturnTo = currentRoute();
-      showToast("Log in to send a gift.");
-      navigate("/login");
-      return;
-    }
     if (giftDraft.who==="friend" && !(giftDraft.to||"").trim()){
       showToast("Who is this for? Add their name.");
       return;
@@ -2479,12 +2485,14 @@
   }
   function logoutUser(){
     setSession(null);
-    navigate("/login");
+    lastContentRoute = "/";
+    navigate("/");
   }
 
   function pageAuth(mode){
     var isUp = mode==="signup";
     return '<div class="auth-card">'+
+      '<button type="button" class="auth-close" id="auth-close" aria-label="Close">×</button>'+
       '<div class="auth-tabs">'+
         '<a href="#/login" class="'+(!isUp?"on":"")+'">Log in</a>'+
         '<a href="#/signup" class="'+(isUp?"on":"")+'">Sign up</a>'+
@@ -2671,8 +2679,8 @@
       '<h2>'+t("gateH")+'</h2>'+
       '<p>'+t("gateP")+'</p>'+
       '<div class="gate-actions">'+
-        '<button class="btn btn-dark btn-block" id="gate-no">'+t("gateNo")+'</button>'+
         '<button class="btn btn-primary btn-block" id="gate-yes">'+t("gateYes")+'</button>'+
+        '<button class="btn btn-dark btn-block" id="gate-no">'+t("gateNo")+'</button>'+
       '</div>';
     document.getElementById("gate-yes").addEventListener("click", function(){
       gateShown = true;
@@ -3401,43 +3409,89 @@
     '</div>';
   }
 
+  function pageHTML(route){
+    if (route === "/" ) return pageHome();
+    if (route === "/collections") return pageCollections();
+    if (route.indexOf("/product/") === 0) return pageProduct(route.replace("/product/",""));
+    if (route === "/live") return pageLive();
+    if (route === "/party") return pageParty();
+    if (route === "/trade") return pageTrade();
+    if (route === "/giveaways") return pageGiveaways();
+    if (route === "/quests") return pageQuests();
+    if (route === "/leaderboard") return pageLeaderboard();
+    if (route === "/socials") return pageSocials();
+    if (route === "/how-it-works") return pageHowItWorks();
+    if (route === "/about") return pageAbout();
+    if (route === "/faq") return pageFAQ();
+    if (route === "/contact") return pageContact();
+    if (route === "/policy/privacy") return pagePolicy("privacy");
+    if (route === "/policy/terms") return pagePolicy("terms");
+    if (route === "/account") return pageAccount();
+    if (route === "/gifts") return pageGiftsShop();
+    if (route.indexOf("/gifts/new")===0) return pageGiftNew(route);
+    if (route === "/gifts/redeem") return pageGiftRedeem();
+    if (route === "/gifts/mine") return pageGiftMine();
+    if (route.indexOf("/gifts/sent/")===0) return pageGiftSent(route.replace("/gifts/sent/",""));
+    if (route.indexOf("/gifts/open/")===0) return pageGiftOpen(route.replace("/gifts/open/",""));
+    if (route === "/cart") return pageCart();
+    if (route === "/checkout") return pageCheckout();
+    if (route === "/confirmation") return pageConfirmation();
+    return '<div class="content-block"><h2>'+t("page404")+'</h2><p><a href="#/">'+t("backHome")+'</a></p></div>';
+  }
+
+  function closeAuthOverlay(){
+    var back = lastContentRoute;
+    if (!back || back==="/login" || back==="/signup") back = "/";
+    navigate(back);
+  }
+
+  function bindAuth(route){
+    var overlay = document.getElementById("auth-overlay");
+    var aform = document.getElementById("auth-form");
+    var xc = document.getElementById("auth-close");
+    if (xc) xc.onclick = closeAuthOverlay;
+    if (overlay) overlay.onclick = function(e){ if (e.target===overlay) closeAuthOverlay(); };
+    if (aform) aform.addEventListener("submit", function(e){
+      e.preventDefault();
+      var msg = route==="/signup"
+        ? signupUser(document.getElementById("auth-name").value, document.getElementById("auth-email").value, document.getElementById("auth-pass").value)
+        : loginUser(document.getElementById("auth-email").value, document.getElementById("auth-pass").value);
+      var box = document.getElementById("auth-msg");
+      if (msg){ if (box) box.textContent = msg; return; }
+      showToast(route==="/signup" ? "Hall pass created." : "You're in.");
+      var next = giftReturnTo || lastContentRoute || "/";
+      if (next==="/login" || next==="/signup") next = "/";
+      giftReturnTo = "";
+      navigate(next);
+    });
+  }
+
   function render(){
     var route = currentRoute().split("?")[0];
     if (route.indexOf("/gifts/open/")!==0) stopUnveil();
-    var html = "";
-    if (route === "/" ) html = pageHome();
-    else if (route === "/collections") html = pageCollections();
-    else if (route.indexOf("/product/") === 0) html = pageProduct(route.replace("/product/",""));
-    else if (route === "/live") html = pageLive();
-    else if (route === "/party") html = pageParty();
-    else if (route === "/trade") html = pageTrade();
-    else if (route === "/giveaways") html = pageGiveaways();
-    else if (route === "/quests") html = pageQuests();
-    else if (route === "/leaderboard") html = pageLeaderboard();
-    else if (route === "/socials") html = pageSocials();
-    else if (route === "/how-it-works") html = pageHowItWorks();
-    else if (route === "/about") html = pageAbout();
-    else if (route === "/faq") html = pageFAQ();
-    else if (route === "/contact") html = pageContact();
-    else if (route === "/policy/privacy") html = pagePolicy("privacy");
-    else if (route === "/policy/terms") html = pagePolicy("terms");
-    else if (route === "/login") html = pageAuth("login");
-    else if (route === "/signup") html = pageAuth("signup");
-    else if (route === "/account") html = pageAccount();
-    else if (route === "/gifts") html = pageGiftsShop();
-    else if (route.indexOf("/gifts/new")===0) html = pageGiftNew(route);
-    else if (route === "/gifts/redeem") html = pageGiftRedeem();
-    else if (route === "/gifts/mine") html = pageGiftMine();
-    else if (route.indexOf("/gifts/sent/")===0) html = pageGiftSent(route.replace("/gifts/sent/",""));
-    else if (route.indexOf("/gifts/open/")===0) html = pageGiftOpen(route.replace("/gifts/open/",""));
-    else if (route === "/cart") html = pageCart();
-    else if (route === "/checkout") html = pageCheckout();
-    else if (route === "/confirmation") html = pageConfirmation();
-    else html = '<div class="content-block"><h2>'+t("page404")+'</h2><p><a href="#/">'+t("backHome")+'</a></p></div>';
+    var isAuth = route === "/login" || route === "/signup";
+    if (!isAuth) lastContentRoute = route;
+    var under = lastContentRoute;
+    if (under==="/login" || under==="/signup") under = "/";
+    var html = pageHTML(isAuth ? under : route);
     document.getElementById("app").innerHTML = html;
+    var overlay = document.getElementById("auth-overlay");
+    if (overlay){
+      if (isAuth){
+        overlay.classList.remove("hidden");
+        overlay.removeAttribute("hidden");
+        overlay.innerHTML = pageAuth(route==="/signup" ? "signup" : "login");
+      } else {
+        overlay.classList.add("hidden");
+        overlay.setAttribute("hidden", "");
+        overlay.innerHTML = "";
+        overlay.onclick = null;
+      }
+    }
     renderCartCount();
-    highlightNav(route);
-    bindPageEvents(route);
+    highlightNav(isAuth ? under : route);
+    bindPageEvents(isAuth ? under : route);
+    if (isAuth) bindAuth(route);
     closeMore();
     renderTabbar();
     renderHud();
@@ -3501,21 +3555,6 @@
         if (em && !em.value) em.value = currentUser.email;
         if (fn && !fn.value) fn.value = (currentUser.name||"").split(" ")[0];
       }
-    }
-    if (route === "/login" || route === "/signup"){
-      var aform = document.getElementById("auth-form");
-      if (aform) aform.addEventListener("submit", function(e){
-        e.preventDefault();
-        var msg = route==="/signup"
-          ? signupUser(document.getElementById("auth-name").value, document.getElementById("auth-email").value, document.getElementById("auth-pass").value)
-          : loginUser(document.getElementById("auth-email").value, document.getElementById("auth-pass").value);
-        var box = document.getElementById("auth-msg");
-        if (msg){ if (box) box.textContent = msg; return; }
-        showToast(route==="/signup" ? "Hall pass created." : "You're in.");
-        var next = giftReturnTo || "/account";
-        giftReturnTo = "";
-        navigate(next);
-      });
     }
     if (route === "/account"){
       var lo = document.getElementById("logout-btn");
