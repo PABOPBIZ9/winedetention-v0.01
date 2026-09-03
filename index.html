@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wine Detention</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Courier+Prime:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cubs-blue:#0e3386;
+    --cubs-blue-deep:#0a2463;
+    --cubs-blue-ink:#071a4a;
+    --cubs-red:#cc3433;
+    --cubs-red-dark:#a02828;
+    --ivory:#f6f1e4;
+    --ivory-deep:#e8e0cc;
+    --manila:#f0e4c4;
+    --manila-dark:#d9c89a;
+    --ink:#1a1a22;
+    --font-chalk:'Caveat',cursive;
+    --font-type:'Courier Prime',monospace;
+    --font-body:'IBM Plex Sans',sans-serif;
+  }
+
+  [data-theme="dark"]{
+    --chrome:var(--cubs-blue);
+    --chrome-deep:var(--cubs-blue-deep);
+    --chrome-text:var(--ivory);
+    --chrome-muted:#c9d4f0;
+    --page:var(--ivory);
+    --page-text:var(--ink);
+    --page-muted:#4a4436;
+    --card:var(--manila);
+    --card-border:var(--manila-dark);
+    --line:rgba(246,241,228,0.22);
+    --accent:var(--cubs-red);
+    --accent-soft:#e8b4c0;
+    --accent-ink:#5c3742;
+    --why-bg:var(--cubs-blue-deep);
+    --why-text:var(--ivory);
+    --why-muted:#c9d4f0;
+    --gate-overlay:rgba(10,36,99,0.94);
+    --header-border:rgba(246,241,228,0.15);
+    --hero-sub:#d9d4c4;
+    --surface:#fffdf6;
+    --rule:#d8d0bb;
+  }
+
+  [data-theme="light"]{
+    --chrome:#fffdf8;
+    --chrome-deep:var(--ivory);
+    --chrome-text:var(--cubs-blue);
+    --chrome-muted:#3a4a8a;
+    --page:#fffdf8;
+    --page-text:var(--ink);
+    --page-muted:#4a4436;
+    --card:#ffffff;
+    --card-border:#e4dcc4;
+    --line:rgba(14,51,134,0.12);
+    --accent:var(--cubs-red);
+    --accent-soft:#f4d4d4;
+    --accent-ink:#7a2a2a;
+    --why-bg:#eef2fb;
+    --why-text:var(--cubs-blue-ink);
+    --why-muted:#3a4a8a;
+    --gate-overlay:rgba(246,241,228,0.96);
+    --header-border:rgba(14,51,134,0.12);
+    --hero-sub:#3a4a8a;
+    --surface:#ffffff;
+    --rule:#e4dcc4;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    color:var(--page-text);
+    background:var(--page);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  h1,h2,h3,h4{margin:0;font-weight:600;}
+  p{margin:0;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+
+  #age-gate{
+    position:fixed;inset:0;background:var(--gate-overlay);
+    display:flex;align-items:center;justify-content:center;
+    z-index:200;padding:20px;
+  }
+  #age-gate.hidden{display:none;}
+  .gate-card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    max-width:400px;width:100%;
+    padding:36px 32px 30px;
+    text-align:center;
+    box-shadow:0 20px 50px rgba(7,26,74,0.28);
+  }
+  .gate-card::before{
+    content:attr(data-pass);
+    font-family:var(--font-type);
+    font-size:11px;letter-spacing:1.5px;
+    color:var(--accent);
+    display:block;margin-bottom:14px;
+  }
+  .gate-card h2{font-family:var(--font-chalk);font-size:38px;color:var(--page-text);line-height:1.05;}
+  .gate-card p{margin-top:12px;font-size:14.5px;color:var(--page-muted);}
+  .gate-actions{display:flex;gap:10px;margin-top:24px;}
+  .btn{
+    font-family:var(--font-type);
+    font-size:13px;
+    padding:12px 18px;
+    border:1.5px solid var(--page-text);
+    background:var(--page);
+    color:var(--page-text);
+    transition:transform .12s ease, background .12s ease;
+    flex:1;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .btn-primary:hover{background:var(--cubs-red-dark);}
+  .btn-dark{background:var(--cubs-blue);border-color:var(--cubs-blue);color:var(--ivory);}
+  .btn-dark:hover{background:var(--cubs-blue-deep);}
+  .btn-ghost{
+    background:transparent;border-color:var(--line);color:var(--chrome-text);
+    padding:8px 10px;flex:none;min-width:42px;
+  }
+  [data-theme="light"] .btn-ghost{border-color:var(--header-border);}
+  .btn-block{width:100%;}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+
+  header.site{
+    background:var(--chrome);
+    color:var(--chrome-text);
+    position:sticky;top:0;z-index:100;
+    border-bottom:1px solid var(--header-border);
+  }
+  .nav-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;max-width:1120px;margin:0 auto;
+    gap:12px;
+  }
+  .brand{
+    font-family:var(--font-chalk);
+    font-size:28px;
+    color:var(--chrome-text);
+    display:flex;align-items:center;gap:8px;
+    white-space:nowrap;
+  }
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;}
+  nav.links{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+  nav.links a{
+    font-size:14px;font-weight:500;
+    color:var(--chrome-text);opacity:.85;
+    padding:4px 2px;border-bottom:2px solid transparent;
+    transition:opacity .15s, border-color .15s;
+  }
+  nav.links a:hover, nav.links a.active{opacity:1;border-color:var(--accent);}
+  .chrome-tools{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+  .lang-select{
+    font-family:var(--font-type);
+    font-size:12px;
+    padding:7px 8px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--chrome-text);
+    max-width:128px;
+  }
+  [data-theme="light"] .lang-select{border-color:var(--header-border);background:#fff;}
+  .cart-link{
+    display:flex;align-items:center;gap:6px;
+    font-family:var(--font-type);
+    background:transparent;
+    border:1px solid var(--line);
+    padding:8px 12px;
+    font-size:13px;
+    color:var(--chrome-text);
+  }
+  [data-theme="light"] .cart-link{border-color:var(--header-border);}
+  .cart-count{
+    background:var(--accent);color:#fff;
+    border-radius:50%;min-width:18px;height:18px;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:11px;padding:0 4px;
+  }
+  .menu-toggle{display:none;background:none;border:1px solid var(--line);color:var(--chrome-text);padding:8px 10px;}
+  [data-theme="light"] .menu-toggle{border-color:var(--header-border);}
+
+  @media(max-width:980px){
+    nav.links{
+      display:none;
+      position:absolute;top:100%;left:0;right:0;
+      background:var(--chrome);
+      flex-direction:column;align-items:flex-start;
+      padding:16px 24px 20px;gap:14px;
+      border-bottom:1px solid var(--header-border);
+    }
+    nav.links.open{display:flex;}
+    .menu-toggle{display:block;}
+  }
+
+  .hero{
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(255,255,255,0.06), transparent 50%),
+      var(--chrome);
+    color:var(--chrome-text);
+    padding:80px 24px 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  [data-theme="light"] .hero{
+    background:
+      radial-gradient(ellipse at 80% 10%, rgba(204,52,51,0.08), transparent 40%),
+      var(--ivory);
+  }
+  .hero::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:14px;
+    background:repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 14px);
+    opacity:.18;
+  }
+  .hero-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:center;}
+  @media(max-width:900px){.hero-inner{grid-template-columns:1fr;}}
+  .hero-eyebrow{
+    font-family:var(--font-type);font-size:12.5px;letter-spacing:1px;
+    color:var(--accent-soft);margin-bottom:16px;display:block;
+  }
+  [data-theme="light"] .hero-eyebrow{color:var(--accent);}
+  .hero h1{
+    font-family:var(--font-chalk);
+    font-size:clamp(44px,6.5vw,74px);
+    line-height:0.98;
+    color:var(--chrome-text);
+  }
+  .hero p.sub{
+    margin-top:20px;font-size:17px;max-width:46ch;color:var(--hero-sub);
+  }
+  .hero-ctas{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-ctas .btn{flex:none;padding:14px 24px;}
+  .chalk-svg{width:100%;max-width:360px;justify-self:center;}
+
+  section{padding:70px 24px;}
+  .section-head{max-width:640px;margin:0 auto 44px;text-align:center;}
+  .section-head .kicker{
+    font-family:var(--font-type);font-size:12px;letter-spacing:1px;
+    color:var(--accent);display:block;margin-bottom:10px;
+  }
+  .section-head h2{font-family:var(--font-chalk);font-size:clamp(32px,4vw,44px);}
+  .section-head p{margin-top:12px;color:var(--page-muted);font-size:15.5px;}
+
+  .steps{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  @media(max-width:800px){.steps{grid-template-columns:1fr;}}
+  .step-card{
+    background:var(--surface);border:1px solid var(--rule);
+    padding:26px 22px;
+  }
+  .step-num{
+    font-family:var(--font-type);font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);width:28px;height:28px;
+    display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  }
+  .step-card h3{font-size:18px;margin-bottom:8px;}
+  .step-card p{font-size:14.5px;color:var(--page-muted);}
+
+  .why-alt{background:var(--why-bg);color:var(--why-text);}
+  .why-alt .section-head p{color:var(--why-muted);}
+  .why-grid{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
+  @media(max-width:800px){.why-grid{grid-template-columns:1fr;}}
+  .why-item{background:var(--why-bg);padding:34px 28px;}
+  .why-item h3{font-size:19px;margin-bottom:10px;}
+  .why-item p{font-size:14.5px;color:var(--why-muted);}
+
+  .grid-products{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:26px;}
+  @media(max-width:760px){.grid-products{grid-template-columns:1fr;}}
+  .slip{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    position:relative;
+    padding:26px 24px 22px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .slip::before{
+    content:"";position:absolute;top:0;left:24px;right:24px;height:0;
+    border-top:2px dashed rgba(26,26,34,0.2);
+  }
+  .slip-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .slip-tag{
+    font-family:var(--font-type);font-size:10.5px;letter-spacing:.5px;
+    background:var(--cubs-blue);color:var(--ivory);
+    padding:3px 8px;
+  }
+  .stamp{
+    font-family:var(--font-type);font-size:11px;color:var(--accent);
+    border:2px solid var(--accent);padding:4px 8px;
+    transform:rotate(-6deg);white-space:nowrap;
+  }
+  .slip h3{font-size:22px;margin-top:6px;}
+  .slip .varietal{font-size:13px;color:var(--page-muted);font-style:italic;}
+  .slip p.desc{font-size:14px;color:var(--page-muted);margin-top:2px;}
+  .slip-price-row{display:flex;align-items:baseline;gap:8px;margin-top:6px;}
+  .price{font-family:var(--font-type);font-size:24px;font-weight:700;}
+  .srp-range{font-size:12.5px;color:var(--page-muted);}
+  .slip-actions{display:flex;gap:10px;margin-top:12px;}
+
+  .stamps-row{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media(max-width:800px){.stamps-row{grid-template-columns:1fr;}}
+  .quote-card{background:var(--surface);border:1px solid var(--rule);padding:24px;}
+  .quote-card p.q{font-size:15px;color:var(--page-text);}
+  .quote-card .who{font-family:var(--font-type);font-size:12px;color:var(--accent);margin-top:14px;display:block;}
+
+  .newsletter{background:var(--accent-soft);}
+  .newsletter-inner{max-width:640px;margin:0 auto;text-align:center;}
+  .newsletter h2{font-family:var(--font-chalk);font-size:36px;}
+  .newsletter p{margin-top:10px;font-size:14.5px;color:var(--accent-ink);}
+  .newsletter-form{display:flex;gap:10px;margin-top:22px;max-width:420px;margin-left:auto;margin-right:auto;}
+  .newsletter-form input{
+    flex:1;padding:12px 14px;border:1.5px solid var(--page-text);background:var(--page);font-family:var(--font-body);font-size:14px;
+  }
+  .newsletter-msg{margin-top:14px;font-family:var(--font-type);font-size:13px;color:var(--accent-ink);}
+
+  footer.site{background:var(--chrome-deep);color:var(--chrome-muted);padding:50px 24px 30px;}
+  .footer-grid{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px;}
+  @media(max-width:760px){.footer-grid{grid-template-columns:1fr 1fr;}}
+  .footer-grid h4{color:var(--chrome-text);font-size:13px;letter-spacing:.5px;margin-bottom:14px;font-family:var(--font-type);}
+  .footer-grid ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;}
+  .footer-grid a{font-size:14px;color:var(--chrome-muted);}
+  .footer-grid a:hover{color:var(--chrome-text);}
+  .footer-brand{font-family:var(--font-chalk);font-size:26px;color:var(--chrome-text);}
+  .footer-blurb{margin-top:12px;font-size:13.5px;color:var(--chrome-muted);max-width:34ch;}
+  .footer-bottom{
+    max-width:1120px;margin:36px auto 0;padding-top:20px;
+    border-top:1px solid var(--header-border);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-size:12.5px;
+  }
+  .social-row{display:flex;gap:14px;margin-top:16px;}
+
+  .page-hero{background:var(--chrome);color:var(--chrome-text);padding:56px 24px 50px;}
+  .page-hero .wrap{max-width:900px;}
+  .page-hero .kicker{font-family:var(--font-type);font-size:12px;color:var(--accent-soft);letter-spacing:1px;}
+  [data-theme="light"] .page-hero .kicker{color:var(--accent);}
+  .page-hero h1{font-family:var(--font-chalk);font-size:clamp(38px,5vw,58px);margin-top:10px;}
+  .page-hero p{margin-top:14px;color:var(--hero-sub);max-width:60ch;font-size:15.5px;}
+
+  .content-block{max-width:800px;margin:0 auto;padding:60px 24px;}
+  .content-block h2{font-family:var(--font-chalk);font-size:30px;margin-top:36px;margin-bottom:12px;}
+  .content-block h2:first-child{margin-top:0;}
+  .content-block p{color:var(--page-text);font-size:15.5px;margin-bottom:14px;}
+
+  .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:1px;background:var(--rule);}
+  .faq-item{background:var(--page);}
+  .faq-q{
+    width:100%;text-align:left;background:none;border:none;
+    padding:20px 4px;display:flex;justify-content:space-between;align-items:center;
+    font-size:16px;font-weight:600;color:var(--page-text);
+  }
+  .faq-q .plus{font-family:var(--font-type);font-size:20px;color:var(--accent);transition:transform .2s;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .faq-item.open .faq-a{max-height:400px;}
+  .faq-a p{padding:0 4px 20px;color:var(--page-muted);font-size:14.5px;}
+
+  .product-detail{max-width:1000px;margin:0 auto;padding:56px 24px;display:grid;grid-template-columns:1fr 1fr;gap:50px;}
+  @media(max-width:800px){.product-detail{grid-template-columns:1fr;}}
+  .pd-visual{
+    background:var(--card);border:1px solid var(--card-border);
+    aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .pd-visual .stamp{position:absolute;top:20px;right:20px;}
+  .pd-info .breadcrumb{font-family:var(--font-type);font-size:12px;color:var(--accent);margin-bottom:16px;display:block;}
+  .pd-info h1{font-family:var(--font-chalk);font-size:44px;line-height:1.02;}
+  .pd-info .varietal{font-style:italic;color:var(--page-muted);margin-top:6px;display:block;}
+  .pd-info .desc{margin-top:18px;font-size:15px;color:var(--page-text);}
+  .pd-price-block{margin-top:24px;padding:18px 20px;background:var(--surface);border:1px solid var(--rule);}
+  .pd-price-block .price{font-size:32px;}
+  .pd-price-block .srp-range{display:block;margin-top:4px;}
+  .qty-row{display:flex;align-items:center;gap:14px;margin-top:20px;}
+  .qty-control{display:flex;align-items:center;border:1.5px solid var(--page-text);}
+  .qty-control button{background:none;border:none;padding:10px 14px;font-size:16px;}
+  .qty-control span{padding:0 14px;font-family:var(--font-type);min-width:20px;text-align:center;}
+  .add-row{display:flex;gap:12px;margin-top:22px;}
+  .pool{margin-top:34px;}
+  .pool h3{font-family:var(--font-chalk);font-size:24px;margin-bottom:14px;}
+  .pool-list{display:flex;flex-direction:column;gap:1px;background:var(--rule);}
+  .pool-row{background:var(--page);display:flex;justify-content:space-between;padding:12px 14px;font-size:14px;}
+  .pool-row .val{font-family:var(--font-type);color:var(--accent);}
+  .added-toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120%);
+    background:var(--cubs-blue);color:var(--ivory);
+    padding:14px 22px;font-family:var(--font-type);font-size:13.5px;
+    border:1px solid var(--accent);z-index:150;transition:transform .25s ease;
+  }
+  .added-toast.show{transform:translateX(-50%) translateY(0);}
+
+  .cart-page{max-width:820px;margin:0 auto;padding:56px 24px;}
+  .cart-item{
+    display:grid;grid-template-columns:1fr auto auto auto;gap:16px;align-items:center;
+    padding:18px 0;border-bottom:1px solid var(--rule);
+  }
+  @media(max-width:600px){.cart-item{grid-template-columns:1fr;gap:8px;}}
+  .cart-item h4{font-size:17px;}
+  .cart-item .meta{font-size:13px;color:var(--page-muted);font-family:var(--font-type);margin-top:3px;}
+  .remove-link{font-family:var(--font-type);font-size:12px;color:var(--accent);border:none;background:none;text-decoration:underline;}
+  .cart-summary{margin-top:26px;padding:22px;background:var(--card);border:1px solid var(--card-border);}
+  .summary-row{display:flex;justify-content:space-between;font-size:15px;padding:6px 0;}
+  .summary-row.total{font-family:var(--font-type);font-size:19px;font-weight:700;border-top:1px dashed rgba(26,26,34,0.3);margin-top:8px;padding-top:14px;}
+  .empty-state{text-align:center;padding:60px 20px;}
+  .empty-state h2{font-family:var(--font-chalk);font-size:32px;margin-bottom:10px;}
+  .empty-state p{color:var(--page-muted);margin-bottom:20px;}
+
+  .checkout-page{max-width:640px;margin:0 auto;padding:56px 24px;}
+  .form-row{margin-bottom:16px;display:flex;flex-direction:column;gap:6px;}
+  .form-row label{font-family:var(--font-type);font-size:12.5px;color:var(--page-muted);}
+  .form-row input,.form-row textarea{
+    padding:11px 12px;border:1.5px solid var(--page-muted);background:var(--page);font-family:var(--font-body);font-size:14.5px;
+  }
+  .form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:520px){.form-grid2{grid-template-columns:1fr;}}
+  .demo-note{
+    background:var(--accent-soft);padding:12px 16px;font-size:13px;color:var(--accent-ink);margin-bottom:24px;
+    border-left:3px solid var(--accent);
+  }
+  .checkout-summary{background:var(--card);border:1px solid var(--card-border);padding:18px;margin-top:24px;font-size:14.5px;}
+
+  .reveal-page{max-width:900px;margin:0 auto;padding:60px 24px;}
+  .reveal-head{text-align:center;margin-bottom:40px;}
+  .reveal-head .order-no{font-family:var(--font-type);font-size:12.5px;color:var(--accent);}
+  .reveal-head h1{font-family:var(--font-chalk);font-size:46px;margin-top:8px;}
+  .reveal-value-banner{
+    background:var(--cubs-blue);color:var(--ivory);text-align:center;
+    padding:22px;margin-bottom:36px;
+  }
+  .reveal-value-banner .big{font-family:var(--font-type);font-size:30px;color:#f4b4b4;}
+  .reveal-group{margin-bottom:34px;}
+  .reveal-group h3{font-family:var(--font-chalk);font-size:26px;margin-bottom:14px;}
+  .reveal-bottles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  @media(max-width:700px){.reveal-bottles{grid-template-columns:1fr 1fr;}}
+  @media(max-width:460px){.reveal-bottles{grid-template-columns:1fr;}}
+  .bottle-card{
+    background:var(--card);border:1px solid var(--card-border);
+    padding:18px 14px;text-align:center;
+    opacity:0;transform:translateY(10px) scale(.97);
+    animation:revealIn .5s ease forwards;
+  }
+  .bottle-card.upgrade{background:var(--accent-soft);border-color:var(--accent);}
+  .bottle-card .upgrade-flag{font-family:var(--font-type);font-size:10px;color:var(--accent);display:block;margin-bottom:8px;letter-spacing:.5px;}
+  .bottle-icon{width:34px;height:60px;margin:0 auto 10px;}
+  .bottle-card h4{font-size:14.5px;line-height:1.3;}
+  .bottle-card .val{font-family:var(--font-type);font-size:16px;margin-top:8px;color:var(--accent);}
+  @keyframes revealIn{to{opacity:1;transform:translateY(0) scale(1);}}
+  @media (prefers-reduced-motion: reduce){
+    .bottle-card{animation:none;opacity:1;transform:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+    outline:2px solid var(--accent);outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+<div id="age-gate">
+  <div class="gate-card" data-pass="HALL PASS REQUIRED" id="gate-card"></div>
+</div>
+
+<header class="site">
+  <div class="nav-row">
+    <a href="#/" class="brand"><span class="dot"></span>Wine Detention</a>
+    <nav class="links" id="nav-links"></nav>
+    <div class="chrome-tools">
+      <button class="btn btn-ghost" id="theme-toggle" type="button" aria-label="Toggle theme">Light</button>
+      <label class="visually-hidden" for="lang-select">Language</label>
+      <select id="lang-select" class="lang-select" aria-label="Language"></select>
+      <a href="#/cart" class="cart-link" data-route="/cart"><span id="cart-label">Hall Pass</span> <span class="cart-count" id="cart-count">0</span></a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="site" id="site-footer"></footer>
+<div class="added-toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var LANGS = [
+    {code:"en", label:"English"},
+    {code:"es", label:"Español"},
+    {code:"fr", label:"Français"},
+    {code:"it", label:"Italiano"},
+    {code:"zh", label:"中文"}
+  ];
+
+  var PRODUCTS = [
+    {
+      slug: "study-hall-sauvignon-blanc",
+      price: 59, srpLow: 59, srpHigh: 140,
+      pool: [
+        {name:"Sable Ridge Sauvignon Blanc", value:59, weight:50},
+        {name:"Thistle & Vine Fumé Blanc", value:65, weight:25},
+        {name:"Highbeam Cellars Reserve Sauvignon Blanc", value:79, weight:14},
+        {name:"Marrow Creek Estate Sauvignon Blanc", value:95, weight:8},
+        {name:"Stonecrop Vineyard Select Sauvignon Blanc", value:140, weight:3}
+      ]
+    },
+    {
+      slug: "chardonnay-class-reunion",
+      price: 69, srpLow: 69, srpHigh: 160,
+      pool: [
+        {name:"Copper Hollow Chardonnay", value:69, weight:50},
+        {name:"Vantage Point Barrel-Aged Chardonnay", value:75, weight:25},
+        {name:"Longshadow Estate Chardonnay", value:89, weight:14},
+        {name:"Nightshade Vineyards Reserve Chardonnay", value:110, weight:8},
+        {name:"Faultline Cellars Grand Chardonnay", value:160, weight:3}
+      ]
+    },
+    {
+      slug: "cabernet-cram-session",
+      price: 89, srpLow: 89, srpHigh: 220,
+      pool: [
+        {name:"Iron Gate Cellars Cabernet Sauvignon", value:89, weight:48},
+        {name:"Wolfsbane Vineyards Cabernet Sauvignon", value:95, weight:25},
+        {name:"Sable Ridge Reserve Cabernet", value:120, weight:15},
+        {name:"Stonecrop Mountain Cabernet", value:150, weight:8},
+        {name:"Longshadow Estate Cabernet", value:220, weight:4}
+      ]
+    },
+    {
+      slug: "icon-detention-rare-reds",
+      price: 149, srpLow: 149, srpHigh: 450,
+      pool: [
+        {name:"Marrow Creek Icon Red Blend", value:149, weight:46},
+        {name:"Nightshade Vineyards Grand Reserve", value:175, weight:26},
+        {name:"Faultline Cellars Icon Cabernet", value:225, weight:16},
+        {name:"Highbeam Cellars Rare Reserve", value:300, weight:9},
+        {name:"Vantage Point Legacy Bottling", value:450, weight:3}
+      ]
+    }
+  ];
+
+  var STR = {
+    en: {
+      title: "Wine Detention — Get Sent To The Good Stuff",
+      navHome:"Home", navCollections:"Collections", navHow:"How It Works", navAbout:"About", navFaq:"FAQ", navContact:"Contact",
+      cart:"Hall Pass", menu:"Menu", themeLight:"Light", themeDark:"Dark",
+      gatePass:"HALL PASS REQUIRED",
+      gateH:"Prove you're<br>not a freshman.",
+      gateP:"You must be 21 or older to enter Wine Detention. This is a demo site for wine collections shipped to eligible U.S. states only.",
+      gateNo:"I'm under 21", gateYes:"I'm 21 or older",
+      gateRejectH:"Come back<br>when you're 21.",
+      gateRejectP:"We take this seriously — Wine Detention (and this demo) is only for adults 21 and older.",
+      heroEye:"DAILY ASSIGNMENTS NOW POSTED",
+      heroH:"You've been sent<br>to Wine Detention.",
+      heroSub:"Buy a themed wine collection at one flat price. Get three bottles assigned at checkout — every one guaranteed worth at least what you paid, some worth a lot more.",
+      ctaAssignments:"See Today's Assignments", ctaHow:"How It Works",
+      processK:"THE DETENTION PROCESS", processH:"Three periods. One sentence.",
+      processP:"No essays required — just three steps between you and a cellar upgrade.",
+      s1t:"Report for Duty", s1b:"Pick a themed collection. One flat price gets you three bottles from that collection's pool — no bottle-by-bottle guessing.",
+      s2t:"Serve Your Upgrade", s2b:"At checkout, your three bottles are assigned from the pool at random. Every outcome is worth at least your buy-in.",
+      s3t:"Enjoy Your Sentence", s3b:"See exactly what you got the moment you check out. Drink tonight or hold the bold ones for a special occasion.",
+      whyK:"WHY STUDENTS KEEP COMING BACK", whyH:"Full price. Real upgrades.",
+      whyP:"We don't discount wine, ever — that's what makes the upgrades mean something.",
+      w1t:"No Discount-Bin Wine", w1b:"Every bottle sells at its true suggested retail price. Wineries partner with us because their pricing never gets undercut.",
+      w2t:"Guaranteed Value Upgrades", w2b:"Every collection is built so your assigned bottles are worth at least your buy-in — often significantly more.",
+      w3t:"Fast, Careful Shipping", w3b:"In a live version, your case would ship within a couple of days, hand-packed with season-appropriate insulation.",
+      colK:"TODAY'S COLLECTIONS", colH:"Pick your period.",
+      colP:"Every collection has one price. Every bottle inside is transparently listed before you buy.",
+      viewAll:"View All Collections", perCollection:"per collection", viewDeal:"View Deal", addCart:"Add to Cart",
+      reviewsK:"HALL MONITOR REVIEWS", reviewsH:"Notes passed in class.",
+      q1:"Pulled a bottle worth almost triple what I paid on my second collection. Didn't expect to actually get excited over Chardonnay.",
+      q1w:"— D. Alvarez, repeat offender",
+      q2:"The reveal happens right at checkout, which is such a small thing but it's genuinely the best part.",
+      q2w:"— M. Okafor, hall monitor",
+      q3:"Bought the Cabernet Cram Session as a gift. The recipient now checks the site weekly.",
+      q3w:"— T. Reyes, enabler",
+      newsH:"Get a permission slip.", newsP:"Sign up and we'll send you a code for your first collection.",
+      newsBtn:"Sign Up", newsOk:"You're on the list. Check your inbox for a code (demo — no email sent).",
+      emailPh:"you@example.com", emailAria:"Email address",
+      footBlurb:"Full-price wine, guaranteed-value upgrades, zero discount-bin shame. Run by Vine & Recess Co.",
+      footSite:"SITE", footShop:"SHOP", footLegal:"LEGAL",
+      footAbout:"About Us", footContact:"Contact Us", footAll:"All Collections", footCart:"Hall Pass (Cart)",
+      footPrivacy:"Privacy Policy", footTerms:"Terms of Service",
+      footCopy:"© 2026 Wine Detention. Demo site — not a real store. You must be 21+.",
+      footWines:"Wines sold by participating fictional wineries.",
+      colHeroK:"FULL ROSTER", colHeroH:"All Collections",
+      colHeroP:"Every deal currently posted on the detention board. One flat price each, three bottles assigned at checkout.",
+      notFound:"Assignment not found", notFoundP:"That collection doesn't exist.", backCols:"Back to all collections",
+      allCols:"← ALL COLLECTIONS", realSrp:"Real suggested retail value:",
+      neverLess:"— you'll never pay less than sticker, only get more.",
+      collectionsWord:"collection(s)", viewPass:"View Hall Pass", possible:"Possible Assignments",
+      added:"Added to your hall pass:",
+      howK:"THE SYLLABUS", howH:"How Wine Detention Works",
+      howP:"From browsing to bottle, here's the full path a collection takes before it reaches your door.",
+      j1t:"Browse curated collections", j1b:"Skip scrolling through hundreds of individual bottles. Every collection is built around a region, varietal, or theme, so you shop by what excites you.",
+      j2t:"Purchase at one flat price", j2b:"Every bottle in a collection shares the same buy-in price. The only decision is which collection to pick.",
+      j3t:"Your bottles are assigned", j3b:"At checkout, your three bottles are pulled from the collection's pool. Every possible outcome is worth at least your buy-in price.",
+      j4t:"See your reveal instantly", j4b:"You find out exactly which bottles you got — and their real market value — the moment your order is placed.",
+      j5t:"Carefully packed and shipped", j5b:"In a live version of this concept, orders would ship hand-packed with seasonally appropriate insulation.",
+      j6t:"Drink now or hold for later", j6b:"Pull a cork tonight, or set a bold red aside for an occasion worth waiting for.",
+      aboutK:"DETENTION FILE", aboutH:"About Wine Detention",
+      aboutP:"A concept wine club built on one rule: never discount the bottle, always upgrade the buyer.",
+      a1t:"Why we exist", a1b:"Wine Detention started as a simple complaint: buying wine online usually means either overpaying for a single bottle you already know, or digging through a discount bin that makes a winery's brand feel cheap. We wanted a third option — one where the winery's pricing stays untouched, and the thrill comes from what you might be assigned rather than how much was slashed off the sticker.",
+      a2t:"How the model works", a2b:"We never discount wine. Every bottle in every collection is sold at its full suggested retail price. Instead of moving inventory through markdowns, we build collections where every outcome already clears the price you paid, and let some outcomes run well past it. Wineries keep their pricing integrity intact, and buyers get a real shot at a meaningful upgrade.",
+      a3t:"Run by Vine & Recess Co.", a3b:"Wine Detention is operated by Vine & Recess Co., a fictional wine-industry group created for this concept. In a live version of this brand, that kind of parent company would bring the operational backbone — sourcing, storage, and fulfillment — while Wine Detention handles the front-of-house experience.",
+      a4t:"A note on this demo", a4b:"This site is a design and product concept, not a functioning retailer. No real wine is sold, no real payment is processed, and the wineries and bottlings referenced throughout are fictional.",
+      faqK:"READ BEFORE YOU RAISE YOUR HAND", faqH:"Frequently Asked Questions",
+      contactK:"NOTE TO THE OFFICE", contactH:"Contact Us",
+      contactP:"Questions about a collection, a reveal, or anything else — send a note below.",
+      name:"Name", email:"Email", message:"Message", send:"Send Message",
+      contactOk:"Message received. In a live version, our office would reply within 1–2 business days.",
+      privacyH:"Privacy Policy", termsH:"Terms of Service", legalK:"LEGAL",
+      privacyB:"This is a placeholder privacy policy for the Wine Detention concept demo. A live version of this site would explain what information is collected at checkout, how it is stored, and how customers can request its removal. No real personal data is collected, stored, or transmitted by this demo. Any information entered into forms on this page stays in your browser session only.",
+      termsB:"This is a placeholder terms of service for the Wine Detention concept demo. A live version would cover eligibility (21+), order fulfillment, shipping restrictions by state, and dispute resolution. This demo does not process real orders or real payments.",
+      emptyH:"Your hall pass is empty.", emptyP:"Nothing's been assigned yet — go pick a collection.",
+      browse:"Browse Collections", hallTitle:"Your Hall Pass", subtotal:"Subtotal", shipping:"Shipping",
+      shipDemo:"Calculated at checkout (demo)", total:"Total", keep:"Keep Browsing", checkout:"Checkout", remove:"Remove",
+      nothingH:"Nothing to check out.", nothingP:"Add a collection first.",
+      checkoutH:"Checkout",
+      demoNote:"This is a demo checkout. No real payment is processed and no wine ships — submitting will simulate your reveal.",
+      first:"First name", last:"Last name", address:"Shipping address", city:"City", zip:"ZIP code",
+      card:"Card number (demo — not sent anywhere)", orderTotal:"Order total:",
+      complete:"Complete Order & Reveal My Wines",
+      noOrder:"No order to show", noOrderP:"Place an order to see your reveal.",
+      revealH:"Detention served. Reveal time.",
+      youPaid:"You paid", youGot:"You received", retail:"in real retail value",
+      upgrade:"UPGRADE!", another:"Serve Another Sentence",
+      page404:"Page not found", backHome:"Back home",
+      faqs:[
+        {q:"Do I get to pick which bottles I receive?", a:"No — that's the whole detention gimmick. Every collection is priced once, and your three bottles are assigned automatically from that collection's pool the moment you check out. Every possible bottle is worth at least your buy-in price."},
+        {q:"How is the value on each bottle calculated?", a:"Every bottle displays its Suggested Retail Price — the number you'd see on the shelf at a wine shop. We never discount, so an upgrade is always a genuine step up in real market value, not an inflated sticker."},
+        {q:"When do I find out what I got?", a:"Immediately. This demo reveals your assigned bottles on the confirmation screen right after checkout — no waiting for the box to show up."},
+        {q:"Do you actually ship wine?", a:"This is a design demo for Wine Detention, a fictional concept site. No real payment is processed and no wine ships. In a live version, orders would ship within a few business days from a licensed fulfillment partner."},
+        {q:"Is this a real discount or clearance sale?", a:"No. Every bottle sells at its full suggested retail price. What you're paying for is the guaranteed chance at an upgrade, not a markdown."},
+        {q:"Do I need to be 21 to browse?", a:"Yes. You must be 21 or older to purchase or browse product collections on a real version of a site like this, which is why we show an age check on entry."}
+      ],
+      products:{
+        "study-hall-sauvignon-blanc":{tag:"3 BOTTLES", name:"Sauvignon Blanc Study Hall", varietal:"Sauvignon Blanc & Fumé Blanc, California", desc:"A crisp assignment in citrus and cut grass. Every bottle in this collection is a Sauvignon Blanc or Fumé Blanc worth at least what you paid — some students get held back for extra credit."},
+        "chardonnay-class-reunion":{tag:"3 BOTTLES", name:"Chardonnay Class Reunion", varietal:"Chardonnay, Sonoma & Napa County", desc:"Buttery, barrel-aged, and built for a reunion toast. Three Chardonnays assigned at random, every one worth at least your buy-in."},
+        "cabernet-cram-session":{tag:"3 BOTTLES", name:"Cabernet Cram Session", varietal:"Cabernet Sauvignon, Napa Valley", desc:"Late-night studying pays off. A classic Napa Cabernet lineup with a real shot at pulling a bottle worth more than double your tuition."},
+        "icon-detention-rare-reds":{tag:"3 BOTTLES", name:"Icon Detention: Rare Reds", varietal:"Icon & Collector Reds, Napa Valley", desc:"The advanced class. Icon-tier reds from small-lot producers, with a rare shot at an ultra-limited bottling worth three times the buy-in."}
+      }
+    },
+    es: {
+      title: "Wine Detention — Te mandan a lo bueno",
+      navHome:"Inicio", navCollections:"Colecciones", navHow:"Cómo funciona", navAbout:"Nosotros", navFaq:"Preguntas", navContact:"Contacto",
+      cart:"Pase de pasillo", menu:"Menú", themeLight:"Claro", themeDark:"Oscuro",
+      gatePass:"SE REQUIERE PASE",
+      gateH:"Demuestra que<br>no eres novato.",
+      gateP:"Debes tener 21 años o más para entrar a Wine Detention. Este es un sitio demo de colecciones de vino enviadas solo a estados elegibles de EE. UU.",
+      gateNo:"Tengo menos de 21", gateYes:"Tengo 21 o más",
+      gateRejectH:"Vuelve<br>cuando tengas 21.",
+      gateRejectP:"Nos lo tomamos en serio: Wine Detention (y esta demo) es solo para adultos de 21 años o más.",
+      heroEye:"TAREAS DEL DÍA PUBLICADAS",
+      heroH:"Te han mandado<br>a Wine Detention.",
+      heroSub:"Compra una colección temática a un precio fijo. En el pago te asignan tres botellas: cada una vale al menos lo que pagaste, y algunas valen mucho más.",
+      ctaAssignments:"Ver las tareas de hoy", ctaHow:"Cómo funciona",
+      processK:"EL PROCESO DE DETENCIÓN", processH:"Tres periodos. Una sentencia.",
+      processP:"Sin ensayos: solo tres pasos entre tú y una mejora de bodega.",
+      s1t:"Preséntate", s1b:"Elige una colección temática. Un precio fijo te da tres botellas de su reserva — sin adivinar botella por botella.",
+      s2t:"Cumple tu mejora", s2b:"En el pago, tus tres botellas se asignan al azar. Cada resultado vale al menos tu entrada.",
+      s3t:"Disfruta la sentencia", s3b:"Ve exactamente qué te tocó en cuanto pagas. Brinda esta noche o guarda las intensas para una ocasión.",
+      whyK:"POR QUÉ VUELVEN LOS ALUMNOS", whyH:"Precio completo. Mejoras reales.",
+      whyP:"Nunca rebajamos el vino: por eso las mejoras significan algo.",
+      w1t:"Nada de ganga", w1b:"Cada botella se vende a su precio de venta sugerido real. Las bodegas se asocian porque su precio no se recorta.",
+      w2t:"Mejoras de valor garantizadas", w2b:"Cada colección está hecha para que tus botellas valgan al menos lo que pagaste — a menudo bastante más.",
+      w3t:"Envío rápido y cuidadoso", w3b:"En una versión real, tu caja saldría en un par de días, empacada a mano con aislamiento de temporada.",
+      colK:"COLECCIONES DE HOY", colH:"Elige tu periodo.",
+      colP:"Cada colección tiene un precio. Cada botella dentro está listada con transparencia antes de comprar.",
+      viewAll:"Ver todas las colecciones", perCollection:"por colección", viewDeal:"Ver oferta", addCart:"Añadir",
+      reviewsK:"RESEÑAS DEL MONITOR", reviewsH:"Notas pasadas en clase.",
+      q1:"En mi segunda colección saqué una botella que valía casi el triple. No esperaba emocionarme tanto con un Chardonnay.",
+      q1w:"— D. Alvarez, reincidente",
+      q2:"El revelado ocurre justo en el pago. Es un detalle pequeño y es lo mejor de todo.",
+      q2w:"— M. Okafor, monitor de pasillo",
+      q3:"Regalé el Cabernet Cram Session. El destinatario ahora entra a la web cada semana.",
+      q3w:"— T. Reyes, cómplice",
+      newsH:"Pide un permiso.", newsP:"Regístrate y te enviaremos un código para tu primera colección.",
+      newsBtn:"Registrarme", newsOk:"Ya estás en la lista. Revisa tu correo (demo — no se envía email).",
+      emailPh:"tu@ejemplo.com", emailAria:"Correo electrónico",
+      footBlurb:"Vino a precio completo, mejoras de valor garantizadas, cero vergüenza de ganga. Operado por Vine & Recess Co.",
+      footSite:"SITIO", footShop:"TIENDA", footLegal:"LEGAL",
+      footAbout:"Sobre nosotros", footContact:"Contáctanos", footAll:"Todas las colecciones", footCart:"Pase de pasillo",
+      footPrivacy:"Política de privacidad", footTerms:"Términos de servicio",
+      footCopy:"© 2026 Wine Detention. Sitio demo — no es una tienda real. Debes tener 21+.",
+      footWines:"Vinos vendidos por bodegas ficticias participantes.",
+      colHeroK:"LISTA COMPLETA", colHeroH:"Todas las colecciones",
+      colHeroP:"Cada oferta en el tablón de detención. Un precio fijo, tres botellas asignadas al pagar.",
+      notFound:"Asignación no encontrada", notFoundP:"Esa colección no existe.", backCols:"Volver a las colecciones",
+      allCols:"← TODAS LAS COLECCIONES", realSrp:"Valor de venta sugerido real:",
+      neverLess:"— nunca pagas menos que la etiqueta, solo puedes recibir más.",
+      collectionsWord:"colección(es)", viewPass:"Ver pase", possible:"Asignaciones posibles",
+      added:"Añadido a tu pase:",
+      howK:"EL TEMARIO", howH:"Cómo funciona Wine Detention",
+      howP:"De la vitrina a la botella: el camino completo de una colección.",
+      j1t:"Explora colecciones curadas", j1b:"Olvídate de cientos de botellas sueltas. Cada colección gira en torno a una región, una cepa o un tema.",
+      j2t:"Compra a un precio fijo", j2b:"Todas las botellas de una colección comparten el mismo precio de entrada. Solo eliges la colección.",
+      j3t:"Se asignan tus botellas", j3b:"Al pagar, se extraen tres botellas de la reserva. Cualquier resultado vale al menos lo que pagaste.",
+      j4t:"Revela al instante", j4b:"Sabes qué botellas te tocaron — y su valor de mercado — en el momento del pedido.",
+      j5t:"Empaque y envío cuidadoso", j5b:"En una versión real, los pedidos saldrían empacados a mano con aislamiento de temporada.",
+      j6t:"Bébelo ya o guárdalo", j6b:"Descorcha esta noche, o reserva un tinto intenso para una ocasión.",
+      aboutK:"EXPEDIENTE", aboutH:"Sobre Wine Detention",
+      aboutP:"Un club de vino conceptual con una regla: nunca rebajar la botella, siempre mejorar al comprador.",
+      a1t:"Por qué existimos", a1b:"Wine Detention nació de una queja simple: comprar vino en línea suele ser pagar de más por una botella que ya conoces, o hurgar en un contenedor de gangas que baratea la marca. Queríamos una tercera vía: el precio de la bodega intacto, y la emoción en lo que te pueden asignar.",
+      a2t:"Cómo funciona el modelo", a2b:"Nunca rebajamos el vino. Cada botella se vende a su precio de venta sugerido completo. En vez de liquidar inventario, armamos colecciones donde cada resultado cubre lo que pagaste, y algunos lo superan. Las bodegas conservan su precio; tú tienes chance real de una mejora.",
+      a3t:"Operado por Vine & Recess Co.", a3b:"Wine Detention lo opera Vine & Recess Co., un grupo ficticio creado para este concepto. En una versión real, esa empresa madre aportaría abastecimiento, almacén y envío.",
+      a4t:"Nota sobre esta demo", a4b:"Este sitio es un concepto de diseño, no un minorista real. No se vende vino real, no se procesa pago real, y las bodegas son ficticias.",
+      faqK:"LEE ANTES DE LEVANTAR LA MANO", faqH:"Preguntas frecuentes",
+      contactK:"NOTA A LA OFICINA", contactH:"Contáctanos",
+      contactP:"Dudas sobre una colección, un revelado u otra cosa — escribe abajo.",
+      name:"Nombre", email:"Correo", message:"Mensaje", send:"Enviar mensaje",
+      contactOk:"Mensaje recibido. En una versión real, la oficina respondería en 1–2 días hábiles.",
+      privacyH:"Política de privacidad", termsH:"Términos de servicio", legalK:"LEGAL",
+      privacyB:"Esta es una política de privacidad provisional para la demo de Wine Detention. Una versión real explicaría qué datos se recogen al pagar, cómo se guardan y cómo pedir su eliminación. Esta demo no recoge, almacena ni transmite datos personales reales.",
+      termsB:"Estos son términos provisionales para la demo. Una versión real cubriría elegibilidad (21+), envíos por estado y resolución de disputas. Esta demo no procesa pedidos ni pagos reales.",
+      emptyH:"Tu pase de pasillo está vacío.", emptyP:"Aún no hay nada asignado — elige una colección.",
+      browse:"Ver colecciones", hallTitle:"Tu pase de pasillo", subtotal:"Subtotal", shipping:"Envío",
+      shipDemo:"Se calcula al pagar (demo)", total:"Total", keep:"Seguir viendo", checkout:"Pagar", remove:"Quitar",
+      nothingH:"Nada que pagar.", nothingP:"Añade una colección primero.",
+      checkoutH:"Pago",
+      demoNote:"Esto es un pago de demo. No se procesa un pago real ni se envía vino: al enviar se simula tu revelado.",
+      first:"Nombre", last:"Apellido", address:"Dirección de envío", city:"Ciudad", zip:"Código postal",
+      card:"Número de tarjeta (demo — no se envía)", orderTotal:"Total del pedido:",
+      complete:"Completar pedido y revelar vinos",
+      noOrder:"No hay pedido", noOrderP:"Haz un pedido para ver tu revelado.",
+      revealH:"Detención cumplida. Hora de revelar.",
+      youPaid:"Pagaste", youGot:"Recibiste", retail:"en valor real de venta",
+      upgrade:"¡MEJORA!", another:"Otra sentencia",
+      page404:"Página no encontrada", backHome:"Volver al inicio",
+      faqs:[
+        {q:"¿Elijo qué botellas recibo?", a:"No: esa es la gracia de la detención. Cada colección tiene un precio, y tus tres botellas se asignan solas de su reserva al pagar. Toda botella posible vale al menos tu entrada."},
+        {q:"¿Cómo se calcula el valor de cada botella?", a:"Cada botella muestra su precio de venta sugerido: el de la estantería. Nunca rebajamos, así que una mejora es un salto real de valor de mercado."},
+        {q:"¿Cuándo sé qué me tocó?", a:"Al instante. Esta demo revela tus botellas en la confirmación, justo después del pago."},
+        {q:"¿Envían vino de verdad?", a:"Esta es una demo de concepto. No hay pago real ni envío. En una versión real, los pedidos saldrían en unos días hábiles con un socio con licencia."},
+        {q:"¿Es una oferta o un saldo?", a:"No. Cada botella se vende a su precio completo. Pagas la chance garantizada de una mejora, no una rebaja."},
+        {q:"¿Hay que tener 21 para navegar?", a:"Sí. Debes tener 21 o más para comprar o ver colecciones en una versión real, por eso hay un control de edad."}
+      ],
+      products:{
+        "study-hall-sauvignon-blanc":{tag:"3 BOTELLAS", name:"Sala de estudio Sauvignon Blanc", varietal:"Sauvignon Blanc y Fumé Blanc, California", desc:"Una tarea crujiente de cítricos y hierba recién cortada. Cada botella es Sauvignon Blanc o Fumé Blanc que vale al menos lo que pagaste — algunos alumnos se quedan a crédito extra."},
+        "chardonnay-class-reunion":{tag:"3 BOTELLAS", name:"Reunión de clase Chardonnay", varietal:"Chardonnay, condados de Sonoma y Napa", desc:"Mantecoso, criado en barrica y hecho para un brindis de reunión. Tres Chardonnays al azar, cada uno vale al menos tu entrada."},
+        "cabernet-cram-session":{tag:"3 BOTELLAS", name:"Atrancón de Cabernet", varietal:"Cabernet Sauvignon, Valle de Napa", desc:"Estudiar de madrugada rinde. Un elenco clásico de Cabernet de Napa, con chance real de una botella que vale más del doble de la matrícula."},
+        "icon-detention-rare-reds":{tag:"3 BOTELLAS", name:"Detención ícono: tintos raros", varietal:"Tintos ícono y de coleccionista, Valle de Napa", desc:"La clase avanzada. Tintos de lote pequeño, con una chance rara de un embotellado ultra limitado que vale tres veces la entrada."}
+      }
+    },
+    fr: {
+      title: "Wine Detention — Envoyé vers le bon cru",
+      navHome:"Accueil", navCollections:"Collections", navHow:"Comment ça marche", navAbout:"À propos", navFaq:"FAQ", navContact:"Contact",
+      cart:"Passe de couloir", menu:"Menu", themeLight:"Clair", themeDark:"Sombre",
+      gatePass:"PASSE OBLIGATOIRE",
+      gateH:"Prouve que tu<br>n'es pas un bleu.",
+      gateP:"Il faut avoir 21 ans ou plus pour entrer dans Wine Detention. Site démo : collections livrées uniquement dans les États américains éligibles.",
+      gateNo:"J'ai moins de 21 ans", gateYes:"J'ai 21 ans ou plus",
+      gateRejectH:"Reviens<br>quand tu auras 21 ans.",
+      gateRejectP:"On ne plaisante pas — Wine Detention (et cette démo) est réservé aux adultes de 21 ans et plus.",
+      heroEye:"DEVOIRS DU JOUR AFFICHÉS",
+      heroH:"Tu as été envoyé<br>en Wine Detention.",
+      heroSub:"Achète une collection thématique à prix unique. Trois bouteilles te sont attribuées à la caisse — chacune vaut au moins ce que tu as payé, certaines bien plus.",
+      ctaAssignments:"Voir les devoirs du jour", ctaHow:"Comment ça marche",
+      processK:"LE PROCESSUS DE RETENUE", processH:"Trois heures. Une sentence.",
+      processP:"Pas de dissertation — trois étapes entre toi et une montée en cave.",
+      s1t:"Présente-toi", s1b:"Choisis une collection. Un prix unique te donne trois bouteilles de son vivier — sans choisir bouteille par bouteille.",
+      s2t:"Purge ta montée", s2b:"À la caisse, tes trois bouteilles sont tirées au sort. Chaque issue vaut au moins ta mise.",
+      s3t:"Savoure ta peine", s3b:"Découvre exactement ce que tu as reçu au moment du paiement. Bois ce soir ou garde les plus denses pour plus tard.",
+      whyK:"POURQUOI ILS REVIENNENT", whyH:"Plein tarif. Vraies montées.",
+      whyP:"Nous ne soldons jamais le vin — c'est ce qui donne du sens aux montées.",
+      w1t:"Pas de vin en destockage", w1b:"Chaque bouteille se vend à son vrai prix conseillé. Les domaines nous rejoignent parce que leur tarif n'est jamais cassé.",
+      w2t:"Montées de valeur garanties", w2b:"Chaque collection est conçue pour que tes bouteilles valent au moins ta mise — souvent nettement plus.",
+      w3t:"Expédition soignée", w3b:"En version réelle, ton carton partirait en quelques jours, emballé à la main avec isolation de saison.",
+      colK:"COLLECTIONS DU JOUR", colH:"Choisis ta période.",
+      colP:"Chaque collection a un prix. Chaque bouteille est listée clairement avant l'achat.",
+      viewAll:"Voir toutes les collections", perCollection:"par collection", viewDeal:"Voir l'offre", addCart:"Ajouter",
+      reviewsK:"AVIS DES SURVEILLANTS", reviewsH:"Billets passés en classe.",
+      q1:"À ma deuxième collection, j'ai tiré une bouteille valant presque le triple. Je ne m'attendais pas à vibrer pour un Chardonnay.",
+      q1w:"— D. Alvarez, récidiviste",
+      q2:"Le reveal a lieu à la caisse. C'est un détail, et c'est vraiment le meilleur moment.",
+      q2w:"— M. Okafor, surveillant",
+      q3:"J'ai offert le Cabernet Cram Session. Le destinataire revient sur le site chaque semaine.",
+      q3w:"— T. Reyes, complice",
+      newsH:"Demande une autorisation.", newsP:"Inscris-toi et on t'envoie un code pour ta première collection.",
+      newsBtn:"S'inscrire", newsOk:"Tu es sur la liste. Vérifie ta boîte (démo — aucun e-mail envoyé).",
+      emailPh:"toi@exemple.com", emailAria:"Adresse e-mail",
+      footBlurb:"Vin au plein tarif, montées de valeur garanties, zéro honte de destockage. Géré par Vine & Recess Co.",
+      footSite:"SITE", footShop:"BOUTIQUE", footLegal:"LÉGAL",
+      footAbout:"À propos", footContact:"Nous contacter", footAll:"Toutes les collections", footCart:"Passe de couloir",
+      footPrivacy:"Politique de confidentialité", footTerms:"Conditions d'utilisation",
+      footCopy:"© 2026 Wine Detention. Site démo — pas une vraie boutique. 21 ans et plus.",
+      footWines:"Vins vendus par des domaines fictifs participants.",
+      colHeroK:"LISTE COMPLÈTE", colHeroH:"Toutes les collections",
+      colHeroP:"Toutes les offres au tableau. Un prix unique, trois bouteilles attribuées à la caisse.",
+      notFound:"Devoir introuvable", notFoundP:"Cette collection n'existe pas.", backCols:"Retour aux collections",
+      allCols:"← TOUTES LES COLLECTIONS", realSrp:"Valeur conseillée réelle :",
+      neverLess:"— tu ne paies jamais moins que l'étiquette, tu peux seulement recevoir plus.",
+      collectionsWord:"collection(s)", viewPass:"Voir le passe", possible:"Attributions possibles",
+      added:"Ajouté à ton passe :",
+      howK:"LE PROGRAMME", howH:"Comment fonctionne Wine Detention",
+      howP:"Du parcours à la bouteille, le chemin complet d'une collection.",
+      j1t:"Parcours des collections", j1b:"Plus besoin de scroller des centaines de bouteilles. Chaque collection s'organise autour d'une région, d'un cépage ou d'un thème.",
+      j2t:"Achat à prix unique", j2b:"Toutes les bouteilles d'une collection partagent le même prix d'entrée. Il ne reste qu'à choisir la collection.",
+      j3t:"Tes bouteilles sont attribuées", j3b:"À la caisse, trois bouteilles sont tirées du vivier. Chaque issue vaut au moins ta mise.",
+      j4t:"Reveal immédiat", j4b:"Tu découvres quelles bouteilles tu as eues — et leur valeur de marché — dès la commande.",
+      j5t:"Emballage et envoi soignés", j5b:"En version réelle, les commandes partiraient emballées à la main avec isolation de saison.",
+      j6t:"Bois maintenant ou attends", j6b:"Ouvre une bouteille ce soir, ou garde un rouge dense pour plus tard.",
+      aboutK:"DOSSIER", aboutH:"À propos de Wine Detention",
+      aboutP:"Un club de vin conceptuel fondé sur une règle : ne jamais solder la bouteille, toujours faire monter l'acheteur.",
+      a1t:"Pourquoi on existe", a1b:"Wine Detention est né d'un constat : acheter du vin en ligne, c'est souvent trop payer une bouteille connue, ou fouiller un bac soldé qui dévalorise le domaine. Nous voulions une troisième voie : le tarif du domaine intact, et l'émotion dans ce qui peut t'être attribué.",
+      a2t:"Le modèle", a2b:"Nous ne soldons jamais. Chaque bouteille se vend à son prix conseillé. Plutôt que de casser les prix, nous construisons des collections où chaque issue couvre déjà ta mise, et certaines la dépassent largement.",
+      a3t:"Géré par Vine & Recess Co.", a3b:"Wine Detention est opéré par Vine & Recess Co., un groupe fictif créé pour ce concept. En version réelle, cette maison-mère assurerait sourcing, stockage et expédition.",
+      a4t:"Note sur cette démo", a4b:"Ce site est un concept, pas un commerçant réel. Aucun vin réel n'est vendu, aucun paiement n'est traité, et les domaines cités sont fictifs.",
+      faqK:"LIS AVANT DE LEVER LA MAIN", faqH:"Questions fréquentes",
+      contactK:"MOT AU BUREAU", contactH:"Nous contacter",
+      contactP:"Une question sur une collection, un reveal ou autre — écris ci-dessous.",
+      name:"Nom", email:"E-mail", message:"Message", send:"Envoyer",
+      contactOk:"Message reçu. En version réelle, le bureau répondrait sous 1–2 jours ouvrés.",
+      privacyH:"Politique de confidentialité", termsH:"Conditions d'utilisation", legalK:"LÉGAL",
+      privacyB:"Politique de confidentialité provisoire pour la démo Wine Detention. Une version réelle expliquerait les données collectées à la caisse, leur stockage et leur suppression. Cette démo ne collecte, n'enregistre ni ne transmet de données personnelles réelles.",
+      termsB:"Conditions provisoires pour la démo. Une version réelle couvrirait l'éligibilité (21+), les envois par État et les litiges. Cette démo ne traite ni commande ni paiement réels.",
+      emptyH:"Ton passe de couloir est vide.", emptyP:"Rien n'est encore attribué — choisis une collection.",
+      browse:"Voir les collections", hallTitle:"Ton passe de couloir", subtotal:"Sous-total", shipping:"Livraison",
+      shipDemo:"Calculée à la caisse (démo)", total:"Total", keep:"Continuer", checkout:"Payer", remove:"Retirer",
+      nothingH:"Rien à payer.", nothingP:"Ajoute d'abord une collection.",
+      checkoutH:"Paiement",
+      demoNote:"Caisse démo. Aucun paiement réel, aucun vin envoyé — valider simule ton reveal.",
+      first:"Prénom", last:"Nom", address:"Adresse de livraison", city:"Ville", zip:"Code postal",
+      card:"Numéro de carte (démo — non envoyé)", orderTotal:"Total de la commande :",
+      complete:"Valider et révéler mes vins",
+      noOrder:"Aucune commande", noOrderP:"Passe commande pour voir ton reveal.",
+      revealH:"Retenue purgée. Place au reveal.",
+      youPaid:"Tu as payé", youGot:"Tu as reçu", retail:"en valeur réelle",
+      upgrade:"MONTÉE !", another:"Une autre sentence",
+      page404:"Page introuvable", backHome:"Retour à l'accueil",
+      faqs:[
+        {q:"Est-ce que je choisis mes bouteilles ?", a:"Non — c'est tout l'intérêt de la retenue. Chaque collection a un prix, et tes trois bouteilles sont attribuées automatiquement à la caisse. Chaque bouteille possible vaut au moins ta mise."},
+        {q:"Comment calcule-t-on la valeur ?", a:"Chaque bouteille affiche son prix conseillé — celui du rayon. Nous ne soldons jamais, donc une montée est un vrai saut de valeur de marché."},
+        {q:"Quand est-ce que je sais ce que j'ai eu ?", a:"Tout de suite. Cette démo révèle tes bouteilles sur l'écran de confirmation, juste après le paiement."},
+        {q:"Livrez-vous vraiment du vin ?", a:"C'est une démo de concept. Aucun paiement réel, aucun envoi. En version réelle, les commandes partiraient en quelques jours via un partenaire licencié."},
+        {q:"Est-ce une promo ou un déstockage ?", a:"Non. Chaque bouteille se vend au plein tarif. Tu paies la chance garantie d'une montée, pas une remise."},
+        {q:"Faut-il avoir 21 ans pour naviguer ?", a:"Oui. Il faut 21 ans ou plus pour acheter ou parcourir les collections en version réelle, d'où le contrôle d'âge."}
+      ],
+      products:{
+        "study-hall-sauvignon-blanc":{tag:"3 BOUTEILLES", name:"Étude surveillée Sauvignon Blanc", varietal:"Sauvignon Blanc et Fumé Blanc, Californie", desc:"Un devoir vif, agrumes et herbe coupée. Chaque bouteille est un Sauvignon Blanc ou Fumé Blanc qui vaut au moins ce que tu as payé — certains élèves restent pour des points bonus."},
+        "chardonnay-class-reunion":{tag:"3 BOUTEILLES", name:"Réunion de classe Chardonnay", varietal:"Chardonnay, comtés de Sonoma et Napa", desc:"Beurré, élevé en fût, pensé pour un toast de retrouvailles. Trois Chardonnays au hasard, chacun vaut au moins ta mise."},
+        "cabernet-cram-session":{tag:"3 BOUTEILLES", name:"Bachotage Cabernet", varietal:"Cabernet Sauvignon, Napa Valley", desc:"Réviser tard paie. Une ligne classique de Cabernet de Napa, avec une vraie chance de tirer une bouteille valant plus du double de tes frais."},
+        "icon-detention-rare-reds":{tag:"3 BOUTEILLES", name:"Retenue icône : rouges rares", varietal:"Rouges icônes et de collection, Napa Valley", desc:"La classe avancée. Rouges de petits lots, avec une chance rare d'une cuvée ultra limitée valant trois fois la mise."}
+      }
+    },
+    it: {
+      title: "Wine Detention — Mandato al vino buono",
+      navHome:"Home", navCollections:"Collezioni", navHow:"Come funziona", navAbout:"Chi siamo", navFaq:"FAQ", navContact:"Contatti",
+      cart:"Permesso", menu:"Menu", themeLight:"Chiaro", themeDark:"Scuro",
+      gatePass:"PERMESSO OBBLIGATORIO",
+      gateH:"Dimostra di<br>non essere una matricola.",
+      gateP:"Devi avere 21 anni o più per entrare in Wine Detention. Questo è un sito demo: collezioni spedite solo negli Stati USA idonei.",
+      gateNo:"Ho meno di 21 anni", gateYes:"Ho 21 anni o più",
+      gateRejectH:"Torna<br>quando avrai 21 anni.",
+      gateRejectP:"Facciamo sul serio: Wine Detention (e questa demo) è solo per adulti di 21 anni o più.",
+      heroEye:"COMPITI DEL GIORNO AFFISSI",
+      heroH:"Sei stato mandato<br>in Wine Detention.",
+      heroSub:"Compra una collezione a tema a un prezzo fisso. Alla cassa ti assegnano tre bottiglie: ognuna vale almeno quanto hai pagato, alcune molto di più.",
+      ctaAssignments:"Vedi i compiti di oggi", ctaHow:"Come funziona",
+      processK:"IL PROCESSO DI PUNIZIONE", processH:"Tre ore. Una condanna.",
+      processP:"Niente temi: solo tre passi tra te e un upgrade di cantina.",
+      s1t:"Presentati", s1b:"Scegli una collezione a tema. Un prezzo fisso ti dà tre bottiglie dal suo pool — senza indovinare bottiglia per bottiglia.",
+      s2t:"Sconta l'upgrade", s2b:"Alla cassa le tre bottiglie vengono assegnate a caso. Ogni esito vale almeno la tua quota.",
+      s3t:"Goditi la condanna", s3b:"Vedi esattamente cosa ti è toccato appena paghi. Bevi stasera o tieni i più strutturati per un'occasione.",
+      whyK:"PERCHÉ GLI STUDENTI TORNAMO", whyH:"Prezzo pieno. Upgrade veri.",
+      whyP:"Non scontiamo mai il vino: è per questo che gli upgrade contano.",
+      w1t:"Niente vino da saldo", w1b:"Ogni bottiglia si vende al vero prezzo consigliato. Le cantine collaborano perché il loro prezzo non viene tagliato.",
+      w2t:"Upgrade di valore garantiti", w2b:"Ogni collezione è costruita perché le bottiglie valgano almeno la tua quota — spesso molto di più.",
+      w3t:"Spedizione rapida e attenta", w3b:"In una versione reale, la cassa partirebbe in un paio di giorni, imballata a mano con isolamento stagionale.",
+      colK:"COLLEZIONI DI OGGI", colH:"Scegli l'ora.",
+      colP:"Ogni collezione ha un prezzo. Ogni bottiglia è elencata in modo trasparente prima dell'acquisto.",
+      viewAll:"Vedi tutte le collezioni", perCollection:"per collezione", viewDeal:"Vedi l'offerta", addCart:"Aggiungi",
+      reviewsK:"RECENSIONI DEL PREFETTO", reviewsH:"Bigliettini passati in classe.",
+      q1:"Alla seconda collezione ho pescato una bottiglia che valeva quasi il triplo. Non pensavo di emozionarmi per uno Chardonnay.",
+      q1w:"— D. Alvarez, recidivo",
+      q2:"Il reveal avviene alla cassa. È un dettaglio, ed è davvero la parte migliore.",
+      q2w:"— M. Okafor, prefetto",
+      q3:"Ho regalato il Cabernet Cram Session. Il destinatario ora apre il sito ogni settimana.",
+      q3w:"— T. Reyes, complice",
+      newsH:"Chiedi un permesso.", newsP:"Iscriviti e ti inviamo un codice per la prima collezione.",
+      newsBtn:"Iscriviti", newsOk:"Sei in lista. Controlla la posta (demo — nessuna email inviata).",
+      emailPh:"tu@esempio.com", emailAria:"Indirizzo email",
+      footBlurb:"Vino a prezzo pieno, upgrade di valore garantiti, zero vergogna da saldo. Gestito da Vine & Recess Co.",
+      footSite:"SITO", footShop:"NEGOZIO", footLegal:"LEGALE",
+      footAbout:"Chi siamo", footContact:"Contattaci", footAll:"Tutte le collezioni", footCart:"Permesso (carrello)",
+      footPrivacy:"Informativa privacy", footTerms:"Termini di servizio",
+      footCopy:"© 2026 Wine Detention. Sito demo — non è un negozio reale. Devi avere 21+.",
+      footWines:"Vini venduti da cantine fittizie partecipanti.",
+      colHeroK:"ELENCO COMPLETO", colHeroH:"Tutte le collezioni",
+      colHeroP:"Ogni offerta sul registro. Un prezzo fisso, tre bottiglie assegnate alla cassa.",
+      notFound:"Compito non trovato", notFoundP:"Quella collezione non esiste.", backCols:"Torna alle collezioni",
+      allCols:"← TUTTE LE COLLEZIONI", realSrp:"Valore al dettaglio suggerito reale:",
+      neverLess:"— non paghi mai meno dell'etichetta, puoi solo ricevere di più.",
+      collectionsWord:"collezione/i", viewPass:"Vedi il permesso", possible:"Assegnazioni possibili",
+      added:"Aggiunto al permesso:",
+      howK:"IL PROGRAMMA", howH:"Come funziona Wine Detention",
+      howP:"Dalla vetrina alla bottiglia, il percorso completo di una collezione.",
+      j1t:"Sfoglia collezioni curate", j1b:"Niente scroll tra centinaia di bottiglie. Ogni collezione ruota intorno a una regione, un vitigno o un tema.",
+      j2t:"Acquista a un prezzo fisso", j2b:"Tutte le bottiglie di una collezione condividono lo stesso prezzo d'ingresso. Decidi solo quale collezione.",
+      j3t:"Le bottiglie vengono assegnate", j3b:"Alla cassa tre bottiglie escono dal pool. Ogni esito vale almeno la tua quota.",
+      j4t:"Reveal istantaneo", j4b:"Scopri quali bottiglie hai ricevuto — e il loro valore di mercato — nel momento dell'ordine.",
+      j5t:"Imballo e spedizione attenti", j5b:"In una versione reale, gli ordini partirebbero imballati a mano con isolamento stagionale.",
+      j6t:"Bevi ora o aspetta", j6b:"Stappa stasera, o tieni un rosso strutturato per un'occasione.",
+      aboutK:"FASCICOLO", aboutH:"Chi è Wine Detention",
+      aboutP:"Un wine club di concept con una regola: mai scontare la bottiglia, sempre migliorare l'acquirente.",
+      a1t:"Perché esistiamo", a1b:"Wine Detention nasce da un lamento semplice: comprare vino online significa o pagare troppo una bottiglia già nota, o frugare in un bidone di saldi che sminuisce la cantina. Volevamo una terza via: il prezzo della cantina intatto, e il brivido in ciò che ti può toccare.",
+      a2t:"Come funziona il modello", a2b:"Non scontiamo mai il vino. Ogni bottiglia si vende al prezzo consigliato pieno. Invece di smaltire scorte, costruiamo collezioni in cui ogni esito copre già quanto hai pagato, e alcuni lo superano.",
+      a3t:"Gestito da Vine & Recess Co.", a3b:"Wine Detention è operato da Vine & Recess Co., un gruppo fittizio creato per questo concept. In una versione reale, quella casa madre curerebbe sourcing, magazzino e spedizioni.",
+      a4t:"Nota su questa demo", a4b:"Questo sito è un concept di design, non un rivenditore reale. Non si vende vino vero, non si elaborano pagamenti, e le cantine citate sono fittizie.",
+      faqK:"LEGGI PRIMA DI ALZARE LA MANO", faqH:"Domande frequenti",
+      contactK:"NOTA ALL'UFFICIO", contactH:"Contattaci",
+      contactP:"Domande su una collezione, un reveal o altro — scrivi qui sotto.",
+      name:"Nome", email:"Email", message:"Messaggio", send:"Invia messaggio",
+      contactOk:"Messaggio ricevuto. In una versione reale, l'ufficio risponderebbe in 1–2 giorni lavorativi.",
+      privacyH:"Informativa privacy", termsH:"Termini di servizio", legalK:"LEGALE",
+      privacyB:"Informativa privacy provvisoria per la demo Wine Detention. Una versione reale spiegherebbe quali dati si raccolgono alla cassa, come si conservano e come chiederne la cancellazione. Questa demo non raccoglie, conserva né trasmette dati personali reali.",
+      termsB:"Termini provvisori per la demo. Una versione reale coprirebbe l'idoneità (21+), le spedizioni per stato e le controversie. Questa demo non elabora ordini né pagamenti reali.",
+      emptyH:"Il tuo permesso è vuoto.", emptyP:"Non è stato ancora assegnato nulla — scegli una collezione.",
+      browse:"Sfoglia le collezioni", hallTitle:"Il tuo permesso", subtotal:"Subtotale", shipping:"Spedizione",
+      shipDemo:"Calcolata alla cassa (demo)", total:"Totale", keep:"Continua a guardare", checkout:"Cassa", remove:"Rimuovi",
+      nothingH:"Niente da pagare.", nothingP:"Aggiungi prima una collezione.",
+      checkoutH:"Cassa",
+      demoNote:"Questa è una cassa demo. Nessun pagamento reale e nessun vino spedito: l'invio simula il reveal.",
+      first:"Nome", last:"Cognome", address:"Indirizzo di spedizione", city:"Città", zip:"CAP",
+      card:"Numero carta (demo — non viene inviato)", orderTotal:"Totale ordine:",
+      complete:"Completa l'ordine e rivela i vini",
+      noOrder:"Nessun ordine da mostrare", noOrderP:"Effettua un ordine per vedere il reveal.",
+      revealH:"Pena scontata. Ora il reveal.",
+      youPaid:"Hai pagato", youGot:"Hai ricevuto", retail:"di valore reale al dettaglio",
+      upgrade:"UPGRADE!", another:"Un'altra condanna",
+      page404:"Pagina non trovata", backHome:"Torna alla home",
+      faqs:[
+        {q:"Scelgo io quali bottiglie ricevo?", a:"No: è tutto il trucco della punizione. Ogni collezione ha un prezzo, e le tre bottiglie vengono assegnate automaticamente dal pool alla cassa. Ogni bottiglia possibile vale almeno la tua quota."},
+        {q:"Come si calcola il valore di ogni bottiglia?", a:"Ogni bottiglia mostra il prezzo al dettaglio suggerito: quello sullo scaffale. Non scontiamo mai, quindi un upgrade è un vero salto di valore di mercato."},
+        {q:"Quando scopro cosa mi è toccato?", a:"Subito. Questa demo rivela le bottiglie nella schermata di conferma, subito dopo il pagamento."},
+        {q:"Spedite davvero il vino?", a:"Questa è una demo di concept. Nessun pagamento reale e nessuna spedizione. In una versione reale, gli ordini partirebbero in pochi giorni da un partner autorizzato."},
+        {q:"È uno sconto o un saldo?", a:"No. Ogni bottiglia si vende al prezzo pieno. Paghi la chance garantita di un upgrade, non un ribasso."},
+        {q:"Devo avere 21 anni per navigare?", a:"Sì. Devi avere 21 anni o più per acquistare o vedere le collezioni in una versione reale, per questo c'è il controllo dell'età."}
+      ],
+      products:{
+        "study-hall-sauvignon-blanc":{tag:"3 BOTTIGLIE", name:"Studio Sauvignon Blanc", varietal:"Sauvignon Blanc e Fumé Blanc, California", desc:"Un compito croccante di agrumi ed erba tagliata. Ogni bottiglia è Sauvignon Blanc o Fumé Blanc che vale almeno quanto hai pagato — alcuni restano per crediti extra."},
+        "chardonnay-class-reunion":{tag:"3 BOTTIGLIE", name:"Riunione di classe Chardonnay", varietal:"Chardonnay, contee di Sonoma e Napa", desc:"Burroso, affinato in botte, pensato per un brindisi di reunion. Tre Chardonnay a caso, ognuno vale almeno la tua quota."},
+        "cabernet-cram-session":{tag:"3 BOTTIGLIE", name:"Ripasso Cabernet", varietal:"Cabernet Sauvignon, Napa Valley", desc:"Studiare di notte paga. Una linea classica di Cabernet di Napa, con una chance reale di una bottiglia che vale più del doppio della retta."},
+        "icon-detention-rare-reds":{tag:"3 BOTTIGLIE", name:"Pena icona: rossi rari", varietal:"Rossi icona e da collezione, Napa Valley", desc:"La classe avanzata. Rossi di piccoli lotti, con una chance rara di un'imbottigliatura ultra limitata che vale tre volte la quota."}
+      }
+    },
+    zh: {
+      title: "Wine Detention — 被罚去喝好酒",
+      navHome:"首页", navCollections:"系列", navHow:"如何运作", navAbout:"关于我们", navFaq:"常见问题", navContact:"联系",
+      cart:"走廊通行证", menu:"菜单", themeLight:"浅色", themeDark:"深色",
+      gatePass:"需要通行证",
+      gateH:"证明你<br>不是新生。",
+      gateP:"进入 Wine Detention 须年满 21 岁。这是演示站点，酒款仅面向美国合资格州份配送。",
+      gateNo:"未满 21 岁", gateYes:"已满 21 岁",
+      gateRejectH:"满 21 岁<br>再来。",
+      gateRejectP:"我们很认真：Wine Detention（以及本演示）仅面向 21 岁及以上成人。",
+      heroEye:"今日作业已公布",
+      heroH:"你被罚去了<br>Wine Detention。",
+      heroSub:"以一口价购买主题葡萄酒系列。结账时获配三瓶酒——每瓶保证至少值你付的钱，有些会贵得多。",
+      ctaAssignments:"查看今日作业", ctaHow:"如何运作",
+      processK:"罚留流程", processH:"三节课。一次判决。",
+      processP:"不用写作文——三步就能升舱。",
+      s1t:"报到", s1b:"选一个主题系列。一口价得到该系列酒池中的三瓶，不用一瓶瓶猜。",
+      s2t:"接受升级", s2b:"结账时从酒池随机分配三瓶。每种结果都至少值你的入场价。",
+      s3t:"享受刑期", s3b:"结账当下就能看到结果。今晚就开，或把浓郁的留到特别场合。",
+      whyK:"学生为何反复回来", whyH:"原价。真升级。",
+      whyP:"我们从不打折卖酒——所以升级才有意义。",
+      w1t:"没有清仓酒", w1b:"每瓶都以真实建议零售价出售。酒庄合作，是因为价格从不被削。",
+      w2t:"保证价值升级", w2b:"每个系列都保证你分到的酒至少值入场价——常常远超。",
+      w3t:"快速仔细配送", w3b:"正式运营时，酒箱会在数日内发出，按季节手工保温包装。",
+      colK:"今日系列", colH:"选你的时段。",
+      colP:"每个系列一个价格。购买前透明列出每一瓶。",
+      viewAll:"查看全部系列", perCollection:"每个系列", viewDeal:"查看优惠", addCart:"加入购物车",
+      reviewsK:"走廊监督评语", reviewsH:"课堂上递来的纸条。",
+      q1:"第二次买系列时抽到一瓶几乎值三倍的酒。没想到霞多丽也能让人这么兴奋。",
+      q1w:"— D. Alvarez，惯犯",
+      q2:"揭晓就在结账发生。小事一桩，却是最好的部分。",
+      q2w:"— M. Okafor，走廊监督",
+      q3:"把 Cabernet Cram Session 当礼物送人。对方现在每周都来看网站。",
+      q3w:"— T. Reyes，帮凶",
+      newsH:"领一张请假条。", newsP:"注册后我们会给你第一单优惠码。",
+      newsBtn:"注册", newsOk:"已加入名单。请查收收件箱（演示——不会真发邮件）。",
+      emailPh:"you@example.com", emailAria:"电子邮箱",
+      footBlurb:"原价酒、保证价值升级、没有清仓尴尬。由 Vine & Recess Co. 运营。",
+      footSite:"网站", footShop:"选购", footLegal:"法律",
+      footAbout:"关于我们", footContact:"联系我们", footAll:"全部系列", footCart:"走廊通行证",
+      footPrivacy:"隐私政策", footTerms:"服务条款",
+      footCopy:"© 2026 Wine Detention。演示站点——不是真实商店。须年满 21 岁。",
+      footWines:"酒款由参与的虚构酒庄出售。",
+      colHeroK:"完整名册", colHeroH:"全部系列",
+      colHeroP:"罚留板上目前公布的所有优惠。一口价，结账时分配三瓶。",
+      notFound:"找不到这份作业", notFoundP:"该系列不存在。", backCols:"返回全部系列",
+      allCols:"← 全部系列", realSrp:"真实建议零售价值：",
+      neverLess:"——你永远不会付得比标价低，只会拿到更多。",
+      collectionsWord:"个系列", viewPass:"查看通行证", possible:"可能分配",
+      added:"已加入你的通行证：",
+      howK:"课程大纲", howH:"Wine Detention 如何运作",
+      howP:"从浏览到开瓶，一个系列到达你家门口的完整路径。",
+      j1t:"浏览精选系列", j1b:"不用翻几百瓶单酒。每个系列围绕产区、品种或主题，按你感兴趣的去买。",
+      j2t:"一口价购买", j2b:"同一系列里每瓶共享同一入场价。你只需选系列。",
+      j3t:"分配你的酒", j3b:"结账时从该系列酒池抽出三瓶。每种可能结果都至少值入场价。",
+      j4t:"即时揭晓", j4b:"下单当下就能知道拿到哪几瓶，以及它们的真实市场价值。",
+      j5t:"仔细包装配送", j5b:"正式运营时，订单会按季节手工保温包装后发出。",
+      j6t:"现在喝或留着", j6b:"今晚就开一瓶，或把一瓶浓郁红酒留到值得等待的场合。",
+      aboutK:"罚留档案", aboutH:"关于 Wine Detention",
+      aboutP:"一个概念葡萄酒俱乐部，只有一条规则：从不打折卖酒，永远给买家升级。",
+      a1t:"我们为什么存在", a1b:"Wine Detention 始于一句抱怨：网上买酒要么为已知的一瓶多付钱，要么翻清仓箱让酒庄品牌显得廉价。我们想要第三条路——酒庄定价不动，刺激来自你可能被分到的酒，而不是标价被砍了多少。",
+      a2t:"模式如何运作", a2b:"我们从不打折。每瓶都以完整建议零售价出售。我们不靠降价清库存，而是让每个结果都已覆盖你付的钱，有些则远超。酒庄保住价格尊严，买家得到真正的升级机会。",
+      a3t:"由 Vine & Recess Co. 运营", a3b:"Wine Detention 由虚构的 Vine & Recess Co. 运营。正式品牌中，这家母公司会负责采购、仓储和履约，Wine Detention 负责前台体验。",
+      a4t:"关于本演示", a4b:"本站是设计和产品概念，不是真实零售商。不出售真酒、不处理真付款，文中酒庄与酒款均为虚构。",
+      faqK:"举手之前先读", faqH:"常见问题",
+      contactK:"给办公室的便条", contactH:"联系我们",
+      contactP:"关于系列、揭晓或其他问题——在下方留言。",
+      name:"姓名", email:"邮箱", message:"留言", send:"发送留言",
+      contactOk:"已收到留言。正式运营时，办公室会在 1–2 个工作日内回复。",
+      privacyH:"隐私政策", termsH:"服务条款", legalK:"法律",
+      privacyB:"这是 Wine Detention 概念演示的占位隐私政策。正式站点会说明结账时收集哪些信息、如何存储，以及如何申请删除。本演示不收集、存储或传输真实个人数据。表单信息仅留在你的浏览器会话中。",
+      termsB:"这是演示的占位服务条款。正式版本会涵盖资格（21 岁以上）、履约、各州配送限制和争议解决。本演示不处理真实订单或付款。",
+      emptyH:"你的走廊通行证是空的。", emptyP:"还没有分配任何东西——去选一个系列。",
+      browse:"浏览系列", hallTitle:"你的走廊通行证", subtotal:"小计", shipping:"运费",
+      shipDemo:"结账时计算（演示）", total:"合计", keep:"继续逛", checkout:"结账", remove:"移除",
+      nothingH:"没有可结账的内容。", nothingP:"请先加入一个系列。",
+      checkoutH:"结账",
+      demoNote:"这是演示结账。不处理真实付款，也不发酒——提交会模拟揭晓。",
+      first:"名", last:"姓", address:"配送地址", city:"城市", zip:"邮编",
+      card:"卡号（演示——不会发送到任何地方）", orderTotal:"订单合计：",
+      complete:"完成订单并揭晓我的酒",
+      noOrder:"没有可显示的订单", noOrderP:"下单后即可看到揭晓。",
+      revealH:"罚留结束。揭晓时间到。",
+      youPaid:"你付了", youGot:"你收到了", retail:"的真实零售价值",
+      upgrade:"升级！", another:"再服一次刑",
+      page404:"找不到页面", backHome:"返回首页",
+      faqs:[
+        {q:"我能自己选收到哪几瓶吗？", a:"不能——这就是罚留的玩法。每个系列一口价，结账时从该系列酒池自动分配三瓶。每一种可能的酒都至少值你的入场价。"},
+        {q:"每瓶的价值如何计算？", a:"每瓶展示建议零售价——酒铺货架上会看到的那个数字。我们从不打折，所以升级永远是真实市场价值的提升，不是虚高标价。"},
+        {q:"什么时候知道拿到了什么？", a:"立刻。本演示在结账后的确认页揭晓分配的酒，不用等箱子到。"},
+        {q:"你们真的发酒吗？", a:"这是 Wine Detention 的设计演示，虚构概念站。不处理真实付款，也不发酒。正式运营时，订单会由持牌履约合作方在数个工作日内发出。"},
+        {q:"这是真折扣还是清仓？", a:"都不是。每瓶都以完整建议零售价出售。你买的是保证的升级机会，不是降价。"},
+        {q:"浏览也必须年满 21 岁吗？", a:"是。在真实站点上购买或浏览系列须年满 21 岁，所以进入时会有年龄确认。"}
+      ],
+      products:{
+        "study-hall-sauvignon-blanc":{tag:"3 瓶", name:"长相思自习室", varietal:"长相思与熏白酒，加州", desc:"柑橘与青草的清爽作业。此系列每瓶都是至少值你所付价格的长相思或熏白酒——有的学生会被留下加学分。"},
+        "chardonnay-class-reunion":{tag:"3 瓶", name:"霞多丽同学聚会", varietal:"霞多丽，索诺玛与纳帕县", desc:"黄油感、桶陈，为重逢干杯而备。随机三瓶霞多丽，每瓶至少值入场价。"},
+        "cabernet-cram-session":{tag:"3 瓶", name:"赤霞珠突击复习", varietal:"赤霞珠，纳帕谷", desc:"开夜车值得。经典纳帕赤霞珠阵容，很有机会抽到价值超过学费两倍的一瓶。"},
+        "icon-detention-rare-reds":{tag:"3 瓶", name:"偶像罚留：稀有红葡萄酒", varietal:"偶像级与收藏级红酒，纳帕谷", desc:"高级班。小产量偶像级红酒，稀有机会抽到价值三倍入场价的限量装瓶。"}
+      }
+    }
+  };
+
+  var cart = [];
+  var lastOrder = null;
+  var gateShown = false;
+  var gateRejected = false;
+  var lang = "en";
+  var theme = "dark";
+
+  function L(){ return STR[lang] || STR.en; }
+  function t(key){ var s=L(); return (s && s[key] != null) ? s[key] : (STR.en[key] != null ? STR.en[key] : key); }
+  function locProduct(p){
+    var pack = (L().products && L().products[p.slug]) || STR.en.products[p.slug];
+    return Object.assign({}, p, pack);
+  }
+  function findProduct(slug){
+    for (var i=0;i<PRODUCTS.length;i++){ if (PRODUCTS[i].slug===slug) return PRODUCTS[i]; }
+    return null;
+  }
+  function money(n){ return "$" + n.toFixed(2).replace(/\.00$/,""); }
+  function cartCount(){ var c=0; cart.forEach(function(i){ c+=i.qty; }); return c; }
+  function cartTotal(){
+    var tot=0; cart.forEach(function(i){ var p=findProduct(i.slug); if(p) tot+=p.price*i.qty; }); return tot;
+  }
+  function addToCart(slug, qty){
+    var existing = null;
+    cart.forEach(function(i){ if(i.slug===slug) existing=i; });
+    if (existing) existing.qty += qty;
+    else cart.push({slug:slug, qty:qty});
+    renderCartCount();
+    showToast(t("added") + " " + locProduct(findProduct(slug)).name);
+  }
+  function removeFromCart(slug){
+    cart = cart.filter(function(i){ return i.slug!==slug; });
+    renderCartCount();
+    render();
+  }
+  function setQty(slug, qty){
+    cart.forEach(function(i){ if(i.slug===slug) i.qty = Math.max(1, qty); });
+    render();
+  }
+  function renderCartCount(){
+    document.getElementById("cart-count").textContent = cartCount();
+  }
+  var toastTimer=null;
+  function showToast(msg){
+    var el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ el.classList.remove("show"); }, 2600);
+  }
+  function weightedPick(pool){
+    var total=0; pool.forEach(function(b){ total+=b.weight; });
+    var r = Math.random()*total, acc=0;
+    for (var i=0;i<pool.length;i++){
+      acc+=pool[i].weight;
+      if (r<=acc) return pool[i];
+    }
+    return pool[0];
+  }
+  function cssVar(name){
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  function bottleIconSVG(){
+    return '<svg viewBox="0 0 34 60" class="bottle-icon" aria-hidden="true">'+
+      '<rect x="13" y="0" width="8" height="12" fill="'+cssVar('--cubs-blue')+'"/>'+
+      '<path d="M10 12 L24 12 L27 22 L27 58 L7 58 L7 22 Z" fill="'+cssVar('--accent')+'" opacity="0.85"/>'+
+      '</svg>';
+  }
+
+  function currentRoute(){
+    var h = location.hash.replace(/^#/, "");
+    return h || "/";
+  }
+  window.addEventListener("hashchange", render);
+  function navigate(path){ location.hash = "#"+path; window.scrollTo(0,0); }
+
+  function applyPrefs(){
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.lang = lang;
+    document.title = t("title");
+    document.getElementById("theme-toggle").textContent = theme === "dark" ? t("themeLight") : t("themeDark");
+    document.getElementById("theme-toggle").setAttribute("aria-label", theme === "dark" ? t("themeLight") : t("themeDark"));
+    document.getElementById("cart-label").textContent = t("cart");
+    document.getElementById("menu-toggle").setAttribute("aria-label", t("menu"));
+    document.getElementById("lang-select").value = lang;
+    renderNav();
+    renderFooter();
+    renderGate();
+  }
+
+  function renderNav(){
+    document.getElementById("nav-links").innerHTML =
+      '<a href="#/" data-route="/">'+t("navHome")+'</a>'+
+      '<a href="#/collections" data-route="/collections">'+t("navCollections")+'</a>'+
+      '<a href="#/how-it-works" data-route="/how-it-works">'+t("navHow")+'</a>'+
+      '<a href="#/about" data-route="/about">'+t("navAbout")+'</a>'+
+      '<a href="#/faq" data-route="/faq">'+t("navFaq")+'</a>'+
+      '<a href="#/contact" data-route="/contact">'+t("navContact")+'</a>';
+  }
+
+  function renderFooter(){
+    document.getElementById("site-footer").innerHTML =
+      '<div class="footer-grid">'+
+        '<div>'+
+          '<div class="footer-brand">Wine Detention</div>'+
+          '<p class="footer-blurb">'+t("footBlurb")+'</p>'+
+          '<div class="social-row"><a href="#/contact">X</a><a href="#/contact">Facebook</a><a href="#/contact">Instagram</a></div>'+
+        '</div>'+
+        '<div><h4>'+t("footSite")+'</h4><ul>'+
+          '<li><a href="#/">'+t("navHome")+'</a></li>'+
+          '<li><a href="#/how-it-works">'+t("navHow")+'</a></li>'+
+          '<li><a href="#/about">'+t("footAbout")+'</a></li>'+
+          '<li><a href="#/contact">'+t("footContact")+'</a></li>'+
+        '</ul></div>'+
+        '<div><h4>'+t("footShop")+'</h4><ul>'+
+          '<li><a href="#/collections">'+t("footAll")+'</a></li>'+
+          '<li><a href="#/faq">'+t("navFaq")+'</a></li>'+
+          '<li><a href="#/cart">'+t("footCart")+'</a></li>'+
+        '</ul></div>'+
+        '<div><h4>'+t("footLegal")+'</h4><ul>'+
+          '<li><a href="#/policy/privacy">'+t("footPrivacy")+'</a></li>'+
+          '<li><a href="#/policy/terms">'+t("footTerms")+'</a></li>'+
+        '</ul></div>'+
+      '</div>'+
+      '<div class="footer-bottom"><span>'+t("footCopy")+'</span><span>'+t("footWines")+'</span></div>';
+  }
+
+  function renderGate(){
+    var card = document.getElementById("gate-card");
+    card.setAttribute("data-pass", t("gatePass"));
+    if (gateRejected){
+      card.innerHTML = '<h2 style="font-size:30px;">'+t("gateRejectH")+'</h2><p>'+t("gateRejectP")+'</p>';
+      return;
+    }
+    card.innerHTML =
+      '<h2>'+t("gateH")+'</h2>'+
+      '<p>'+t("gateP")+'</p>'+
+      '<div class="gate-actions">'+
+        '<button class="btn btn-dark btn-block" id="gate-no">'+t("gateNo")+'</button>'+
+        '<button class="btn btn-primary btn-block" id="gate-yes">'+t("gateYes")+'</button>'+
+      '</div>';
+    document.getElementById("gate-yes").addEventListener("click", function(){
+      gateShown = true;
+      document.getElementById("age-gate").classList.add("hidden");
+    });
+    document.getElementById("gate-no").addEventListener("click", function(){
+      gateRejected = true;
+      renderGate();
+    });
+  }
+
+  function pageHome(){
+    var featured = PRODUCTS.map(locProduct).map(productSlipHTML).join("");
+    return '' +
+    '<section class="hero">' +
+      '<div class="hero-inner">' +
+        '<div>' +
+          '<span class="hero-eyebrow">'+t("heroEye")+'</span>' +
+          '<h1>'+t("heroH")+'</h1>' +
+          '<p class="sub">'+t("heroSub")+'</p>' +
+          '<div class="hero-ctas">' +
+            '<a href="#/collections" class="btn btn-primary">'+t("ctaAssignments")+'</a>' +
+            '<a href="#/how-it-works" class="btn btn-dark">'+t("ctaHow")+'</a>' +
+          '</div>' +
+        '</div>' +
+        heroDoodle() +
+      '</div>' +
+    '</section>' +
+    '<section>' +
+      '<div class="section-head">' +
+        '<span class="kicker">'+t("processK")+'</span>' +
+        '<h2>'+t("processH")+'</h2>' +
+        '<p>'+t("processP")+'</p>' +
+      '</div>' +
+      '<div class="steps">' +
+        stepCard("1",t("s1t"),t("s1b")) +
+        stepCard("2",t("s2t"),t("s2b")) +
+        stepCard("3",t("s3t"),t("s3b")) +
+      '</div>' +
+    '</section>' +
+    '<section class="why-alt">' +
+      '<div class="section-head">' +
+        '<span class="kicker" style="color:var(--accent-soft)">'+t("whyK")+'</span>' +
+        '<h2>'+t("whyH")+'</h2>' +
+        '<p>'+t("whyP")+'</p>' +
+      '</div>' +
+      '<div class="why-grid">' +
+        whyItem(t("w1t"),t("w1b")) +
+        whyItem(t("w2t"),t("w2b")) +
+        whyItem(t("w3t"),t("w3b")) +
+      '</div>' +
+    '</section>' +
+    '<section>' +
+      '<div class="section-head">' +
+        '<span class="kicker">'+t("colK")+'</span>' +
+        '<h2>'+t("colH")+'</h2>' +
+        '<p>'+t("colP")+'</p>' +
+      '</div>' +
+      '<div class="grid-products">' + featured + '</div>' +
+      '<div style="text-align:center;margin-top:34px;"><a href="#/collections" class="btn btn-dark">'+t("viewAll")+'</a></div>' +
+    '</section>' +
+    '<section>' +
+      '<div class="section-head"><span class="kicker">'+t("reviewsK")+'</span><h2>'+t("reviewsH")+'</h2></div>' +
+      '<div class="stamps-row">' +
+        quoteCard(t("q1"), t("q1w")) +
+        quoteCard(t("q2"), t("q2w")) +
+        quoteCard(t("q3"), t("q3w")) +
+      '</div>' +
+    '</section>' +
+    '<section class="newsletter">' +
+      '<div class="newsletter-inner">' +
+        '<h2>'+t("newsH")+'</h2>' +
+        '<p>'+t("newsP")+'</p>' +
+        '<form class="newsletter-form" id="newsletter-form">' +
+          '<input type="email" required placeholder="'+t("emailPh")+'" aria-label="'+t("emailAria")+'">' +
+          '<button class="btn btn-dark" type="submit">'+t("newsBtn")+'</button>' +
+        '</form>' +
+        '<div class="newsletter-msg" id="newsletter-msg"></div>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function heroDoodle(){
+    var stroke = cssVar('--chrome-text') || '#f6f1e4';
+    var accent = cssVar('--accent') || '#cc3433';
+    return '<svg class="chalk-svg" viewBox="0 0 260 300" fill="none" aria-hidden="true">'+
+      '<ellipse cx="130" cy="285" rx="70" ry="8" stroke="'+stroke+'" stroke-opacity="0.25" stroke-width="2"/>'+
+      '<path d="M95 20 L165 20 L175 60 L175 260 L85 260 L85 60 Z" stroke="'+stroke+'" stroke-width="3" stroke-linejoin="round" opacity="0.85"/>'+
+      '<path d="M110 20 L110 8 Q110 2 116 2 L144 2 Q150 2 150 8 L150 20" stroke="'+stroke+'" stroke-width="3" opacity="0.85"/>'+
+      '<rect x="90" y="110" width="80" height="60" stroke="'+accent+'" stroke-width="2.5" opacity="0.9"/>'+
+      '<text x="130" y="135" text-anchor="middle" fill="'+accent+'" font-family="Courier Prime, monospace" font-size="11" opacity="0.9">SRP $95</text>'+
+      '<text x="130" y="152" text-anchor="middle" fill="'+accent+'" font-family="Courier Prime, monospace" font-size="11" opacity="0.9">UPGRADE!</text>'+
+    '</svg>';
+  }
+  function stepCard(n,title,body){
+    return '<div class="step-card"><div class="step-num">'+n+'</div><h3>'+title+'</h3><p>'+body+'</p></div>';
+  }
+  function whyItem(title,body){
+    return '<div class="why-item"><h3>'+title+'</h3><p>'+body+'</p></div>';
+  }
+  function quoteCard(q,who){
+    return '<div class="quote-card"><p class="q">"'+q+'"</p><span class="who">'+who+'</span></div>';
+  }
+  function productSlipHTML(p){
+    return '' +
+    '<div class="slip">' +
+      '<div class="slip-top"><span class="slip-tag">'+p.tag+'</span><span class="stamp">SRP '+money(p.srpLow)+'&ndash;'+money(p.srpHigh)+'</span></div>' +
+      '<h3>'+p.name+'</h3>' +
+      '<span class="varietal">'+p.varietal+'</span>' +
+      '<p class="desc">'+p.desc+'</p>' +
+      '<div class="slip-price-row"><span class="price">'+money(p.price)+'</span><span class="srp-range">'+t("perCollection")+'</span></div>' +
+      '<div class="slip-actions">' +
+        '<a class="btn btn-dark" href="#/product/'+p.slug+'">'+t("viewDeal")+'</a>' +
+        '<button class="btn btn-primary" data-add="'+p.slug+'">'+t("addCart")+'</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function pageCollections(){
+    return '' +
+    '<div class="page-hero"><div class="wrap">' +
+      '<span class="kicker">'+t("colHeroK")+'</span>' +
+      '<h1>'+t("colHeroH")+'</h1>' +
+      '<p>'+t("colHeroP")+'</p>' +
+    '</div></div>' +
+    '<section><div class="grid-products">' + PRODUCTS.map(locProduct).map(productSlipHTML).join("") + '</div></section>';
+  }
+
+  function pageProduct(slug){
+    var raw = findProduct(slug);
+    if (!raw) return '<div class="content-block"><h2>'+t("notFound")+'</h2><p>'+t("notFoundP")+' <a href="#/collections">'+t("backCols")+'</a>.</p></div>';
+    var p = locProduct(raw);
+    var poolRows = p.pool.map(function(b){
+      return '<div class="pool-row"><span>'+b.name+'</span><span class="val">'+money(b.value)+'</span></div>';
+    }).join("");
+    return '' +
+    '<div class="product-detail">' +
+      '<div class="pd-visual">' + bigBottleSVG() + '<span class="stamp">SRP '+money(p.srpLow)+'&ndash;'+money(p.srpHigh)+'</span></div>' +
+      '<div class="pd-info">' +
+        '<a class="breadcrumb" href="#/collections">'+t("allCols")+'</a>' +
+        '<h1>'+p.name+'</h1>' +
+        '<span class="varietal">'+p.varietal+'</span>' +
+        '<p class="desc">'+p.desc+'</p>' +
+        '<div class="pd-price-block">' +
+          '<span class="price">'+money(p.price)+'</span> <span style="font-size:13px;color:var(--page-muted);">'+t("perCollection")+' ('+p.tag.toLowerCase()+')</span>' +
+          '<span class="srp-range">'+t("realSrp")+' '+money(p.srpLow)+'&ndash;'+money(p.srpHigh)+' '+t("neverLess")+'</span>' +
+        '</div>' +
+        '<div class="qty-row">' +
+          '<div class="qty-control">' +
+            '<button id="qty-minus" aria-label="-">&minus;</button>' +
+            '<span id="qty-val">1</span>' +
+            '<button id="qty-plus" aria-label="+">+</button>' +
+          '</div>' +
+          '<span style="font-size:13px;color:var(--page-muted);">'+t("collectionsWord")+'</span>' +
+        '</div>' +
+        '<div class="add-row">' +
+          '<button class="btn btn-primary" id="pd-add" style="flex:1;">'+t("addCart")+'</button>' +
+          '<a class="btn btn-dark" href="#/cart" style="flex:1;text-align:center;">'+t("viewPass")+'</a>' +
+        '</div>' +
+        '<div class="pool">' +
+          '<h3>'+t("possible")+'</h3>' +
+          '<div class="pool-list">'+poolRows+'</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function bigBottleSVG(){
+    return '<svg viewBox="0 0 120 200" width="120" aria-hidden="true">'+
+      '<path d="M48 10 L72 10 L72 30 L86 60 L86 190 L34 190 L34 60 Z" fill="'+cssVar('--cubs-blue')+'"/>'+
+      '<rect x="48" y="0" width="24" height="12" fill="'+cssVar('--cubs-blue')+'"/>'+
+      '<rect x="34" y="100" width="52" height="40" fill="'+cssVar('--ivory')+'" opacity="0.9"/>'+
+    '</svg>';
+  }
+
+  function pageHowItWorks(){
+    return '' +
+    '<div class="page-hero"><div class="wrap">' +
+      '<span class="kicker">'+t("howK")+'</span>' +
+      '<h1>'+t("howH")+'</h1>' +
+      '<p>'+t("howP")+'</p>' +
+    '</div></div>' +
+    '<div class="content-block">' +
+      journeyStep("1",t("j1t"),t("j1b")) +
+      journeyStep("2",t("j2t"),t("j2b")) +
+      journeyStep("3",t("j3t"),t("j3b")) +
+      journeyStep("4",t("j4t"),t("j4b")) +
+      journeyStep("5",t("j5t"),t("j5b")) +
+      journeyStep("6",t("j6t"),t("j6b")) +
+    '</div>';
+  }
+  function journeyStep(n,title,body){ return '<h2>'+n+'. '+title+'</h2><p>'+body+'</p>'; }
+
+  function pageAbout(){
+    return '' +
+    '<div class="page-hero"><div class="wrap">' +
+      '<span class="kicker">'+t("aboutK")+'</span>' +
+      '<h1>'+t("aboutH")+'</h1>' +
+      '<p>'+t("aboutP")+'</p>' +
+    '</div></div>' +
+    '<div class="content-block">' +
+      '<h2>'+t("a1t")+'</h2><p>'+t("a1b")+'</p>' +
+      '<h2>'+t("a2t")+'</h2><p>'+t("a2b")+'</p>' +
+      '<h2>'+t("a3t")+'</h2><p>'+t("a3b")+'</p>' +
+      '<h2>'+t("a4t")+'</h2><p>'+t("a4b")+'</p>' +
+    '</div>';
+  }
+
+  function pageFAQ(){
+    var items = t("faqs").map(function(f,idx){
+      return '<div class="faq-item" data-idx="'+idx+'">' +
+        '<button class="faq-q"><span>'+f.q+'</span><span class="plus">+</span></button>' +
+        '<div class="faq-a"><p>'+f.a+'</p></div>' +
+      '</div>';
+    }).join("");
+    return '' +
+    '<div class="page-hero"><div class="wrap">' +
+      '<span class="kicker">'+t("faqK")+'</span>' +
+      '<h1>'+t("faqH")+'</h1>' +
+    '</div></div>' +
+    '<section><div class="faq-list">'+items+'</div></section>';
+  }
+
+  function pageContact(){
+    return '' +
+    '<div class="page-hero"><div class="wrap">' +
+      '<span class="kicker">'+t("contactK")+'</span>' +
+      '<h1>'+t("contactH")+'</h1>' +
+      '<p>'+t("contactP")+'</p>' +
+    '</div></div>' +
+    '<div class="content-block">' +
+      '<form id="contact-form">' +
+        '<div class="form-row"><label for="c-name">'+t("name")+'</label><input id="c-name" required></div>' +
+        '<div class="form-row"><label for="c-email">'+t("email")+'</label><input id="c-email" type="email" required></div>' +
+        '<div class="form-row"><label for="c-msg">'+t("message")+'</label><textarea id="c-msg" rows="5" required></textarea></div>' +
+        '<button class="btn btn-primary" type="submit">'+t("send")+'</button>' +
+        '<div id="contact-msg" style="margin-top:14px;font-family:var(--font-type);font-size:13.5px;color:var(--accent);"></div>' +
+      '</form>' +
+    '</div>';
+  }
+
+  function pagePolicy(kind){
+    var title = kind==="privacy" ? t("privacyH") : t("termsH");
+    var body = kind==="privacy" ? t("privacyB") : t("termsB");
+    return '' +
+    '<div class="page-hero"><div class="wrap"><span class="kicker">'+t("legalK")+'</span><h1>'+title+'</h1></div></div>' +
+    '<div class="content-block"><p>'+body+'</p></div>';
+  }
+
+  function pageCart(){
+    if (cart.length===0){
+      return '<div class="cart-page"><div class="empty-state">' +
+        '<h2>'+t("emptyH")+'</h2>' +
+        '<p>'+t("emptyP")+'</p>' +
+        '<a class="btn btn-primary" href="#/collections">'+t("browse")+'</a>' +
+      '</div></div>';
+    }
+    var rows = cart.map(function(item){
+      var p = locProduct(findProduct(item.slug));
+      return '<div class="cart-item">' +
+        '<div><h4>'+p.name+'</h4><span class="meta">'+money(p.price)+' &times; '+item.qty+'</span></div>' +
+        '<div class="qty-control">' +
+          '<button data-dec="'+p.slug+'" aria-label="-">&minus;</button>' +
+          '<span>'+item.qty+'</span>' +
+          '<button data-inc="'+p.slug+'" aria-label="+">+</button>' +
+        '</div>' +
+        '<div style="font-family:var(--font-type);">'+money(p.price*item.qty)+'</div>' +
+        '<button class="remove-link" data-remove="'+p.slug+'">Remove</button>' +
+      '</div>';
+    }).join("");
+    var total = cartTotal();
+    return '' +
+    '<div class="cart-page">' +
+      '<h1 style="font-family:var(--font-chalk);font-size:38px;margin-bottom:20px;">'+t("hallTitle")+'</h1>' +
+      rows +
+      '<div class="cart-summary">' +
+        '<div class="summary-row"><span>'+t("subtotal")+'</span><span>'+money(total)+'</span></div>' +
+        '<div class="summary-row"><span>'+t("shipping")+'</span><span>'+t("shipDemo")+'</span></div>' +
+        '<div class="summary-row total"><span>'+t("total")+'</span><span>'+money(total)+'</span></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:12px;margin-top:22px;">' +
+        '<a class="btn btn-dark" href="#/collections" style="flex:1;text-align:center;">'+t("keep")+'</a>' +
+        '<a class="btn btn-primary" href="#/checkout" style="flex:1;text-align:center;">'+t("checkout")+'</a>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function pageCheckout(){
+    if (cart.length===0){
+      return '<div class="checkout-page"><div class="empty-state"><h2>'+t("nothingH")+'</h2><p>'+t("nothingP")+'</p><a class="btn btn-primary" href="#/collections">'+t("browse")+'</a></div></div>';
+    }
+    var total = cartTotal();
+    return '' +
+    '<div class="checkout-page">' +
+      '<h1 style="font-family:var(--font-chalk);font-size:38px;margin-bottom:6px;">'+t("checkoutH")+'</h1>' +
+      '<div class="demo-note">'+t("demoNote")+'</div>' +
+      '<form id="checkout-form">' +
+        '<div class="form-grid2">' +
+          '<div class="form-row"><label for="ch-first">'+t("first")+'</label><input id="ch-first" required></div>' +
+          '<div class="form-row"><label for="ch-last">'+t("last")+'</label><input id="ch-last" required></div>' +
+        '</div>' +
+        '<div class="form-row"><label for="ch-email">'+t("email")+'</label><input id="ch-email" type="email" required></div>' +
+        '<div class="form-row"><label for="ch-address">'+t("address")+'</label><input id="ch-address" required></div>' +
+        '<div class="form-grid2">' +
+          '<div class="form-row"><label for="ch-city">'+t("city")+'</label><input id="ch-city" required></div>' +
+          '<div class="form-row"><label for="ch-zip">'+t("zip")+'</label><input id="ch-zip" required></div>' +
+        '</div>' +
+        '<div class="form-row"><label for="ch-card">'+t("card")+'</label><input id="ch-card" placeholder="4242 4242 4242 4242" required></div>' +
+        '<div class="checkout-summary"><strong>'+t("orderTotal")+' '+money(total)+'</strong></div>' +
+        '<button class="btn btn-primary btn-block" type="submit" style="margin-top:20px;">'+t("complete")+'</button>' +
+      '</form>' +
+    '</div>';
+  }
+
+  function pageConfirmation(){
+    if (!lastOrder){
+      return '<div class="content-block"><h2>'+t("noOrder")+'</h2><p>'+t("noOrderP")+' <a href="#/collections">'+t("browse")+'</a>.</p></div>';
+    }
+    var groups = lastOrder.groups.map(function(g){
+      var bottles = g.bottles.map(function(b){
+        var isUpgrade = b.value > g.pricePerBottle;
+        return '<div class="bottle-card'+(isUpgrade ? ' upgrade':'')+'">' +
+          (isUpgrade ? '<span class="upgrade-flag">'+t("upgrade")+'</span>' : '') +
+          bottleIconSVG() +
+          '<h4>'+b.name+'</h4>' +
+          '<div class="val">'+money(b.value)+'</div>' +
+        '</div>';
+      }).join("");
+      return '<div class="reveal-group"><h3>'+g.name+'</h3><div class="reveal-bottles">'+bottles+'</div></div>';
+    }).join("");
+    return '' +
+    '<div class="reveal-page">' +
+      '<div class="reveal-head">' +
+        '<span class="order-no">ORDER '+lastOrder.orderId+'</span>' +
+        '<h1>'+t("revealH")+'</h1>' +
+      '</div>' +
+      '<div class="reveal-value-banner">' +
+        '<div>'+t("youPaid")+' <strong>'+money(lastOrder.paid)+'</strong></div>' +
+        '<div class="big">'+t("youGot")+' '+money(lastOrder.value)+' '+t("retail")+'</div>' +
+      '</div>' +
+      groups +
+      '<div style="text-align:center;margin-top:30px;">' +
+        '<a class="btn btn-primary" href="#/collections">'+t("another")+'</a>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function render(){
+    var route = currentRoute();
+    var html = "";
+    if (route === "/" ) html = pageHome();
+    else if (route === "/collections") html = pageCollections();
+    else if (route.indexOf("/product/") === 0) html = pageProduct(route.replace("/product/",""));
+    else if (route === "/how-it-works") html = pageHowItWorks();
+    else if (route === "/about") html = pageAbout();
+    else if (route === "/faq") html = pageFAQ();
+    else if (route === "/contact") html = pageContact();
+    else if (route === "/policy/privacy") html = pagePolicy("privacy");
+    else if (route === "/policy/terms") html = pagePolicy("terms");
+    else if (route === "/cart") html = pageCart();
+    else if (route === "/checkout") html = pageCheckout();
+    else if (route === "/confirmation") html = pageConfirmation();
+    else html = '<div class="content-block"><h2>'+t("page404")+'</h2><p><a href="#/">'+t("backHome")+'</a></p></div>';
+    document.getElementById("app").innerHTML = html;
+    renderCartCount();
+    highlightNav(route);
+    bindPageEvents(route);
+    document.getElementById("nav-links").classList.remove("open");
+  }
+
+  function highlightNav(route){
+    document.querySelectorAll("nav.links a[data-route]").forEach(function(a){
+      var r = a.getAttribute("data-route");
+      a.classList.toggle("active", r===route || (r==="/collections" && route.indexOf("/product/")===0));
+    });
+  }
+
+  function bindPageEvents(route){
+    document.querySelectorAll("[data-add]").forEach(function(btn){
+      btn.addEventListener("click", function(){ addToCart(btn.getAttribute("data-add"), 1); });
+    });
+    if (route.indexOf("/product/") === 0){
+      var slug = route.replace("/product/","");
+      var qty = 1;
+      var qtyVal = document.getElementById("qty-val");
+      document.getElementById("qty-minus").addEventListener("click", function(){
+        qty = Math.max(1, qty-1); qtyVal.textContent = qty;
+      });
+      document.getElementById("qty-plus").addEventListener("click", function(){
+        qty = qty+1; qtyVal.textContent = qty;
+      });
+      document.getElementById("pd-add").addEventListener("click", function(){ addToCart(slug, qty); });
+    }
+    if (route === "/faq"){
+      document.querySelectorAll(".faq-item").forEach(function(item){
+        item.querySelector(".faq-q").addEventListener("click", function(){ item.classList.toggle("open"); });
+      });
+    }
+    if (route === "/cart"){
+      document.querySelectorAll("[data-remove]").forEach(function(btn){
+        btn.addEventListener("click", function(){ removeFromCart(btn.getAttribute("data-remove")); });
+      });
+      document.querySelectorAll("[data-inc]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var s = btn.getAttribute("data-inc");
+          var item = cart.find(function(i){return i.slug===s;});
+          setQty(s, item.qty+1);
+        });
+      });
+      document.querySelectorAll("[data-dec]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var s = btn.getAttribute("data-dec");
+          var item = cart.find(function(i){return i.slug===s;});
+          setQty(s, item.qty-1);
+        });
+      });
+    }
+    if (route === "/checkout"){
+      var form = document.getElementById("checkout-form");
+      if (form) form.addEventListener("submit", function(e){ e.preventDefault(); processOrder(); });
+    }
+    if (route === "/contact"){
+      var cform = document.getElementById("contact-form");
+      cform.addEventListener("submit", function(e){
+        e.preventDefault();
+        document.getElementById("contact-msg").textContent = t("contactOk");
+        cform.reset();
+      });
+    }
+    if (route === "/"){
+      var nform = document.getElementById("newsletter-form");
+      if (nform){
+        nform.addEventListener("submit", function(e){
+          e.preventDefault();
+          document.getElementById("newsletter-msg").textContent = t("newsOk");
+          nform.reset();
+        });
+      }
+    }
+  }
+
+  function processOrder(){
+    var groups = cart.map(function(item){
+      var p = locProduct(findProduct(item.slug));
+      var bottles = [];
+      for (var u=0; u<item.qty; u++){
+        for (var b=0; b<3; b++){ bottles.push(weightedPick(p.pool)); }
+      }
+      return { name: p.name + " ×" + item.qty, pricePerBottle: p.price / 3, bottles: bottles };
+    });
+    var value = 0;
+    groups.forEach(function(g){ g.bottles.forEach(function(b){ value += b.value; }); });
+    lastOrder = {
+      orderId: "WD-" + Math.floor(100000 + Math.random()*899999),
+      paid: cartTotal(),
+      value: value,
+      groups: groups
+    };
+    cart = [];
+    renderCartCount();
+    navigate("/confirmation");
+  }
+
+  function persist(){
+    try {
+      localStorage.setItem("wd-theme", theme);
+      localStorage.setItem("wd-lang", lang);
+    } catch (e) {}
+  }
+
+  function loadPrefs(){
+    try {
+      var savedTheme = localStorage.getItem("wd-theme");
+      var savedLang = localStorage.getItem("wd-lang");
+      if (savedTheme === "light" || savedTheme === "dark") theme = savedTheme;
+      if (savedLang && STR[savedLang]) lang = savedLang;
+    } catch (e) {}
+  }
+
+  document.getElementById("menu-toggle").addEventListener("click", function(){
+    document.getElementById("nav-links").classList.toggle("open");
+  });
+  document.getElementById("theme-toggle").addEventListener("click", function(){
+    theme = theme === "dark" ? "light" : "dark";
+    persist();
+    applyPrefs();
+    render();
+  });
+  document.getElementById("lang-select").addEventListener("change", function(){
+    lang = this.value;
+    persist();
+    applyPrefs();
+    render();
+  });
+
+  LANGS.forEach(function(item){
+    var opt = document.createElement("option");
+    opt.value = item.code;
+    opt.textContent = item.label;
+    document.getElementById("lang-select").appendChild(opt);
+  });
+
+  loadPrefs();
+  applyPrefs();
+  if (gateShown) document.getElementById("age-gate").classList.add("hidden");
+  render();
+})();
+</script>
+</body>
+</html>
