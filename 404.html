@@ -699,7 +699,8 @@
     .rail-logo{padding:8px 0 6px;}
     .rail-logo svg{width:34px;height:34px;}
     .nowbar{
-      left:calc(var(--rail-w) + 8px);right:76px;max-width:none;
+      left:calc(var(--rail-w) + 8px);right:auto;max-width:280px;
+      width:min(280px, calc(100vw - var(--rail-w) - 88px));
       bottom:calc(16px + env(safe-area-inset-bottom,0px));
       padding:6px 8px 6px 6px;border-radius:12px;gap:4px;
     }
@@ -711,7 +712,7 @@
     .now-ctrl button svg{width:18px;height:18px;}
     .now-play{width:38px !important;height:38px !important;}
     .chat-root{left:auto;right:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:auto;}
-    .uber-widget{width:min(360px, calc(100vw - var(--rail-w) - 24px));max-height:min(70vh, 520px);}
+    .wd-widget{width:min(360px, calc(100vw - var(--rail-w) - 24px));}
     .hero{padding:18px 14px 24px;}
     .hero h1{font-size:clamp(30px,11vw,44px);line-height:.92;}
     .hero p.sub{font-size:14px;margin-top:10px;}
@@ -731,7 +732,7 @@
     .footer-grid{grid-template-columns:1fr;gap:22px;}
     .board-row{grid-template-columns:28px 1fr auto;gap:8px;padding:10px;}
     .play-head{padding:16px;}
-    .auth-overlay{padding:20px 12px 140px;align-items:center;}
+    .auth-overlay{padding:20px 12px;align-items:center;}
     .gifts-hero h1{font-size:clamp(32px,12vw,48px);}
     .slip{padding:16px;}
     body.chat-open .nowbar{opacity:.35;pointer-events:none;}
@@ -823,14 +824,15 @@
   .hud{display:none !important;}
 
   .nowbar{
-    position:fixed;left:12px;right:88px;z-index:186;
-    bottom:16px;display:flex;flex-direction:column;gap:6px;
-    background:rgba(14,51,134,.94);color:#fff;
-    border:0;border-radius:14px;
+    position:fixed;left:calc(var(--rail-w) + 12px);right:auto;z-index:186;
+    bottom:calc(16px + env(safe-area-inset-bottom,0px));
+    display:flex;flex-direction:column;gap:6px;
+    background:#fff;color:#161823;
+    border:1px solid #E8E8EA;border-radius:14px;
     padding:8px 10px 8px 8px;
-    box-shadow:0 10px 28px rgba(14,51,134,.28);
-    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-    max-width:560px;
+    box-shadow:0 10px 28px rgba(22,24,35,.14);
+    width:min(360px, calc(100vw - var(--rail-w) - 88px));
+    max-width:360px;
   }
   .nowbar-inner{display:flex;align-items:center;gap:10px;width:100%;}
   .now-art{
@@ -840,119 +842,110 @@
       conic-gradient(from 40deg,#0E3386,#CC3433,#fff,#0E3386);
     border:2px solid #fff;
   }
-  .now-meta{flex:1;min-width:0;color:#fff;text-decoration:none;}
+  .now-meta{flex:1;min-width:0;color:#161823;text-decoration:none;}
   .now-meta b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .now-meta span{display:block;font-size:11px;opacity:.82;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .now-meta span{display:block;font-size:11px;opacity:.62;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .now-pts{
     font-family:var(--font-type);font-size:10px;font-weight:800;letter-spacing:.04em;
     opacity:.8;flex-shrink:0;
   }
   .now-ctrl{display:flex;align-items:center;gap:2px;flex-shrink:0;}
   .now-ctrl button{
-    background:transparent;color:#fff;border:none;width:36px;height:36px;
+    background:transparent;color:#161823;border:none;width:36px;height:36px;
     display:grid;place-items:center;padding:0;min-height:0;
   }
   .now-ctrl button svg{width:22px;height:22px;fill:currentColor;}
   .now-play{
     width:40px !important;height:40px !important;border-radius:50% !important;
-    background:#fff !important;color:var(--cubs-blue) !important;
+    background:#161823 !important;color:#fff !important;
   }
-  .now-prog{height:3px;background:rgba(255,255,255,.22);border-radius:99px;overflow:hidden;}
-  .now-prog i{display:block;height:100%;width:0;background:#fff;border-radius:99px;}
+  .now-prog{height:3px;background:#E8E8EA;border-radius:99px;overflow:hidden;}
+  .now-prog i{display:block;height:100%;width:0;background:#CC3433;border-radius:99px;}
+  [data-theme="dark"] .nowbar{background:rgba(14,51,134,.94);color:#fff;border-color:transparent;}
+  [data-theme="dark"] .now-meta,[data-theme="dark"] .now-ctrl button{color:#fff;}
+  [data-theme="dark"] .now-play{background:#fff !important;color:var(--cubs-blue) !important;}
+  [data-theme="dark"] .now-prog{background:rgba(255,255,255,.22);}
+  [data-theme="dark"] .now-prog i{background:#fff;}
 
   .chat-root{
-    position:fixed;left:var(--rail-w);right:0;bottom:0;z-index:188;
-    display:flex;flex-direction:column;align-items:stretch;
+    position:fixed;left:auto;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));
+    z-index:188;display:flex;flex-direction:column;align-items:flex-end;gap:10px;
     width:auto;max-width:none;pointer-events:none;
   }
   .chat-root > *{pointer-events:auto;}
-  .concierge-salon{
-    display:flex;flex-direction:column;
-    background:var(--luxe-ivory);color:var(--luxe-ink);
-    border-top:1px solid var(--luxe-gold);
-    max-height:min(62vh, 540px);
-    box-shadow:0 -18px 40px rgba(14,51,134,.12);
+  .wd-widget{
+    display:flex;flex-direction:column;width:min(380px, calc(100vw - var(--rail-w) - 28px));
+    max-height:min(68vh, 560px);background:#fff;color:#161823;
+    border-radius:12px;overflow:hidden;
+    box-shadow:0 18px 48px rgba(22,24,35,.22);
   }
-  .concierge-salon.hidden{display:none;}
-  .concierge-head{
-    display:flex;justify-content:space-between;align-items:flex-start;
-    padding:18px 20px 8px;gap:12px;
+  .wd-widget.hidden,.wd-x.hidden,.wd-fab.hidden{display:none;}
+  .wd-widget-head{
+    display:flex;align-items:center;gap:10px;
+    background:#161823;color:#fff;padding:14px 16px;flex-shrink:0;
   }
-  .concierge-kicker{
-    display:block;font-family:var(--font-type);font-size:10px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--luxe-gold);margin-bottom:4px;
+  .wd-widget-av{
+    width:32px;height:32px;border-radius:50%;background:#fff;flex-shrink:0;
+    background-image:radial-gradient(circle at 40% 38%, #CC3433 0 28%, #0E3386 29% 100%);
   }
-  .concierge-head strong{
-    display:block;font-family:var(--font-body);font-weight:500;font-size:22px;letter-spacing:.04em;
-  }
-  .concierge-head button{
-    background:transparent;border:none;color:var(--luxe-ink);font-size:22px;line-height:1;padding:4px 6px;
-  }
-  .concierge-avail{
-    padding:0 20px 12px;font-size:13px;letter-spacing:.04em;color:#5C6B8A;
-    border-bottom:1px solid rgba(201,169,98,.35);
+  .wd-widget-head strong{font-size:15px;font-weight:700;}
+  .wd-widget-body{display:flex;flex-direction:column;min-height:0;flex:1;background:#fff;}
+  .chat-stamp{
+    text-align:center;font-size:11px;color:#8A8B92;letter-spacing:.06em;
+    text-transform:uppercase;padding:12px 16px 0;
   }
   .chat-log{
-    flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:14px;min-height:160px;
+    flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px;min-height:120px;
   }
   .chat-bubble{
-    max-width:92%;font-size:15px;line-height:1.55;padding:0;border-radius:0;
+    max-width:88%;font-size:14px;line-height:1.45;padding:10px 12px;border-radius:16px;
   }
-  .chat-bubble.bot{
-    align-self:flex-start;background:transparent;border-left:1px solid var(--luxe-gold);padding:2px 0 2px 14px;
-  }
-  .chat-bubble.me{
-    align-self:flex-end;background:transparent;color:var(--luxe-ink);text-align:right;
-    border-right:1px solid var(--cubs-blue);padding:2px 14px 2px 0;
-  }
-  .chat-chips{display:flex;flex-wrap:wrap;gap:10px 16px;padding:4px 20px 14px;}
+  .chat-bubble.bot{align-self:flex-start;background:#F1F2F4;color:#161823;}
+  .chat-bubble.me{align-self:flex-end;background:#0E3386;color:#fff;border-radius:16px 16px 4px 16px;}
+  .chat-chips{display:flex;flex-direction:column;align-items:flex-end;gap:8px;padding:4px 16px 12px;}
   .chat-chips button{
-    border:none;background:transparent;color:var(--luxe-ink);
-    border-bottom:1px solid var(--luxe-gold);border-radius:0;
-    padding:4px 0;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+    border:1.5px solid #161823;background:#fff;color:#161823;
+    border-radius:999px;padding:10px 18px;font-size:14px;font-weight:600;
+    min-width:168px;text-align:center;
   }
-  .chat-form{display:flex;align-items:center;border-top:1px solid rgba(201,169,98,.45);background:#FBF8F1;}
+  .chat-chips button:hover{background:#161823;color:#fff;}
+  .chat-form{display:flex;align-items:center;border-top:1px solid #F1F1F2;background:#fff;}
   .chat-form input{
-    flex:1;border:none;background:transparent;padding:16px 18px;font:inherit;min-width:0;
-    font-size:15px;letter-spacing:.01em;color:var(--luxe-ink);
+    flex:1;border:none;background:transparent;padding:14px 16px;font:inherit;min-width:0;
+    font-size:15px;color:#161823;
   }
-  .chat-form input::placeholder{color:#8A93A8;}
+  .chat-form input::placeholder{color:#8A8B92;}
   .chat-form button{
-    border:none;background:transparent;color:var(--luxe-ink);
-    padding:16px 20px;font-family:var(--font-type);font-size:11px;font-weight:600;
-    letter-spacing:.18em;text-transform:uppercase;
+    border:none;background:transparent;color:#0E3386;
+    padding:14px 16px;font-size:14px;font-weight:700;
   }
-  .concierge-dock{
-    display:flex;align-items:center;gap:14px;width:100%;
-    background:var(--luxe-ivory);color:var(--luxe-ink);
-    border:none;border-top:1px solid var(--luxe-gold);
-    padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));
-    text-align:left;min-height:56px;cursor:pointer;
+  .wd-widget-legal{
+    padding:0 16px 12px;font-size:11px;color:#8A8B92;line-height:1.4;
   }
-  .concierge-gem{
-    width:8px;height:8px;flex-shrink:0;background:var(--luxe-gold);transform:rotate(45deg);
+  .wd-x{
+    width:44px;height:44px;border:none;border-radius:8px;
+    background:#161823;color:#fff;font-size:22px;line-height:1;
+    box-shadow:0 8px 20px rgba(22,24,35,.2);
   }
-  .concierge-copy{flex:1;min-width:0;}
-  .concierge-copy b{
-    display:block;font-family:var(--font-body);font-weight:600;font-size:11px;
-    letter-spacing:.26em;text-transform:uppercase;
+  .wd-fab{
+    width:56px;height:56px;border:none;border-radius:50%;
+    background:#0E3386;color:#fff;
+    display:grid;place-items:center;
+    box-shadow:0 10px 28px rgba(14,51,134,.32);
+    position:relative;
   }
-  .concierge-copy small{
-    display:block;margin-top:2px;font-size:13px;font-weight:400;letter-spacing:.02em;color:#5C6B8A;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  .wd-fab svg{width:26px;height:26px;fill:currentColor;}
+  .wd-fab .wd-unread{
+    position:absolute;top:4px;right:4px;width:10px;height:10px;
+    background:#CC3433;border:2px solid #fff;border-radius:50%;display:none;
   }
-  .concierge-cta{
-    font-family:var(--font-type);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--luxe-ink);border-bottom:1px solid var(--luxe-gold);padding-bottom:2px;flex-shrink:0;
-  }
-  [data-theme="dark"] .concierge-salon,[data-theme="dark"] .concierge-dock,[data-theme="dark"] .chat-form{
-    background:#0A2768;color:#fff;border-color:var(--luxe-gold);
-  }
-  [data-theme="dark"] .concierge-head strong,[data-theme="dark"] .concierge-copy b,[data-theme="dark"] .chat-form button{
-    color:#fff;
-  }
-  [data-theme="dark"] .concierge-avail,[data-theme="dark"] .concierge-copy small{color:#D6E4FF;}
-  [data-theme="dark"] .chat-bubble.bot,[data-theme="dark"] .chat-bubble.me{color:#fff;}
+  .wd-fab.unread .wd-unread{display:block;}
+  [data-theme="dark"] .wd-widget{background:#0A2768;color:#fff;}
+  [data-theme="dark"] .wd-widget-body,[data-theme="dark"] .chat-form{background:#0A2768;}
+  [data-theme="dark"] .chat-bubble.bot{background:rgba(255,255,255,.12);color:#fff;}
+  [data-theme="dark"] .chat-chips button{border-color:#fff;background:transparent;color:#fff;}
+  [data-theme="dark"] .chat-form input,[data-theme="dark"] .chat-form button{color:#fff;}
+  [data-theme="dark"] .wd-widget-legal{color:#D6E4FF;}
 
   .footer-socials{max-width:1120px;margin:28px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.22);}
   .footer-socials h4{color:#fff;font-size:13px;letter-spacing:.5px;margin-bottom:12px;font-family:var(--font-type);}
@@ -1083,17 +1076,16 @@
   }
   @media(max-width:1023px){
     .nowbar{
-      left:calc(var(--rail-w) + 6px);right:6px;max-width:none;
-      bottom:calc(64px + env(safe-area-inset-bottom,0px));
-      padding:6px 8px 6px 6px;border-radius:12px;gap:4px;
+      left:calc(var(--rail-w) + 8px);right:auto;max-width:280px;
+      width:min(280px, calc(100vw - var(--rail-w) - 88px));
+      bottom:calc(16px + env(safe-area-inset-bottom,0px));
     }
     .now-art{width:36px;height:36px;}
     .now-pts{display:none;}
     .now-ctrl button{width:34px;height:34px;}
     .now-play{width:38px !important;height:38px !important;}
     .nav-row .brand{display:none !important;}
-    .chat-root{left:var(--rail-w);right:0;bottom:0;width:auto;z-index:188;}
-    .concierge-dock{min-height:48px;}
+    .chat-root{left:auto;right:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:auto;z-index:188;}
     body.chat-open .nowbar{opacity:.35;pointer-events:none;}
   }
   @media(min-width:1024px){
@@ -1117,16 +1109,15 @@
     .left-rail .rail-sub a:hover{background:#E8EEF9;}
     .rail-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;padding:0 8px;}
     .rail-pts{text-align:left;padding:10px 12px;font-size:12px;}
-    footer.site{padding-bottom:168px;}
-    .nowbar{left:calc(var(--rail-w) + 12px);right:12px;bottom:calc(62px + env(safe-area-inset-bottom,0px));max-width:none;}
-    .chat-root{left:var(--rail-w);right:0;bottom:0;width:auto;}
+    footer.site{padding-bottom:88px;}
+    .nowbar{left:calc(var(--rail-w) + 12px);right:auto;bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:360px;}
+    .chat-root{left:auto;right:20px;bottom:20px;width:auto;}
   }
   @media(min-width:1280px){
-    .right-rail{display:flex;}
-    header.site,main#app,footer.site{margin-right:292px;}
-    .nowbar{right:304px;bottom:calc(62px + env(safe-area-inset-bottom,0px));}
-    .chat-root{right:292px;width:auto;}
-    .right-rail{top:0;}
+    .right-rail{display:none !important;}
+    header.site,main#app,footer.site{margin-right:0;}
+    .nowbar{right:auto;bottom:calc(16px + env(safe-area-inset-bottom,0px));}
+    .chat-root{right:20px;width:auto;}
   }
 
   .rooms{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
@@ -1227,6 +1218,15 @@
     .gift-row .g-actions{grid-column:1/-1;}
     .gifts-stack{height:180px;}
   }
+
+  .chat-root{
+    left:auto !important;right:16px !important;
+    bottom:calc(16px + env(safe-area-inset-bottom,0px)) !important;
+    width:auto !important;align-items:flex-end !important;
+  }
+  .right-rail{display:none !important;}
+  header.site,main#app,footer.site{margin-right:0 !important;}
+  .ticker{display:none !important;}
 </style>
 </head>
 <body>
@@ -1299,30 +1299,27 @@
 <div class="hud" id="hud"></div>
 <div class="nowbar" id="nowbar"></div>
 <div class="chat-root" id="chat-root">
-  <div class="concierge-salon hidden" id="chat-panel" role="dialog" aria-label="Private client concierge">
-    <div class="concierge-head">
-      <div>
-        <span class="concierge-kicker">Private client</span>
-        <strong>Concierge</strong>
-      </div>
-      <button type="button" id="chat-x" aria-label="Close concierge">×</button>
+  <div class="wd-widget hidden" id="chat-panel" role="dialog" aria-label="Wine Detention help">
+    <div class="wd-widget-head">
+      <span class="wd-widget-av" aria-hidden="true"></span>
+      <strong>Wine Detention</strong>
     </div>
-    <p class="concierge-avail">A specialist is available now · 21 and over</p>
-    <div class="chat-log" id="chat-log"></div>
-    <div class="chat-chips" id="chat-chips"></div>
-    <form class="chat-form" id="chat-form">
-      <label class="visually-hidden" for="chat-in">Message the concierge</label>
-      <input id="chat-in" maxlength="240" placeholder="Write a note to the cellar…" autocomplete="off">
-      <button type="submit">Send</button>
-    </form>
+    <div class="wd-widget-body">
+      <div class="chat-stamp" id="chat-stamp"></div>
+      <div class="chat-log" id="chat-log"></div>
+      <div class="chat-chips" id="chat-chips"></div>
+      <form class="chat-form" id="chat-form">
+        <label class="visually-hidden" for="chat-in">Message</label>
+        <input id="chat-in" maxlength="240" placeholder="Message…" autocomplete="off">
+        <button type="submit">Send</button>
+      </form>
+      <p class="wd-widget-legal">Demo help · 21 and over · No payment is taken</p>
+    </div>
   </div>
-  <button class="concierge-dock" type="button" id="chat-fab" aria-expanded="false" aria-controls="chat-panel">
-    <span class="concierge-gem" aria-hidden="true"></span>
-    <span class="concierge-copy">
-      <b>Concierge</b>
-      <small>How may we assist you?</small>
-    </span>
-    <span class="concierge-cta" id="chat-cta">Write</span>
+  <button class="wd-x hidden" type="button" id="chat-x" aria-label="Close chat">×</button>
+  <button class="wd-fab" type="button" id="chat-fab" aria-expanded="false" aria-controls="chat-panel" aria-label="Help">
+    <span class="wd-unread" aria-hidden="true"></span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8A2.5 2.5 0 0 1 17.5 16H12l-4.2 3.4c-.7.56-1.8.06-1.8-.8V16H6.5A2.5 2.5 0 0 1 4 13.5v-8z"/></svg>
   </button>
 </div>
 
@@ -2939,21 +2936,20 @@
   }
 
   function conciergeHello(){
-    var h = new Date().getHours();
-    var when = h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
-    return when + ". I am the Wine Detention concierge. How may I be of assistance?";
+    return "Hi there, how can I help you today?";
   }
   function hallReply(q){
     var s = String(q||"").toLowerCase();
-    if (/gift|bonus|unveil|card/.test(s)) return "A pleasure. Gift cards are issued from ten to five hundred dollars. After they are sent, a private unveiling reveals a courtesy multiple — never less than four percent, customarily near one and a third, and on rare evenings, considerably more. This preview is ceremonial; no funds are taken.";
-    if (/music|jukebox|party|song|play|radio/.test(s)) return "Detention Radio is composed for the hall — original house loops, never a licensed catalog. The player at the foot of the page will play, pause, and skip. Party is the full salon if you wish to request a track.";
-    if (/login|account|sign|pass/.test(s)) return "LOG IN is the single key in the header, as a maison would have it. Should you be new, a quiet link inside the sheet will open a hall pass. It remains on this device only.";
-    if (/drop|wine|buy|shop|sentence|locker|pinot|cabernet|chardonnay|sauvignon|bottle/.test(s)) return "Five lockers are open: Sauvignon Blanc from Happy Canyon and Fort Ross-Seaview, coastal Chardonnay, Sta. Rita Hills Pinot, Rutherford-to-Oakville Cabernet, and a mountain Icon Detention. Every bottle lists vintage, AVA, and suggested retail. The floor is always the buy-in. This maison preview does not ship alcohol.";
-    if (/age|21|legal/.test(s)) return "Entry is reserved for guests twenty-one and over. We are a demonstration, not a licensed merchant.";
-    if (/pt|point|pts|quest/.test(s)) return "PTS are marks of attendance on this device. Purchases, shares, and quests add to your standing. Forty points will bump a jukebox request.";
-    if (/ship|deliver|hk|napa|moscow/.test(s)) return "We sketch bonded lanes from Napa toward Hong Kong, Shanghai, Moscow, Tokyo, London, and Dubai. Fulfilment remains a courtesy sketch until licensed shipping is appointed.";
-    if (/help|hi|hey|hello|thanks|thank/.test(s)) return conciergeHello();
-    return "Of course. I can speak to today's allocation, a gift, Detention Radio, your points, or your pass. Choose a line below, or write freely.";
+    if (/gift|bonus|unveil|card/.test(s)) return "Gift cards run $10–$500. After you send one, a private unveil shows a bonus — never under +4%, usually around +35%, rarely up to 18×. Demo only: no money moves.";
+    if (/music|jukebox|party|song|play|radio/.test(s)) return "The mini player is original Detention Radio. Play, skip, or open Party for the full jukebox.";
+    if (/login|account|sign|pass/.test(s)) return "Tap Log in in the header. New here? Switch to Sign up on that sheet. It stays on this device.";
+    if (/how it works|how does/.test(s)) return "Pick a locker. Pay one price. At checkout we assign three bottles from that pool — every one at least the buy-in. Vintage, AVA, and SRP are listed before you pay.";
+    if (/drop|wine|buy|shop|sentence|locker|pinot|cabernet|chardonnay|sauvignon|bottle|allocation/.test(s)) return "Five lockers are open — Sauvignon Blanc, Chardonnay, Pinot, Cabernet, and Icon. Every bottle lists vintage, AVA, and SRP. Floor is always the buy-in. We don’t ship alcohol in this preview.";
+    if (/age|21|legal/.test(s)) return "You must be 21+. This is a demo, not a licensed shop.";
+    if (/pt|point|pts|quest/.test(s)) return "PTS live on this device. Buys, shares, and quests add up. 40 pts bumps a jukebox request.";
+    if (/ship|deliver|hk|napa|moscow/.test(s)) return "We sketch Napa lanes to Hong Kong, Shanghai, Moscow, Tokyo, London, and Dubai. Shipping stays a sketch until a licensed partner is live.";
+    if (/support|help|hi|hey|hello|thanks|thank/.test(s)) return conciergeHello();
+    return "I can help with today’s drop, gifts, the radio, points, or your pass. Pick a button or type a question.";
   }
 
   function ensureChat(){
@@ -2992,12 +2988,21 @@
     var log = document.getElementById("chat-log");
     var chips = document.getElementById("chat-chips");
     var fab = document.getElementById("chat-fab");
-    var cta = document.getElementById("chat-cta");
+    var xbtn = document.getElementById("chat-x");
+    var stamp = document.getElementById("chat-stamp");
     if (!panel) return;
     panel.classList.toggle("hidden", !chatOpen);
     document.body.classList.toggle("chat-open", chatOpen);
-    if (fab) fab.setAttribute("aria-expanded", chatOpen ? "true" : "false");
-    if (cta) cta.textContent = chatOpen ? "Close" : "Write";
+    if (fab){
+      fab.setAttribute("aria-expanded", chatOpen ? "true" : "false");
+      fab.classList.toggle("hidden", chatOpen);
+      fab.classList.toggle("unread", !chatOpen && chatUnread);
+    }
+    if (xbtn) xbtn.classList.toggle("hidden", !chatOpen);
+    if (stamp){
+      var d = new Date();
+      stamp.textContent = "Today " + d.toLocaleTimeString([], {hour:"numeric", minute:"2-digit"});
+    }
     if (log){
       log.innerHTML = chatLog.map(function(m){
         return '<div class="chat-bubble '+(m.who==="me"?"me":"bot")+'">'+esc(m.text)+'</div>';
@@ -3005,7 +3010,7 @@
       log.scrollTop = log.scrollHeight;
     }
     if (chips){
-      var qs = ["Today's allocation","A gift for someone","The cellar radio"];
+      var qs = ["Shop today's drop","Send a gift","Get support","How it works"];
       chips.innerHTML = qs.map(function(q){ return '<button type="button" data-chip="'+esc(q)+'">'+esc(q)+'</button>'; }).join("");
       chips.querySelectorAll("[data-chip]").forEach(function(b){
         b.onclick = function(){
