@@ -34,28 +34,28 @@
   }
 
   [data-theme="light"]{
-    --chrome:#0E3386;
-    --chrome-deep:#0A2768;
-    --chrome-text:#FFFFFF;
-    --chrome-muted:#D6E4FF;
+    --chrome:#FFFFFF;
+    --chrome-deep:#F6F7F8;
+    --chrome-text:#161823;
+    --chrome-muted:#73747B;
     --page:#FFFFFF;
-    --page-text:#0E3386;
-    --page-muted:#3D5A99;
+    --page-text:#161823;
+    --page-muted:#73747B;
     --card:#FFFFFF;
-    --card-border:#C9D6F2;
-    --line:rgba(14,51,134,0.16);
+    --card-border:#E8E8EA;
+    --line:rgba(22,24,35,0.12);
     --accent:var(--cubs-red);
     --accent-soft:#E36A68;
     --accent-ink:#FFFFFF;
-    --why-bg:#0E3386;
-    --why-text:#FFFFFF;
-    --why-muted:#D6E4FF;
-    --gate-overlay:rgba(14,51,134,0.88);
-    --header-border:rgba(255,255,255,0.22);
-    --hero-sub:#163F99;
+    --why-bg:#F6F7F8;
+    --why-text:#161823;
+    --why-muted:#73747B;
+    --gate-overlay:rgba(22,24,35,0.45);
+    --header-border:#F1F1F2;
+    --hero-sub:#5C6370;
     --surface:#FFFFFF;
-    --rule:#D7E0F4;
-    --pinstripe:rgba(14,51,134,0.08);
+    --rule:#F1F1F2;
+    --pinstripe:transparent;
     --ink-on-accent:#FFFFFF;
   }
 
@@ -160,13 +160,7 @@
   .btn-block{width:100%;}
   .btn:disabled{opacity:.45;cursor:not-allowed;filter:none;}
 
-  .ticker{
-    background:var(--cubs-red);color:#fff;
-    overflow:hidden;white-space:nowrap;
-    font-family:var(--font-type);font-size:12px;font-weight:700;
-    letter-spacing:.04em;
-    border-bottom:3px solid #fff;
-  }
+  .ticker{display:none !important;}
   .ticker-track{
     display:inline-flex;gap:48px;padding:8px 0;
     animation:ticker 28s linear infinite;
@@ -181,11 +175,11 @@
     border-bottom:1px solid var(--header-border);
   }
   .urgency{
-    display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
-    background:var(--cubs-red);color:#fff;
+    display:flex;align-items:center;justify-content:flex-start;gap:10px;flex-wrap:nowrap;
+    background:var(--chrome);color:var(--chrome-text);
     padding:8px 16px;
-    font-family:var(--font-type);font-size:12px;font-weight:700;
-    letter-spacing:.06em;
+    font-family:var(--font-body);font-size:12px;font-weight:600;
+    letter-spacing:0;border-bottom:1px solid var(--header-border);
   }
   .live-dot{
     display:inline-flex;align-items:center;gap:6px;
@@ -203,18 +197,20 @@
     100%{box-shadow:0 0 0 0 rgba(204,52,51,0);}
   }
   .clock{
-    font-family:var(--font-bang);font-size:20px;letter-spacing:.08em;
-    color:var(--cubs-blue);background:#fff;padding:2px 10px;
+    font-family:var(--font-type);font-size:13px;letter-spacing:0;
+    color:var(--chrome-text);background:transparent;padding:0;
   }
+  .brand-kicker{display:none !important;}
+  .hud,.action-rail,.right-rail,.tabbar,.more-sheet,.more-backdrop,.desk-more{display:none !important;}
   .nav-row{
     display:flex;align-items:center;justify-content:space-between;
     padding:12px 24px;max-width:1120px;margin:0 auto;
     gap:12px;
   }
   .brand{
-    font-family:var(--font-chalk);
-    font-size:28px;
-    color:#fff;
+    font-family:var(--font-body);
+    font-size:18px;font-weight:800;
+    color:var(--chrome-text);
     display:flex;align-items:center;gap:10px;
     white-space:nowrap;
   }
@@ -861,6 +857,15 @@
   }
   .now-prog{height:3px;background:#E8E8EA;border-radius:99px;overflow:hidden;}
   .now-prog i{display:block;height:100%;width:0;background:#CC3433;border-radius:99px;}
+  .now-x{
+    border:none;background:transparent;color:inherit;width:32px;height:32px;
+    font-size:22px;line-height:1;padding:0;flex-shrink:0;
+  }
+  .nowbar.mini{width:44px;min-width:44px;padding:0;right:auto;}
+  .now-restore{
+    width:44px;height:44px;border:none;border-radius:14px;background:transparent;
+    color:inherit;font-size:18px;
+  }
   [data-theme="dark"] .nowbar{background:rgba(14,51,134,.94);color:#fff;border-color:transparent;}
   [data-theme="dark"] .now-meta,[data-theme="dark"] .now-ctrl button{color:#fff;}
   [data-theme="dark"] .now-play{background:#fff !important;color:var(--cubs-blue) !important;}
@@ -1236,13 +1241,10 @@
 </div>
 
 <header class="site">
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track" id="ticker-track"></div>
-  </div>
+  <div class="ticker" id="ticker-track" hidden></div>
   <div class="urgency">
-    <span class="live-dot">LIVE DROP</span>
+    <span class="live-dot">LIVE</span>
     <span id="watchers">42 watching</span>
-    <span class="urgency-end">DAILY SENTENCE ENDS</span>
     <span class="clock" id="day-clock" data-countdown="day">--:--:--</span>
   </div>
   <div class="nav-row">
@@ -1268,7 +1270,7 @@
           <rect x="5.4" y="28" width="5.2" height="8" fill="#FFFFFF"/>
         </g>
       </svg>
-      <span class="brand-type"><span class="brand-kicker">CHAMPAGNE + TROPHIES</span>Wine Detention</span>
+      <span class="brand-type">Wine Detention</span>
     </a>
     <nav class="links" id="nav-links"></nav>
     <div class="chrome-tools">
@@ -2176,6 +2178,7 @@
   var lang = "en";
   var theme = "light";
   var currentUser = null;
+  var nowbarOn = true;
 
   function L(){ return STR[lang] || STR.en; }
   function t(key){ var s=L(); return (s && s[key] != null) ? s[key] : (STR.en[key] != null ? STR.en[key] : key); }
@@ -2472,25 +2475,34 @@
   function renderNowBar(){
     var el = document.getElementById("nowbar");
     if (!el) return;
+    if (!nowbarOn){
+      el.className = "nowbar mini";
+      el.innerHTML = '<button type="button" class="now-restore" id="now-restore" aria-label="Open player">♪</button>';
+      var rs = document.getElementById("now-restore");
+      if (rs) rs.onclick = function(){ nowbarOn = true; persist(); renderNowBar(); };
+      return;
+    }
     var tr = findTrack(nowPlayingId);
     el.className = "nowbar on";
     el.innerHTML = '<div class="nowbar-inner">'+
       '<a class="now-art" href="#/party" aria-hidden="true"></a>'+
       '<a class="now-meta" href="#/party"><b>'+esc(tr.title)+'</b><span>'+esc(tr.artist)+' · '+esc(tr.album)+'</span></a>'+
-      '<span class="now-pts" id="now-pts">'+points+' PTS</span>'+
       '<div class="now-ctrl">'+
         '<button type="button" id="now-prev" aria-label="Previous">'+iconPrev()+'</button>'+
         '<button type="button" class="now-play" id="now-pause" aria-label="'+(musicOn?"Pause":"Play")+'">'+(musicOn?iconPause():iconPlay())+'</button>'+
         '<button type="button" id="now-next" aria-label="Next">'+iconNext()+'</button>'+
+        '<button type="button" class="now-x" id="now-x" aria-label="Close player">×</button>'+
       '</div>'+
     '</div>'+
     '<div class="now-prog"><i id="now-fill"></i></div>';
     var p = document.getElementById("now-pause");
     var prev = document.getElementById("now-prev");
     var next = document.getElementById("now-next");
+    var xc = document.getElementById("now-x");
     if (p) p.onclick = toggleMusic;
     if (prev) prev.onclick = function(){ skipTrack(-1); };
     if (next) next.onclick = function(){ skipTrack(1); };
+    if (xc) xc.onclick = function(){ nowbarOn = false; persist(); renderNowBar(); };
     startProgressLoop();
     updateNowProgress();
   }
@@ -2922,10 +2934,7 @@
 
   function renderActionRail(){
     var el = document.getElementById("action-rail");
-    if (!el) return;
-    el.innerHTML = '<button class="action-btn" type="button" id="rail-pts" aria-label="Points"><b id="rail-pts-n">'+points+'</b><span>PTS</span></button>';
-    var rp = document.getElementById("rail-pts");
-    if (rp) rp.onclick = function(){ navigate("/leaderboard"); };
+    if (el) el.innerHTML = "";
   }
 
   function renderTabbar(){
@@ -4240,6 +4249,7 @@
       localStorage.setItem("wd-quests", JSON.stringify(questsDone));
       localStorage.setItem("wd-farm", String(farmCount));
       localStorage.setItem("wd-gate", gateShown ? "1" : "0");
+      localStorage.setItem("wd-nowbar", nowbarOn ? "1" : "0");
       if (currentUser) localStorage.setItem("wd-session", JSON.stringify(currentUser));
     } catch (e) {}
   }
@@ -4257,6 +4267,7 @@
       if (qd && typeof qd==="object") questsDone = qd;
       farmCount = parseInt(localStorage.getItem("wd-farm")||"0",10)||0;
       if (localStorage.getItem("wd-gate")==="1") gateShown = true;
+      if (localStorage.getItem("wd-nowbar")==="0") nowbarOn = false;
       var sess = JSON.parse(localStorage.getItem("wd-session")||"null");
       if (sess && sess.email) currentUser = sess;
     } catch (e) {}
