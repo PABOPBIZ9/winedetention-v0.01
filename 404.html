@@ -577,7 +577,76 @@
   a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
     outline:2px solid var(--gold);outline-offset:2px;
   }
-</style>
+
+  .socials-row{
+    display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;
+    padding:8px 24px 10px;max-width:1200px;margin:0 auto;
+  }
+  .socials-row a{
+    font-size:13px;font-weight:700;
+    color:var(--chrome-text);opacity:.88;
+    padding:3px 2px;border-bottom:2px solid transparent;
+  }
+  .socials-row a:hover,.socials-row a.live{opacity:1;border-color:var(--gold);color:var(--gold);}
+  .hud{
+    position:fixed;left:14px;bottom:14px;z-index:160;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .hud-card{
+    background:#1a0b10;border:1px solid var(--gold);color:var(--gold);
+    padding:10px 12px;font-family:var(--font-type);font-size:12px;min-width:168px;
+    box-shadow:6px 6px 0 #9a1020;
+  }
+  .hud-card b{font-family:var(--font-bang);font-size:28px;display:block;color:#fff;letter-spacing:.04em;}
+  .hud-actions{display:flex;gap:6px;margin-top:8px;}
+  .hud-actions button,.hud-actions a{
+    flex:1;text-align:center;border:1px solid var(--gold);background:transparent;color:var(--gold);
+    font-family:var(--font-type);font-size:11px;padding:6px 4px;
+  }
+  .hud-actions button.on{background:var(--gold);color:#1a0b10;}
+  .rooms{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media(max-width:860px){.rooms{grid-template-columns:1fr;}}
+  .room{
+    background:#0c0608;border:1px solid var(--card-border);position:relative;overflow:hidden;min-height:240px;
+  }
+  .room-vid{
+    height:168px;background:
+      radial-gradient(circle at 30% 40%, rgba(255,45,66,.45), transparent 42%),
+      radial-gradient(circle at 70% 60%, rgba(255,196,77,.28), transparent 40%),
+      #220c12;
+    animation:roomPulse 3.2s ease-in-out infinite;
+  }
+  .room:nth-child(2) .room-vid{filter:hue-rotate(40deg);}
+  .room:nth-child(3) .room-vid{filter:hue-rotate(-20deg) saturate(1.2);}
+  @keyframes roomPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
+  .room-meta{padding:12px 12px 14px;}
+  .room-meta h3{font-family:var(--font-bang);font-size:22px;text-transform:uppercase;}
+  .room-meta p{font-size:13px;color:var(--page-muted);margin-top:4px;}
+  .room-live{
+    position:absolute;top:10px;left:10px;background:var(--siren);color:#fff;
+    font-family:var(--font-type);font-size:11px;font-weight:700;padding:3px 7px;
+  }
+  .room-view{position:absolute;top:10px;right:10px;background:#1a0b10;color:var(--lime);font-family:var(--font-type);font-size:11px;padding:3px 7px;}
+  .chat-fly{position:absolute;left:10px;bottom:78px;font-size:12px;color:#fff;text-shadow:0 1px 4px #000;max-width:80%;}
+  .board{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:8px;}
+  .board-row{display:grid;grid-template-columns:48px 1fr auto auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--rule);padding:12px 14px;}
+  .board-row .rk{font-family:var(--font-bang);font-size:22px;color:var(--gold);}
+  .lane-grid{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media(max-width:800px){.lane-grid{grid-template-columns:1fr;}}
+  .lane{background:var(--card);border:1px solid var(--card-border);padding:18px;}
+  .lane h3{font-family:var(--font-bang);font-size:24px;text-transform:uppercase;}
+  .quest-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:10px;}
+  .quest{background:var(--surface);border:1px solid var(--rule);padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:center;}
+  .quest.done{border-color:var(--lime);}
+  .group-box{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:800px){.group-box{grid-template-columns:1fr;}}
+  .composer{max-width:800px;margin:0 auto 18px;display:flex;gap:8px;}
+  .composer input{flex:1;padding:12px;border:1.5px solid var(--rule);background:var(--page);color:var(--page-text);font-family:inherit;}
+  .map-wrap{max-width:1120px;margin:0 auto;background:#0c0608;border:1px solid var(--gold);padding:16px;}
+  .prize{background:var(--card);border:1px solid var(--gold);padding:20px;}
+  .prize h3{font-family:var(--font-bang);font-size:28px;text-transform:uppercase;}
+  @media(max-width:700px){.hud{left:8px;right:8px;bottom:8px;}.hud-card{min-width:0;}}
+
 </head>
 <body>
 
@@ -606,7 +675,9 @@
       <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">☰</button>
     </div>
   </div>
+  <nav class="socials-row" id="socials-row" aria-label="Social networks"></nav>
 </header>
+<div class="hud" id="hud"></div>
 
 <main id="app"></main>
 
@@ -1267,8 +1338,106 @@
     heatH: "People are hitting upgrades right now.",
     heatP: "This is a running board of demo pulls — the same math you'll get at checkout.",
     feedK: "HALL MONITOR WIRE",
-    feedH: "Someone just got lucky."
+    feedH: "Someone just got lucky.",
+    navLive:"Live", navTrade:"Import / Export", navGive:"Giveaways", navQuests:"Quests", navBoard:"Leaderboard", navSocials:"Socials",
+    liveK:"STREAMING IN PUBLIC", liveH:"The locker is live on 18 apps.",
+    liveP:"Whatnot energy. Douyin night market. TikTok shop hosts. Same drop, different time zones.",
+    tradeK:"NAPA → THE WORLD", tradeH:"Import / export lanes are open.",
+    tradeP:"We show the route from Napa Valley lockers to Hong Kong, mainland China, Russia, and the rest of the night.",
+    giveK:"HUGE GIVEAWAYS", giveH:"The whole hall is poppin'.",
+    giveP:"Enter with detention points. Weekly cellar raids, 1-of-1 icons, and crew prizes.",
+    questK:"DAILY QUESTS", questH:"Farm points for every move.",
+    questP:"Scroll. Share. Post. Buy. Sit in a live. Crush grapes. The board never sleeps.",
+    boardK:"HALL OF FAME", boardH:"Who's farming the loudest.",
+    socialsK:"BUILD IN PUBLIC", socialsH:"18 networks. Same sentence.",
+    socialsP:"We stream the drop everywhere the party already is.",
+    groupK:"CREW BUY", groupH:"Fill the locker together.",
+    groupP:"Hit the crew cap and unlock a bonus bottle for everyone in the room.",
+    pointsWord:"PTS",
+    partyOn:"PARTY",
+    partyOff:"MUTE",
+    farmBtn:"Crush grapes",
+    shareBtn:"Share drop",
+    joinCrew:"Join crew",
+    enterGive:"Enter with points",
+    posted:"Posted to the hall.",
+    shared:"Shared. Points banked.",
+    farmed:"Grape crush +2",
+    questDone:"Quest cleared"
   });
+
+  var SOCIALS = [
+    {id:"tiktok", name:"TikTok", url:"https://www.tiktok.com", live:true},
+    {id:"instagram", name:"Instagram", url:"https://www.instagram.com", live:true},
+    {id:"youtube", name:"YouTube", url:"https://www.youtube.com", live:true},
+    {id:"x", name:"X", url:"https://x.com", live:true},
+    {id:"whatnot", name:"Whatnot", url:"https://www.whatnot.com", live:true},
+    {id:"douyin", name:"Douyin", url:"https://www.douyin.com", live:true},
+    {id:"red", name:"Xiaohongshu", url:"https://www.xiaohongshu.com", live:true},
+    {id:"twitch", name:"Twitch", url:"https://www.twitch.tv", live:true},
+    {id:"kick", name:"Kick", url:"https://kick.com", live:false},
+    {id:"discord", name:"Discord", url:"https://discord.com", live:true},
+    {id:"telegram", name:"Telegram", url:"https://telegram.org", live:false},
+    {id:"facebook", name:"Facebook", url:"https://www.facebook.com", live:false},
+    {id:"threads", name:"Threads", url:"https://www.threads.com", live:false},
+    {id:"snapchat", name:"Snapchat", url:"https://www.snapchat.com", live:false},
+    {id:"pinterest", name:"Pinterest", url:"https://www.pinterest.com", live:false},
+    {id:"reddit", name:"Reddit", url:"https://www.reddit.com", live:false},
+    {id:"wechat", name:"WeChat", url:"https://www.wechat.com", live:true},
+    {id:"vk", name:"VK", url:"https://vk.com", live:true}
+  ];
+
+  var ROOMS = [
+    {id:"whatnot", host:"Coach Vale", title:"Whatnot locker raid", chat:"NY just jumped a $220 cab", viewers:1840, product:"cabernet-cram-session"},
+    {id:"douyin", host:"Night Market Mei", title:"Douyin night crush", chat:"HK crew at 11/12 for the bonus", viewers:3920, product:"icon-detention-rare-reds"},
+    {id:"tiktok", host:"Hall Monitor Jax", title:"TikTok shop flash", chat:"Don't blink the sauvignon", viewers:2711, product:"study-hall-sauvignon-blanc"}
+  ];
+
+  var LANES = [
+    {from:"Napa Valley", to:"Hong Kong", hours:16, mode:"Bonded air", note:"Tsim Sha Tsui tasting lockers. Same-week reveal."},
+    {from:"Napa Valley", to:"Shanghai / Shenzhen", hours:18, mode:"Bonded air", note:"Mainland demo lane — licensed importer partner in a live version."},
+    {from:"Napa Valley", to:"Moscow", hours:20, mode:"Bonded air", note:"VK stream + local fulfillment sketch. Weather-packed."},
+    {from:"Napa Valley", to:"Tokyo", hours:14, mode:"Air", note:"Late-night Shibuya watch parties."},
+    {from:"Napa Valley", to:"London", hours:11, mode:"Air", note:"Soho detention after-hours."},
+    {from:"Napa Valley", to:"Dubai", hours:16, mode:"Air", note:"Desert-proof insulation on the box."}
+  ];
+
+  var GIVEAWAYS = [
+    {id:"raid", name:"Friday Cellar Raid", cost:200, prize:"Case of today's drop + a mystery icon", ends:"tonight"},
+    {id:"icon", name:"1-of-1 Stonecrop", cost:500, prize:"Single bottle, $450 SRP, never recast", ends:"Sunday"},
+    {id:"crew", name:"Whole-hall crew prize", cost:80, prize:"If 100 people enter, everyone who entered gets 50 pts back plus a merch stamp", ends:"always on"}
+  ];
+
+  var QUESTS = [
+    {id:"scroll", name:"Scroll the hall", pts:5, how:"scroll"},
+    {id:"live", name:"Sit in a live room", pts:15, how:"live"},
+    {id:"share", name:"Share today's drop", pts:25, how:"share"},
+    {id:"post", name:"Post in the detention feed", pts:20, how:"post"},
+    {id:"farm", name:"Crush 10 grapes", pts:20, how:"farm"},
+    {id:"crew", name:"Join a crew buy", pts:40, how:"crew"},
+    {id:"buy", name:"Lock in a collection", pts:80, how:"buy"}
+  ];
+
+  var BOARD = [
+    {name:"Mei.HK", pts:4280, pulls:19},
+    {name:"Jax.NY", pts:3910, pulls:17},
+    {name:"Vale.Napa", pts:3602, pulls:14},
+    {name:"Anton.MSK", pts:3330, pulls:12},
+    {name:"Rio.LA", pts:2988, pulls:11},
+    {name:"YOU", pts:0, pulls:0}
+  ];
+
+  var posts = [
+    {who:"Mei.HK", text:"Just hit +$131 on the cab. Hong Kong locker is loud."},
+    {who:"Anton.MSK", text:"VK stream is packed. Moscow wants the icon lane."}
+  ];
+  var crewFilled = 9;
+  var farmCount = 0;
+  var questsDone = {};
+  var points = 0;
+  var musicOn = false;
+  var audioCtx = null;
+  var musicHandles = [];
 
   var cart = [];
   var lastOrder = null;
@@ -1298,9 +1467,115 @@
     if (existing) existing.qty += qty;
     else cart.push({slug:slug, qty:qty});
     boughtExtra[slug] = (boughtExtra[slug]||0) + qty;
+    addPoints(80, "buy");
     renderCartCount();
     showToast(t("added") + " " + locProduct(findProduct(slug)).name);
     updateLiveChrome();
+    renderHud();
+  }
+
+  function addPoints(n, questId){
+    points += n;
+    if (questId && !questsDone[questId]){
+      var q = QUESTS.filter(function(x){ return x.id===questId; })[0];
+      if (q && (questId!=="farm" || farmCount>=10)){
+        questsDone[questId] = true;
+        points += q.pts;
+      }
+    }
+    persist();
+    renderHud();
+  }
+  function renderSocials(){
+    var row = document.getElementById("socials-row");
+    if (!row) return;
+    row.innerHTML = SOCIALS.map(function(s){
+      return '<a href="#/live" data-social="'+s.id+'" class="'+(s.live?"live":"")+'">'+s.name+'</a>';
+    }).join("");
+  }
+  function renderHud(){
+    var el = document.getElementById("hud");
+    if (!el) return;
+    BOARD[BOARD.length-1].pts = points;
+    el.innerHTML =
+      '<div class="hud-card">'+
+        '<span>'+t("pointsWord")+'</span><b id="pts-val">'+points+'</b>'+
+        '<div class="hud-actions">'+
+          '<button type="button" id="party-btn" class="'+(musicOn?"on":"")+'">'+(musicOn?t("partyOff"):t("partyOn"))+'</button>'+
+          '<button type="button" id="farm-btn">'+t("farmBtn")+'</button>'+
+          '<a href="#/quests">Quests</a>'+
+        '</div>'+
+      '</div>';
+    var pb = document.getElementById("party-btn");
+    var fb = document.getElementById("farm-btn");
+    if (pb) pb.onclick = toggleMusic;
+    if (fb) fb.onclick = crushGrape;
+  }
+  function crushGrape(){
+    farmCount += 1;
+    addPoints(2, farmCount>=10 ? "farm" : null);
+    showToast(t("farmed")+" ("+farmCount+")");
+  }
+  function shareDrop(){
+    var url = location.href.split("#")[0]+"#/";
+    if (navigator.share){
+      navigator.share({title:"Wine Detention", url:url}).catch(function(){});
+    } else if (navigator.clipboard){
+      navigator.clipboard.writeText(url).catch(function(){});
+    }
+    addPoints(5, "share");
+    showToast(t("shared"));
+  }
+  function toggleMusic(){
+    if (!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    if (musicOn){ stopMusic(); musicOn=false; renderHud(); return; }
+    startParty(); musicOn=true; renderHud();
+  }
+  function stopMusic(){
+    musicHandles.forEach(function(h){ try{ clearInterval(h); }catch(e){} });
+    musicHandles = [];
+    if (audioCtx && audioCtx.state!=="closed"){
+      audioCtx.close();
+      audioCtx = null;
+    }
+  }
+  function startParty(){
+    var ctx = audioCtx;
+    var master = ctx.createGain();
+    master.gain.value = 0.09;
+    master.connect(ctx.destination);
+    var t0 = ctx.currentTime;
+    function kick(){
+      var o = ctx.createOscillator();
+      var g = ctx.createGain();
+      o.type="sine"; o.frequency.setValueAtTime(110, ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(42, ctx.currentTime+0.14);
+      g.gain.setValueAtTime(1, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.16);
+      o.connect(g); g.connect(master); o.start(); o.stop(ctx.currentTime+0.17);
+    }
+    function hat(){
+      var buf = ctx.createBuffer(1, ctx.sampleRate*0.05, ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i=0;i<d.length;i++) d[i] = (Math.random()*2-1)*0.4;
+      var src = ctx.createBufferSource(); src.buffer=buf;
+      var f = ctx.createBiquadFilter(); f.type="highpass"; f.frequency.value=6000;
+      var g = ctx.createGain(); g.gain.value=0.35;
+      src.connect(f); f.connect(g); g.connect(master); src.start();
+    }
+    function bass(){
+      var o = ctx.createOscillator();
+      var g = ctx.createGain();
+      o.type="square"; o.frequency.value = [55,65,73,82][Math.floor(Math.random()*4)];
+      g.gain.setValueAtTime(0.18, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.22);
+      o.connect(g); g.connect(master); o.start(); o.stop(ctx.currentTime+0.24);
+    }
+    kick();
+    musicHandles.push(setInterval(kick, 500));
+    musicHandles.push(setInterval(hat, 250));
+    musicHandles.push(setInterval(bass, 1000));
+    void t0;
   }
   function removeFromCart(slug){
     cart = cart.filter(function(i){ return i.slug!==slug; });
@@ -1359,13 +1634,21 @@
     document.getElementById("lang-select").value = lang;
     renderNav();
     renderFooter();
+    renderSocials();
+    renderHud();
     renderGate();
   }
 
   function renderNav(){
     document.getElementById("nav-links").innerHTML =
       '<a href="#/" data-route="/">'+t("navHome")+'</a>'+
+      '<a href="#/live" data-route="/live">'+t("navLive")+'</a>'+
       '<a href="#/collections" data-route="/collections">'+t("navCollections")+'</a>'+
+      '<a href="#/trade" data-route="/trade">'+t("navTrade")+'</a>'+
+      '<a href="#/giveaways" data-route="/giveaways">'+t("navGive")+'</a>'+
+      '<a href="#/quests" data-route="/quests">'+t("navQuests")+'</a>'+
+      '<a href="#/leaderboard" data-route="/leaderboard">'+t("navBoard")+'</a>'+
+      '<a href="#/socials" data-route="/socials">'+t("navSocials")+'</a>'+
       '<a href="#/how-it-works" data-route="/how-it-works">'+t("navHow")+'</a>'+
       '<a href="#/about" data-route="/about">'+t("navAbout")+'</a>'+
       '<a href="#/faq" data-route="/faq">'+t("navFaq")+'</a>'+
@@ -1378,17 +1661,19 @@
         '<div>'+
           '<div class="footer-brand">Wine Detention</div>'+
           '<p class="footer-blurb">'+t("footBlurb")+'</p>'+
-          '<div class="social-row"><a href="#/contact">X</a><a href="#/contact">Facebook</a><a href="#/contact">Instagram</a></div>'+
+          '<div class="social-row">'+SOCIALS.slice(0,6).map(function(s){ return '<a href="#/live">'+s.name+'</a>'; }).join("")+'</div>'+
         '</div>'+
         '<div><h4>'+t("footSite")+'</h4><ul>'+
           '<li><a href="#/">'+t("navHome")+'</a></li>'+
-          '<li><a href="#/how-it-works">'+t("navHow")+'</a></li>'+
+          '<li><a href="#/live">'+t("navLive")+'</a></li>'+
+          '<li><a href="#/trade">'+t("navTrade")+'</a></li>'+
           '<li><a href="#/about">'+t("footAbout")+'</a></li>'+
           '<li><a href="#/contact">'+t("footContact")+'</a></li>'+
         '</ul></div>'+
         '<div><h4>'+t("footShop")+'</h4><ul>'+
           '<li><a href="#/collections">'+t("footAll")+'</a></li>'+
-          '<li><a href="#/faq">'+t("navFaq")+'</a></li>'+
+          '<li><a href="#/giveaways">'+t("navGive")+'</a></li>'+
+          '<li><a href="#/quests">'+t("navQuests")+'</a></li>'+
           '<li><a href="#/cart">'+t("footCart")+'</a></li>'+
         '</ul></div>'+
         '<div><h4>'+t("footLegal")+'</h4><ul>'+
@@ -1415,6 +1700,7 @@
       '</div>';
     document.getElementById("gate-yes").addEventListener("click", function(){
       gateShown = true;
+      persist();
       document.getElementById("age-gate").classList.add("hidden");
     });
     document.getElementById("gate-no").addEventListener("click", function(){
@@ -1502,6 +1788,15 @@
         quoteCard(t("q3"), t("q3w")) +
       '</div>' +
     '</section>' +
+    '<section class="why-alt">' +
+      '<div class="section-head"><span class="kicker">'+t("liveK")+'</span><h2>'+t("liveH")+'</h2><p>'+t("liveP")+'</p></div>' +
+      roomsHTML() +
+      '<div style="text-align:center;margin-top:22px;"><a class="btn btn-primary" href="#/live">Open the live floor</a></div>' +
+    '</section>' +
+    '<section>' +
+      '<div class="section-head"><span class="kicker">'+t("groupK")+'</span><h2>'+t("groupH")+'</h2><p>'+t("groupP")+'</p></div>' +
+      groupBuyHTML() +
+    '</section>' +
     '<section class="newsletter">' +
       '<div class="newsletter-inner">' +
         '<h2>'+t("newsH")+'</h2>' +
@@ -1557,13 +1852,10 @@
   }
 
   function pageCollections(){
-    return '' +
-    '<div class="page-hero"><div class="wrap">' +
-      '<span class="kicker">'+t("colHeroK")+'</span>' +
-      '<h1>'+t("colHeroH")+'</h1>' +
-      '<p>'+t("colHeroP")+'</p>' +
-    '</div></div>' +
-    '<section><div class="grid-products">' + PRODUCTS.map(locProduct).map(productSlipHTML).join("") + '</div></section>';
+    return pageHero("FULL ROSTER","Every locker still breathing","Flash stock, upgrade odds, and the same bottles the live rooms are yelling about.") +
+      '<section><div class="grid-products">' + PRODUCTS.map(locProduct).map(productSlipHTML).join("") + '</div></section>'+
+      '<section class="why-alt"><div class="section-head"><h2>Don\'t just browse.</h2><p>Sit a stream or farm the vine while these bars burn down.</p></div>'+
+      '<div style="text-align:center;"><a class="btn btn-primary" href="#/live">Jump live</a></div></section>';
   }
 
   function pageProduct(slug){
@@ -1618,70 +1910,147 @@
     '</svg>';
   }
 
-  function pageHowItWorks(){
-    return '' +
-    '<div class="page-hero"><div class="wrap">' +
-      '<span class="kicker">'+t("howK")+'</span>' +
-      '<h1>'+t("howH")+'</h1>' +
-      '<p>'+t("howP")+'</p>' +
-    '</div></div>' +
-    '<div class="content-block">' +
-      journeyStep("1",t("j1t"),t("j1b")) +
-      journeyStep("2",t("j2t"),t("j2b")) +
-      journeyStep("3",t("j3t"),t("j3b")) +
-      journeyStep("4",t("j4t"),t("j4b")) +
-      journeyStep("5",t("j5t"),t("j5b")) +
-      journeyStep("6",t("j6t"),t("j6b")) +
+  function roomsHTML(){
+    return '<div class="rooms">'+ROOMS.map(function(r){
+      return '<article class="room" data-room="'+r.id+'">'+
+        '<span class="room-live">LIVE</span>'+
+        '<span class="room-view">'+r.viewers.toLocaleString()+'</span>'+
+        '<div class="room-vid"></div>'+
+        '<div class="chat-fly">'+r.chat+'</div>'+
+        '<div class="room-meta"><h3>'+r.title+'</h3><p>'+r.host+' · '+locProduct(findProduct(r.product)).name+'</p>'+
+        '<button class="btn btn-primary" data-sit="'+r.id+'" style="margin-top:10px;">Sit in · +15 pts</button></div>'+
+      '</article>';
+    }).join("")+'</div>';
+  }
+  function groupBuyHTML(){
+    var need = 12;
+    var pct = Math.round((crewFilled/need)*100);
+    return '<div class="group-box">'+
+      '<div class="prize"><h3>Napa → HK crew locker</h3><p style="margin:10px 0;">'+crewFilled+' / '+need+' in. Bonus bottle unlocks at 12.</p>'+
+        '<div class="stock-bar"><i style="width:'+pct+'%"></i></div>'+
+        '<button class="btn btn-primary" id="join-crew" style="margin-top:12px;">'+t("joinCrew")+'</button></div>'+
+      '<div class="prize"><h3>Moscow night crew</h3><p style="margin:10px 0;">VK stream is filling a parallel locker. Same drop, later timezone.</p>'+
+        '<a class="btn btn-dark" href="#/live" style="margin-top:12px;display:inline-block;">Watch VK / Whatnot</a></div>'+
     '</div>';
+  }
+  function pageHero(k,h,p){
+    return '<div class="page-hero"><div class="wrap"><span class="kicker">'+k+'</span><h1>'+h+'</h1><p>'+p+'</p></div></div>';
+  }
+  function pageLive(){
+    var feed = posts.map(function(p){ return '<div class="feed-row"><span><b>'+p.who+'</b> — '+p.text+'</span></div>'; }).join("");
+    return pageHero(t("liveK"), t("liveH"), t("liveP")) +
+      '<section>'+roomsHTML()+'</section>'+
+      '<section><div class="section-head"><span class="kicker">HALL FEED</span><h2>Post it while it\'s hot.</h2></div>'+
+        '<form class="composer" id="post-form"><input id="post-text" maxlength="140" placeholder="Drop a line for the hall..." required><button class="btn btn-primary" type="submit">Post · +20</button></form>'+
+        '<div class="board" style="max-width:800px;">'+feed+'</div></section>';
+  }
+  function pageTrade(){
+    var lanes = LANES.map(function(l){
+      return '<div class="lane"><h3>'+l.from+' → '+l.to+'</h3><p style="margin-top:8px;">'+l.hours+'h · '+l.mode+'</p><p style="margin-top:8px;color:var(--page-muted);">'+l.note+'</p></div>';
+    }).join("");
+    return pageHero(t("tradeK"), t("tradeH"), t("tradeP")) +
+      '<section><div class="map-wrap">'+
+        '<svg viewBox="0 0 800 260" width="100%" aria-hidden="true">'+
+          '<circle cx="120" cy="150" r="8" fill="#ffc44d"/><text x="136" y="155" fill="#f6ecd8" font-size="14">Napa</text>'+
+          '<circle cx="620" cy="70" r="7" fill="#ff2d42"/><text x="636" y="74" fill="#f6ecd8" font-size="14">HK / CN</text>'+
+          '<circle cx="560" cy="90" r="6" fill="#d6ff3c"/><text x="400" y="40" fill="#f6ecd8" font-size="13">Moscow</text>'+
+          '<path d="M128 150 C 300 40, 480 30, 616 70" stroke="#ffc44d" fill="none" stroke-width="2"/>'+
+          '<path d="M128 150 C 260 20, 420 10, 500 40" stroke="#ff2d42" fill="none" stroke-width="2"/>'+
+        '</svg>'+
+        '<p style="text-align:center;color:var(--gold);font-family:var(--font-type);font-size:13px;">Bonded air lanes sketched for a live importer network. Demo only.</p>'+
+      '</div></section>'+
+      '<section><div class="lane-grid">'+lanes+'</div></section>';
+  }
+  function pageGiveaways(){
+    var cards = GIVEAWAYS.map(function(g){
+      return '<div class="prize"><h3>'+g.name+'</h3><p style="margin:10px 0;">'+g.prize+'</p><p style="font-family:var(--font-type);color:var(--gold);">'+g.cost+' pts · ends '+g.ends+'</p>'+
+        '<button class="btn btn-primary" data-enter="'+g.id+'" style="margin-top:12px;">'+t("enterGive")+'</button></div>';
+    }).join("");
+    return pageHero(t("giveK"), t("giveH"), t("giveP")) +
+      '<section><div class="lane-grid">'+cards+'</div></section>';
+  }
+  function pageQuests(){
+    var rows = QUESTS.map(function(q){
+      return '<div class="quest'+(questsDone[q.id]?" done":"")+'"><div><strong>'+q.name+'</strong><div style="color:var(--page-muted);font-size:13px;">+'+q.pts+' pts</div></div>'+
+        (questsDone[q.id] ? '<span class="pill lime">DONE</span>' : '<span class="pill">OPEN</span>')+'</div>';
+    }).join("");
+    return pageHero(t("questK"), t("questH"), t("questP")) +
+      '<section><div class="quest-list">'+rows+'</div>'+
+      '<div style="text-align:center;margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">'+
+        '<button class="btn btn-primary" id="share-drop">'+t("shareBtn")+'</button>'+
+        '<button class="btn btn-dark" id="farm-more">'+t("farmBtn")+'</button>'+
+      '</div></section>';
+  }
+  function pageLeaderboard(){
+    var sorted = BOARD.slice().sort(function(a,b){ return b.pts-a.pts; });
+    var rows = sorted.map(function(p,i){
+      return '<div class="board-row"><span class="rk">'+(i+1)+'</span><div><strong>'+p.name+'</strong></div><span>'+p.pulls+' pulls</span><span class="hit">'+p.pts+' pts</span></div>';
+    }).join("");
+    return pageHero(t("boardK"), t("boardH"), "Detention points from scrolling, farming, posting, sharing, sitting live, and locking drops.") +
+      '<section><div class="board">'+rows+'</div></section>';
+  }
+  function pageSocials(){
+    var cards = SOCIALS.map(function(s){
+      return '<div class="lane"><h3>'+s.name+'</h3><p style="margin-top:8px;">'+(s.live?"LIVE now — we\'re building in public.":"Clip archive + drop alerts.")+'</p>'+
+        '<a class="btn btn-dark" href="#/live" style="margin-top:12px;display:inline-block;">Open room</a></div>';
+    }).join("");
+    return pageHero(t("socialsK"), t("socialsH"), t("socialsP")) +
+      '<section><div class="lane-grid">'+cards+'</div></section>';
+  }
+
+  function pageHowItWorks(){
+    return pageHero("THE SYLLABUS","How the whole party works","Drop. Stream. Farm points. Export the case. This is not a quiet wine club.") +
+      '<section><div class="steps">'+
+        stepCard("1","Catch the live locker","Home and Live run the same daily sentence. Stock burns on a clock.")+
+        stepCard("2","Sit the stream","Whatnot / Douyin / TikTok rooms. Sitting in one is a quest.")+
+        stepCard("3","Crew up","Fill a group locker for a bonus bottle.")+
+        stepCard("4","Pay one price","Three bottles assigned at checkout. Floor is your buy-in.")+
+        stepCard("5","Bank points","Scroll, share, post, farm, buy. Giveaways spend the same points.")+
+        stepCard("6","Export the case","Napa can ride to HK, China, Russia, Tokyo, London, Dubai in a live importer version.")+
+      '</div></section>';
   }
   function journeyStep(n,title,body){ return '<h2>'+n+'. '+title+'</h2><p>'+body+'</p>'; }
 
   function pageAbout(){
-    return '' +
-    '<div class="page-hero"><div class="wrap">' +
-      '<span class="kicker">'+t("aboutK")+'</span>' +
-      '<h1>'+t("aboutH")+'</h1>' +
-      '<p>'+t("aboutP")+'</p>' +
-    '</div></div>' +
-    '<div class="content-block">' +
-      '<h2>'+t("a1t")+'</h2><p>'+t("a1b")+'</p>' +
-      '<h2>'+t("a2t")+'</h2><p>'+t("a2b")+'</p>' +
-      '<h2>'+t("a3t")+'</h2><p>'+t("a3b")+'</p>' +
-      '<h2>'+t("a4t")+'</h2><p>'+t("a4b")+'</p>' +
-    '</div>';
+    return pageHero("DETENTION FILE","We stream the cellar","Wine Detention is a Napa-born drop desk that refuses markdowns and refuses to be quiet.") +
+      '<section><div class="lane-grid">'+
+        '<div class="lane"><h3>Why we exist</h3><p style="margin-top:10px;">Buying wine online is either a known bottle at a sad markup or a discount bin that cheapens the winery. We keep sticker. The thrill is the assignment.</p></div>'+
+        '<div class="lane"><h3>Build in public</h3><p style="margin-top:10px;">Eighteen networks. Same locker. If the hall is poppin\' on Douyin at 2am Hong Kong, Napa hears it.</p></div>'+
+        '<div class="lane"><h3>Vine & Recess Co.</h3><p style="margin-top:10px;">Fictional operator for this concept — sourcing, bonded lanes, and the party audio.</p></div>'+
+      '</div></section>'+
+      '<div class="content-block"><h2>A note on this demo</h2><p>No real wine ships, no real payment moves, no real export license is claimed. The lanes and streams are the product story.</p></div>';
   }
 
   function pageFAQ(){
-    var items = t("faqs").map(function(f,idx){
+    var extra = [
+      {q:"Do you really stream on Whatnot and Douyin?", a:"This demo stages live rooms on the site. A live version would simulcast the same locker to Whatnot, Douyin, TikTok Shop, Twitch, and the rest of the 18."},
+      {q:"Can Napa wine actually go to Hong Kong, China, or Russia?", a:"The Import / Export page is the route map we would run with licensed importers. This demo does not move alcohol across borders."},
+      {q:"How do detention points work?", a:"You earn them by scrolling, crushing grapes, posting, sharing, sitting in a live, joining a crew, and locking a collection. Spend them on giveaways."},
+      {q:"What is a crew buy?", a:"A group locker. When the room hits the cap, everyone in that crew is sketched to unlock a bonus bottle."}
+    ];
+    var items = extra.concat(t("faqs")).map(function(f,idx){
       return '<div class="faq-item" data-idx="'+idx+'">' +
         '<button class="faq-q"><span>'+f.q+'</span><span class="plus">+</span></button>' +
         '<div class="faq-a"><p>'+f.a+'</p></div>' +
       '</div>';
     }).join("");
-    return '' +
-    '<div class="page-hero"><div class="wrap">' +
-      '<span class="kicker">'+t("faqK")+'</span>' +
-      '<h1>'+t("faqH")+'</h1>' +
-    '</div></div>' +
-    '<section><div class="faq-list">'+items+'</div></section>';
+    return pageHero(t("faqK"), t("faqH"), "Drops, streams, points, and export lanes — read before you raise your hand.") +
+      '<section><div class="faq-list">'+items+'</div></section>';
   }
 
   function pageContact(){
-    return '' +
-    '<div class="page-hero"><div class="wrap">' +
-      '<span class="kicker">'+t("contactK")+'</span>' +
-      '<h1>'+t("contactH")+'</h1>' +
-      '<p>'+t("contactP")+'</p>' +
-    '</div></div>' +
-    '<div class="content-block">' +
-      '<form id="contact-form">' +
-        '<div class="form-row"><label for="c-name">'+t("name")+'</label><input id="c-name" required></div>' +
-        '<div class="form-row"><label for="c-email">'+t("email")+'</label><input id="c-email" type="email" required></div>' +
-        '<div class="form-row"><label for="c-msg">'+t("message")+'</label><textarea id="c-msg" rows="5" required></textarea></div>' +
-        '<button class="btn btn-primary" type="submit">'+t("send")+'</button>' +
-        '<div id="contact-msg" style="margin-top:14px;font-family:var(--font-type);font-size:13.5px;color:var(--accent);"></div>' +
-      '</form>' +
-    '</div>';
+    return pageHero("NOTE TO THE OFFICE","Ping the hall monitors","Press, importer partners, stream hosts, or a wild giveaway idea.") +
+      '<div class="content-block">' +
+        '<p>Napa desk · HK night desk · Moscow VK desk. This form stays in your browser.</p>'+
+        '<form id="contact-form">' +
+          '<div class="form-row"><label for="c-name">'+t("name")+'</label><input id="c-name" required></div>' +
+          '<div class="form-row"><label for="c-email">'+t("email")+'</label><input id="c-email" type="email" required></div>' +
+          '<div class="form-row"><label for="c-msg">'+t("message")+'</label><textarea id="c-msg" rows="5" required></textarea></div>' +
+          '<button class="btn btn-primary" type="submit">'+t("send")+'</button>' +
+          '<div id="contact-msg" style="margin-top:14px;font-family:var(--font-type);font-size:13.5px;color:var(--accent);"></div>' +
+        '</form>' +
+        '<p style="margin-top:28px;"><a href="#/socials">Or yell at us on all 18 networks →</a></p>'+
+      '</div>';
   }
 
   function pagePolicy(kind){
@@ -1796,6 +2165,12 @@
     if (route === "/" ) html = pageHome();
     else if (route === "/collections") html = pageCollections();
     else if (route.indexOf("/product/") === 0) html = pageProduct(route.replace("/product/",""));
+    else if (route === "/live") html = pageLive();
+    else if (route === "/trade") html = pageTrade();
+    else if (route === "/giveaways") html = pageGiveaways();
+    else if (route === "/quests") html = pageQuests();
+    else if (route === "/leaderboard") html = pageLeaderboard();
+    else if (route === "/socials") html = pageSocials();
     else if (route === "/how-it-works") html = pageHowItWorks();
     else if (route === "/about") html = pageAbout();
     else if (route === "/faq") html = pageFAQ();
@@ -1811,6 +2186,7 @@
     highlightNav(route);
     bindPageEvents(route);
     document.getElementById("nav-links").classList.remove("open");
+    renderHud();
   }
 
   function highlightNav(route){
@@ -1882,6 +2258,44 @@
         });
       }
     }
+    document.querySelectorAll("[data-sit]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        addPoints(0, "live");
+        showToast("Sat in "+btn.getAttribute("data-sit")+" · +15");
+      });
+    });
+    var crew = document.getElementById("join-crew");
+    if (crew) crew.addEventListener("click", function(){
+      crewFilled = Math.min(12, crewFilled+1);
+      addPoints(0, "crew");
+      showToast("Crew "+crewFilled+"/12");
+      render();
+    });
+    var post = document.getElementById("post-form");
+    if (post) post.addEventListener("submit", function(e){
+      e.preventDefault();
+      var tx = document.getElementById("post-text").value.trim();
+      if (!tx) return;
+      posts.unshift({who:"YOU", text:tx});
+      addPoints(0, "post");
+      showToast(t("posted"));
+      render();
+    });
+    document.querySelectorAll("[data-enter]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var g = GIVEAWAYS.filter(function(x){ return x.id===btn.getAttribute("data-enter"); })[0];
+        if (!g) return;
+        if (points < g.cost){ showToast("Need "+g.cost+" pts"); return; }
+        points -= g.cost;
+        persist();
+        showToast("Entered "+g.name);
+        renderHud();
+      });
+    });
+    var sd = document.getElementById("share-drop");
+    if (sd) sd.addEventListener("click", shareDrop);
+    var fm = document.getElementById("farm-more");
+    if (fm) fm.addEventListener("click", crushGrape);
   }
 
   function processOrder(){
@@ -1910,6 +2324,10 @@
     try {
       localStorage.setItem("wd-theme", theme);
       localStorage.setItem("wd-lang", lang);
+      localStorage.setItem("wd-points", String(points));
+      localStorage.setItem("wd-quests", JSON.stringify(questsDone));
+      localStorage.setItem("wd-farm", String(farmCount));
+      localStorage.setItem("wd-gate", gateShown ? "1" : "0");
     } catch (e) {}
   }
 
@@ -1919,6 +2337,12 @@
       var savedLang = localStorage.getItem("wd-lang");
       if (savedTheme === "light" || savedTheme === "dark") theme = savedTheme;
       if (savedLang && STR[savedLang]) lang = savedLang;
+      var p = parseInt(localStorage.getItem("wd-points")||"0",10);
+      if (!isNaN(p)) points = p;
+      var qd = JSON.parse(localStorage.getItem("wd-quests")||"{}");
+      if (qd && typeof qd==="object") questsDone = qd;
+      farmCount = parseInt(localStorage.getItem("wd-farm")||"0",10)||0;
+      if (localStorage.getItem("wd-gate")==="1") gateShown = true;
     } catch (e) {}
   }
 
@@ -1954,6 +2378,13 @@
       el.textContent = formatRemain(endOfDay() - Date.now());
     });
   }
+
+  var scrolledOnce = false;
+  window.addEventListener("scroll", function(){
+    if (scrolledOnce || window.scrollY < 200) return;
+    scrolledOnce = true;
+    addPoints(0, "scroll");
+  }, {passive:true});
 
   loadPrefs();
   applyPrefs();
