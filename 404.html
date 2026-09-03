@@ -563,7 +563,7 @@
   .form-row{margin-bottom:16px;display:flex;flex-direction:column;gap:6px;}
   .form-row label{font-family:var(--font-type);font-size:12.5px;color:var(--page-muted);}
   .form-row input,.form-row textarea{
-    padding:11px 12px;border:1.5px solid var(--page-muted);background:var(--page);color:var(--page-text);font-family:var(--font-body);font-size:14.5px;
+    padding:11px 12px;border:1.5px solid var(--page-muted);background:var(--page);color:var(--page-text);font-family:var(--font-body);font-size:16px;
   }
   .form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   @media(max-width:520px){.form-grid2{grid-template-columns:1fr;}}
@@ -819,6 +819,7 @@
 
   .hud{display:none !important;}
 
+  #party-audio{position:absolute;width:0;height:0;opacity:0;pointer-events:none;}
   .nowbar{
     position:fixed;left:calc(var(--rail-w) + 12px);right:auto;z-index:186;
     bottom:calc(16px + env(safe-area-inset-bottom,0px));
@@ -1232,6 +1233,57 @@
   .right-rail{display:none !important;}
   header.site,main#app,footer.site{margin-right:0 !important;}
   .ticker{display:none !important;}
+  .unveil-avg{
+    margin:8px 0 6px;font-size:12px;font-weight:800;letter-spacing:.08em;
+    text-transform:uppercase;opacity:.82;
+  }
+  .hero-card,.slip,.lane,.bottle-card,.auth-card,.gate-card,.gift-strip,.gc{
+    overflow:hidden;
+  }
+  input,select,textarea{font-size:16px;}
+  h1,h2,h3{overflow-wrap:anywhere;}
+  @media (max-width:1023px){
+    :root{ --rail-w:52px; }
+    header.site{
+      display:flex !important;flex-direction:row !important;align-items:center !important;
+      min-height:48px;
+    }
+    .urgency{
+      flex:1;min-width:0;
+      padding:8px 8px 8px 10px !important;
+      min-height:48px !important;
+      border-bottom:0 !important;
+    }
+    #watchers{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:38vw;}
+    .nav-row{
+      position:static !important;top:auto !important;right:auto !important;left:auto !important;
+      height:48px !important;width:auto !important;margin:0 !important;padding:4px 8px !important;
+      background:transparent !important;border:0 !important;
+    }
+    .hero-card{box-shadow:0 8px 24px rgba(22,24,35,.1) !important;}
+    .hero h1,.page-hero h1,.gifts-hero h1,.section-head h2,.pd-info h1,.empty-state h2,.gift-form h2{
+      font-size:clamp(26px,8vw,40px) !important;
+      line-height:1.05 !important;
+    }
+    .hero-card .price,.pd-price-block .price{font-size:clamp(32px,10vw,48px) !important;}
+    .gifts-stack{overflow:hidden;max-width:100%;}
+    .unveil-num{font-size:clamp(64px,18vw,120px);}
+    .unveil-boom{font-size:clamp(36px,12vw,64px);text-shadow:0 4px 0 #CC3433;}
+    .left-rail{border-right:1px solid #E8E8EA;}
+    main#app{isolation:isolate;overflow-x:hidden;padding-bottom:24px;}
+    footer.site{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px)) !important;}
+    .nowbar{
+      left:calc(var(--rail-w) + 8px) !important;right:auto !important;
+      width:min(220px, calc(100vw - var(--rail-w) - 88px)) !important;
+      max-width:220px !important;z-index:184;
+    }
+    .content-block,.cart-page,.checkout-page,.product-detail{padding-left:14px;padding-right:14px;}
+    .product-detail{padding-top:20px;}
+    .pd-visual{aspect-ratio:1;max-height:280px;}
+    .gift-strip{padding:16px;}
+    .gift-strip h2{font-size:22px;}
+    .added-toast{left:calc(50% + var(--rail-w)/2);max-width:calc(100vw - var(--rail-w) - 24px);}
+  }
 </style>
 </head>
 <body>
@@ -1300,6 +1352,7 @@
 <div id="auth-overlay" class="auth-overlay hidden" hidden></div>
 <div class="hud" id="hud"></div>
 <div class="nowbar" id="nowbar"></div>
+<audio id="party-audio" playsinline loop preload="auto"></audio>
 <div class="chat-root" id="chat-root">
   <div class="wd-widget hidden" id="chat-panel" role="dialog" aria-label="Wine Detention help">
     <div class="wd-widget-head">
@@ -2057,6 +2110,17 @@
   ];
 
   var TRACKS = [
+    {id:"superboy", title:"Superboy (First Person)", artist:"Superboy", album:"First Person", dur:"2:36", src:"audio/superboy-first-person-v1.m4a"},
+    {id:"superboy-v2", title:"Superboy (First Person) V2", artist:"Superboy", album:"First Person", dur:"2:36", src:"audio/superboy-first-person-v2.m4a"},
+    {id:"superboy-v2b", title:"Superboy (First Person) V2.1", artist:"Superboy", album:"First Person", dur:"2:36", src:"audio/superboy-first-person-v2-1.m4a"},
+    {id:"superboy-hard-v1", title:"Superboy (Hardstyle Mix)", artist:"Superboy", album:"Hardstyle", dur:"2:52", src:"audio/superboy-hardstyle-v1.m4a"},
+    {id:"superboy-hard-v2", title:"Superboy (Hardstyle Mix) V2", artist:"Superboy", album:"Hardstyle", dur:"2:55", src:"audio/superboy-hardstyle-v2.m4a"},
+    {id:"superboy-male-v1", title:"Superboy (Male Vocals)", artist:"Superboy", album:"Male Vocals", dur:"2:55", src:"audio/superboy-male-v1.m4a"},
+    {id:"superboy-male-remix", title:"Superboy (Male Vocals Remix)", artist:"Superboy", album:"Male Vocals", dur:"2:39", src:"audio/superboy-male-v1-remix.m4a"},
+    {id:"superboy-male-v2", title:"Superboy (Male Vocals) V2", artist:"Superboy", album:"Male Vocals", dur:"2:51", src:"audio/superboy-male-v2.m4a"},
+    {id:"superboy-cut", title:"Superboy", artist:"Superboy", album:"Superboy", dur:"2:34", src:"audio/superboy.m4a"},
+    {id:"superboy-1", title:"Superboy 1", artist:"Superboy", album:"Superboy", dur:"3:00", src:"audio/superboy-1.m4a"},
+    {id:"superboy-2", title:"Superboy 2", artist:"Superboy", album:"Superboy", dur:"3:01", src:"audio/superboy-2.m4a"},
     {id:"cork", title:"Cork Pop Cabernet", artist:"Hall Monitor Band", album:"Detention Radio Vol. 1", dur:"2:58", bpm:120, kick:500, hat:250, notes:[55,65,73,82]},
     {id:"wrigley", title:"Wrigley After Dark", artist:"Vine & Recess", album:"Night Game", dur:"3:12", bpm:108, kick:555, hat:278, notes:[49,58,65,73]},
     {id:"napa", title:"Napa Neon", artist:"Mei HK", album:"Export Lanes", dur:"2:41", bpm:126, kick:476, hat:238, notes:[62,70,78,93]},
@@ -2094,10 +2158,10 @@
     {id:"sentence", name:"First Sentence", emoji:"📜", blurb:"Opening drop, founding crew."}
   ];
   var GIFT_MULTS = [
-    {w:45, m:1.04}, {w:22, m:1.18}, {w:14, m:1.35}, {w:10, m:1.55},
-    {w:5, m:1.90}, {w:2.2, m:2.50}, {w:1.1, m:5}, {w:0.5, m:10}, {w:0.2, m:18}
+    {w:24, m:1.10}, {w:22, m:1.20}, {w:32, m:1.35}, {w:13, m:1.48},
+    {w:6, m:1.65}, {w:2, m:2.1}, {w:0.7, m:3.5}, {w:0.22, m:8}, {w:0.08, m:18}
   ];
-  var giftDraft = {designId:"launch-0", format:"digital", amount:50, custom:false, who:"friend", to:"", from:"", note:"", song:"cork"};
+  var giftDraft = {designId:"launch-0", format:"digital", amount:50, custom:false, who:"friend", to:"", from:"", note:"", song:"superboy"};
   var gifts = [];
   var userBadges = [];
   var unveilHandles = [];
@@ -2105,13 +2169,13 @@
   var unveilChunks = [];
   var giftReturnTo = "";
   var lastContentRoute = "/";
-  var nowPlayingId = "cork";
+  var nowPlayingId = "superboy";
   var jukeQueue = [
     {id:"wrigley", by:"Mei.HK", pts:40},
     {id:"napa", by:"Anton.MSK", pts:40}
   ];
   var karaokeQueue = [
-    {who:"Vale.Napa", song:"Cork Pop Cabernet"},
+    {who:"Vale.Napa", song:"Superboy (First Person)"},
     {who:"Rio.LA", song:"Ivy Wall Disco"}
   ];
   var onStage = {who:"Jax.NY", song:"Wrigley After Dark", viewers:38};
@@ -2243,6 +2307,17 @@
       '<a href="#/gifts/mine" class="'+(on==="mine"?"on":"")+'">My gifts</a>'+
     '</div>';
   }
+  function giftAvgMult(){
+    var tw=0, ev=0;
+    GIFT_MULTS.forEach(function(x){ tw+=x.w; ev+=x.w*x.m; });
+    return ev/tw;
+  }
+  function giftAvgPct(){ return Math.round((giftAvgMult()-1)*100); }
+  function giftFloorPct(){
+    var m=GIFT_MULTS[0].m;
+    GIFT_MULTS.forEach(function(x){ if (x.m<m) m=x.m; });
+    return Math.round((m-1)*100);
+  }
   function rollGiftMult(){
     var total=0; GIFT_MULTS.forEach(function(x){ total+=x.w; });
     var r=Math.random()*total, acc=0;
@@ -2255,6 +2330,34 @@
   function formatMult(m){
     if (m>=2) return (Math.round(m*10)/10)+"×";
     return "+" + Math.round((m-1)*100) + "%";
+  }
+  function giftOddsNote(){
+    return "Most rolls land +35%. Floor +"+giftFloorPct()+"%. Hall average +"+giftAvgPct()+"%. Jackpot 18×.";
+  }
+  function giftOpenedHTML(g){
+    return '<div class="unveil-boom">'+formatMult(g.mult)+'</div>'+
+      '<p class="unveil-avg">This roll · hall average +'+giftAvgPct()+'%</p>'+
+      '<p>'+money(g.amount)+' became <b>'+money(g.payout)+'</b> hall credit.</p>';
+  }
+  function poolOdds(pool, b){
+    var tw=0; pool.forEach(function(x){ tw+=x.weight; });
+    return tw ? Math.round(b.weight/tw*100) : 0;
+  }
+  function cloneBottle(b){
+    return {
+      producer:b.producer, cuvee:b.cuvee, vintage:b.vintage, ava:b.ava,
+      grapes:b.grapes, abv:b.abv, cases:b.cases, notes:b.notes,
+      value:b.value, name:b.name
+    };
+  }
+  function saveLastOrder(){
+    try { sessionStorage.setItem("wd-last-order", JSON.stringify(lastOrder)); } catch (e) {}
+  }
+  function loadLastOrder(){
+    try {
+      var o = JSON.parse(sessionStorage.getItem("wd-last-order")||"null");
+      if (o && o.orderId) lastOrder = o;
+    } catch (e) {}
   }
   function giftCode(){
     var s="ABCDEFGHJKLMNPQRSTUVWXYZ23456789", out="WD-";
@@ -2382,13 +2485,43 @@
     var p = String(s||"0:00").split(":");
     return (parseInt(p[0],10)||0)*60 + (parseInt(p[1],10)||0) || 180;
   }
+  var fileAudio = null;
+  function partyAudioEl(){
+    if (fileAudio) return fileAudio;
+    fileAudio = document.getElementById("party-audio");
+    if (!fileAudio){
+      fileAudio = document.createElement("audio");
+      fileAudio.id = "party-audio";
+      fileAudio.setAttribute("playsinline", "");
+      fileAudio.loop = true;
+      fileAudio.preload = "auto";
+      document.body.appendChild(fileAudio);
+    }
+    fileAudio.loop = true;
+    fileAudio.setAttribute("playsinline", "");
+    return fileAudio;
+  }
+  function audioUrl(src){
+    try { return new URL(src, location.href.split("#")[0]).href; }
+    catch (e) { return src; }
+  }
+  function refreshPartySoon(){
+    if (currentRoute().split("?")[0]!=="/party") return;
+    clearTimeout(refreshPartySoon._t);
+    refreshPartySoon._t = setTimeout(function(){
+      if (currentRoute().split("?")[0]==="/party") render();
+    }, 80);
+  }
   function toggleMusic(){
     if (musicOn){
-      pausedElapsed = (Date.now()-musicStarted)/1000;
+      var cur = findTrack(nowPlayingId);
+      var el = partyAudioEl();
+      pausedElapsed = (cur.src && el) ? (el.currentTime || 0) : (Date.now()-musicStarted)/1000;
       stopMusic();
       musicOn = false;
       renderNowBar();
       renderHud();
+      refreshPartySoon();
       return;
     }
     playTrack(nowPlayingId);
@@ -2396,22 +2529,22 @@
   function stopMusic(){
     musicHandles.forEach(function(h){ try{ clearInterval(h); }catch(e){} });
     musicHandles = [];
+    var el = document.getElementById("party-audio") || fileAudio;
+    if (el){ try{ el.pause(); }catch(e){} }
     if (audioMaster){ try{ audioMaster.disconnect(); }catch(e){} audioMaster=null; }
   }
   function playTrack(id){
     var tr = findTrack(id);
     if (tr.id !== nowPlayingId) pausedElapsed = 0;
     nowPlayingId = tr.id;
-    if (!audioCtx || audioCtx.state==="closed") audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-    if (audioCtx.state==="suspended") audioCtx.resume();
     stopMusic();
-    startParty(tr);
     musicOn = true;
     musicStarted = Date.now() - pausedElapsed*1000;
-    pausedElapsed = 0;
+    startParty(tr);
     renderHud();
     renderNowBar();
     startProgressLoop();
+    refreshPartySoon();
   }
   function skipTrack(dir){
     var i = 0;
@@ -2419,8 +2552,7 @@
     var next = TRACKS[(i+dir+TRACKS.length)%TRACKS.length];
     pausedElapsed = 0;
     if (musicOn) playTrack(next.id);
-    else { nowPlayingId = next.id; renderNowBar(); }
-    if (currentRoute().split("?")[0]==="/party") render();
+    else { nowPlayingId = next.id; renderNowBar(); refreshPartySoon(); }
   }
   function startProgressLoop(){
     if (progressTimer) return;
@@ -2429,13 +2561,46 @@
   function updateNowProgress(){
     var el = document.getElementById("now-fill");
     if (!el) return;
-    var dur = parseDur(findTrack(nowPlayingId).dur);
+    var tr = findTrack(nowPlayingId);
+    var dur = parseDur(tr.dur);
     var elapsed = musicOn ? (Date.now()-musicStarted)/1000 : pausedElapsed;
+    var a = document.getElementById("party-audio") || fileAudio;
+    if (tr.src && a && a.duration && isFinite(a.duration)){
+      dur = a.duration;
+      elapsed = musicOn ? a.currentTime : pausedElapsed;
+    }
     el.style.width = (Math.min(0.999, (elapsed % dur) / dur) * 100) + "%";
   }
   var audioMaster = null;
+  function startFileTrack(tr){
+    var a = partyAudioEl();
+    var next = audioUrl(tr.src);
+    var resumeAt = pausedElapsed;
+    pausedElapsed = 0;
+    a.volume = 1;
+    a.muted = false;
+    if (a.getAttribute("data-src") !== tr.src){
+      a.src = next;
+      a.setAttribute("data-src", tr.src);
+    }
+    if (resumeAt > 0){
+      a.onloadedmetadata = function(){
+        a.onloadedmetadata = null;
+        try { a.currentTime = resumeAt; } catch (e) {}
+      };
+    } else {
+      try { if (a.currentTime > 0.2) a.currentTime = 0; } catch (e) {}
+    }
+    var p = a.play();
+    if (p && p.catch) p.catch(function(){
+      showToast("Tap play again — the browser blocked audio.");
+    });
+  }
   function startParty(tr){
     tr = tr || findTrack(nowPlayingId);
+    if (tr.src){ startFileTrack(tr); return; }
+    if (!audioCtx || audioCtx.state==="closed") audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    if (audioCtx.state==="suspended") audioCtx.resume();
     var ctx = audioCtx;
     var master = ctx.createGain();
     master.gain.value = 0.09;
@@ -2670,7 +2835,7 @@
         saveGifts();
         awardLaunchBadges();
         addPoints(25);
-        if (body) body.innerHTML = '<div class="unveil-boom">'+formatMult(g.mult)+'</div><p>'+money(g.amount)+' became <b>'+money(g.payout)+'</b> hall credit.</p>';
+        if (body) body.innerHTML = giftOpenedHTML(g);
         if (ctx) paintUnveil(ctx, g, 0, true);
         burstFx();
         showToast("Bonus "+formatMult(g.mult)+" · "+money(g.payout));
@@ -2949,8 +3114,8 @@
   }
   function hallReply(q){
     var s = String(q||"").toLowerCase();
-    if (/gift|bonus|unveil|card/.test(s)) return "Gift cards run $10–$500. After you send one, a private unveil shows a bonus — never under +4%, usually around +35%, rarely up to 18×. Demo only: no money moves.";
-    if (/music|jukebox|party|song|play|radio/.test(s)) return "The mini player is original Detention Radio. Play, skip, or open Party for the full jukebox.";
+    if (/gift|bonus|unveil|card/.test(s)) return "Gift cards run $10–$500. The unveil rolls a weighted bonus — most often +35%, never under +"+giftFloorPct()+"%, hall average +"+giftAvgPct()+"%, rare jackpots to 18×. Demo only: no money moves.";
+    if (/music|jukebox|party|song|play|radio|superboy/.test(s)) return "The hall opens on Superboy (First Person). Skip into original Detention Radio loops, or open Party for the full jukebox.";
     if (/login|account|sign|pass/.test(s)) return "Tap Log in in the header. New here? Switch to Sign up on that sheet. It stays on this device.";
     if (/how it works|how does/.test(s)) return "Pick a locker. Pay one price. At checkout we assign three bottles from that pool — every one at least the buy-in. Vintage, AVA, and SRP are listed before you pay.";
     if (/drop|wine|buy|shop|sentence|locker|pinot|cabernet|chardonnay|sauvignon|bottle|allocation/.test(s)) return "Five lockers are open — Sauvignon Blanc, Chardonnay, Pinot, Cabernet, and Icon. Every bottle lists vintage, AVA, and SRP. Floor is always the buy-in. We don’t ship alcohol in this preview.";
@@ -3200,7 +3365,7 @@
     '</section>' +
     '<section>' +
       '<div class="gift-strip">' +
-        '<div><h2>Gift cards · avg +35% more</h2><p>Send a friend an 8-second unveil. Launch weekend: 3 digital badges. Floor +4%. Jackpot 18×.</p></div>' +
+        '<div><h2>Gift cards · avg +'+giftAvgPct()+'% more</h2><p>Send a friend an 8-second unveil. Most rolls land near +35%. Floor +'+giftFloorPct()+'%. Jackpot 18×.</p></div>' +
         '<a class="btn btn-primary" href="#/gifts">Shop gift cards</a>' +
       '</div>' +
     '</section>' +
@@ -3322,8 +3487,10 @@
     if (!raw) return '<div class="content-block"><h2>'+t("notFound")+'</h2><p>'+t("notFoundP")+' <a href="#/collections">'+t("backCols")+'</a>.</p></div>';
     var p = locProduct(raw);
     var poolRows = p.pool.map(function(b){
+      var odds = poolOdds(p.pool, b);
+      var up = b.value > p.price;
       return '<div class="pool-row"><span><b>'+esc(bottleLabel(b))+'</b>'+
-        '<span class="meta">'+esc(bottleSub(b))+(b.cases?' · '+esc(b.cases)+' cases':'')+'</span>'+
+        '<span class="meta">'+esc(bottleSub(b))+(b.cases?' · '+esc(b.cases)+' cases':'')+' · '+odds+'% of pulls'+(up?' · upgrade':' · floor')+'</span>'+
         (b.notes?'<span class="notes">'+esc(b.notes)+'</span>':'')+
         '</span><span class="val">'+money(b.value)+' SRP</span></div>';
     }).join("");
@@ -3358,7 +3525,7 @@
         '</div>' +
         '<div class="pool">' +
           '<h3>'+t("possible")+'</h3>' +
-          '<p class="pool-lede">Vintage, AVA, and suggested retail as printed. Weighted toward the floor; the rare lots are the extra credit.</p>' +
+          '<p class="pool-lede">Three bottles are pulled at checkout from this weighted locker. Floor is the '+money(p.price)+' buy-in. '+upgradeChance(p)+'% of pulls are upgrades.</p>' +
           '<div class="pool-list">'+poolRows+'</div>' +
         '</div>' +
       '</div>' +
@@ -3425,7 +3592,7 @@
     var kq = karaokeQueue.map(function(k){
       return '<div class="feed-row"><span><b>'+esc(k.who)+'</b> — '+esc(k.song)+'</span></div>';
     }).join("");
-    return pageHero("DETENTION RADIO","The whole hall is one party.","Original house loops — not licensed hits. Pay points to bump the jukebox. Grab the mic for karaoke livestream (demo).")+
+    return pageHero("DETENTION RADIO","The whole hall is one party.","Superboy (First Person) plus original house loops. Pay points to bump the jukebox. Grab the mic for karaoke livestream (demo).")+
       '<section>'+
         '<div class="play-head">'+
           '<div class="play-art" aria-hidden="true"></div>'+
@@ -3439,7 +3606,7 @@
               '<button class="btn btn-dark" type="button" id="play-next">Next</button>'+
               '<button class="btn btn-dark" type="button" data-req="'+tr.id+'">Bump this · 40 pts</button>'+
             '</div>'+
-            '<p style="margin-top:10px;font-size:13px;opacity:.85;">Browser-made beats. No Apple Music catalog, no copyrighted tracks.</p>'+
+            '<p style="margin-top:10px;font-size:13px;opacity:.85;">'+ (tr.src ? "Playing the original Superboy cut." : "Browser-made house loop.") +' No licensed catalog.</p>'+
           '</div>'+
         '</div>'+
         '<div class="track-list">'+rows+'</div>'+
@@ -3591,7 +3758,7 @@
     }).join("");
     var faqs = [
       ["How do I redeem a Wine Detention gift card?","Open the link, or paste the code on Redeem. After the countdown, hall credit lands in this demo locker. Not real money, not real alcohol."],
-      ["What's the 35% bonus?","Every unveil rolls a weighted bonus. Common hits are +4% to +55%. Average across all rolls is about +35%. Ultra-rare unseals go 5×, 10×, even 18×."],
+      ["What's the 35% bonus?","Every unveil rolls a weighted bonus. The most common hit is +35%. "+giftOddsNote()+" Ultra-rare unseals go 3.5×, 8×, even 18×."],
       ["Can I send this to a friend?","Yes — digital cards include a share link. They get an 8–9 second countdown, confetti, and a recordable unveil for socials."],
       ["What are launch-weekend badges?","Founding Cellar, Night Game, and First Sentence. Send or open a gift this weekend and they pin to your hall pass."]
     ].map(function(f){
@@ -3600,7 +3767,7 @@
     return '<div class="content-block" style="max-width:1120px;">'+giftNavHTML("shop")+
       '<div class="gifts-hero">'+
         '<div><span class="kicker">WINE DETENTION GIFTS</span><h1>Gift cards</h1>'+
-        '<p>Choose a design. Add an amount, a name, a note, and a Detention Radio song. They get a countdown, fireworks, and about 35% extra hall credit on average.</p>'+
+        '<p>Choose a design. Add an amount, a name, a note, and a Detention Radio song. They get a countdown, fireworks, and '+giftOddsNote()+'</p>'+
         '<a class="btn btn-primary" href="#/gifts/new/'+featured[0].id+'">Customize a card</a></div>'+
         '<div class="gifts-stack">'+featured.map(function(d){ return giftCardHTML(d); }).join("")+'</div>'+
       '</div>'+
@@ -3614,7 +3781,7 @@
       '<div class="how-buy">'+
         '<article><h3>Purchase for your crew</h3><p>Demo bulk: send more than one from My gifts. A live version would open a corporate portal at 10+ cards.</p></article>'+
         '<article><h3>Buy from stores</h3><p>Physical cards are a sketch — we do not mail plastic or alcohol. Digital is instant.</p></article>'+
-        '<article><h3>Send with a song</h3><p>Attach a Detention Radio loop. The unveil plays it while the multiplier slams.</p></article>'+
+        '<article><h3>Send with a song</h3><p>Attach Superboy or a Detention Radio loop. The unveil plays it while the multiplier slams.</p></article>'+
       '</div>'+
       '<div class="section-head"><span class="kicker">FAQ</span><h2>Gift card questions</h2></div>'+
       '<div class="faq-list">'+faqs+'</div>'+
@@ -3648,11 +3815,11 @@
             '<div class="badge-row">'+LAUNCH_BADGES.map(function(b){
               return '<div class="badge-chip"><b>'+b.emoji+'</b>'+esc(b.name)+'</div>';
             }).join("")+'</div>'+
-            '<p style="margin:10px 0 0;font-size:13px;opacity:.9;">Get Founding Cellar, Night Game, and First Sentence with this purchase. Average unveil bonus +35%.</p>'+
+            '<p style="margin:10px 0 0;font-size:13px;opacity:.9;">Get Founding Cellar, Night Game, and First Sentence with this purchase. '+giftOddsNote()+'</p>'+
           '</div>'+
         '</div>'+
         '<div class="gift-form">'+
-          '<h2>Enjoy about 35% more with a gift card.</h2>'+
+          '<h2>Enjoy about +'+giftAvgPct()+'% more with a gift card.</h2>'+
           '<p class="lede">Digital cards send a shareable countdown. Physical is a demo — we don\'t mail cards.</p>'+
           '<div class="gfield"><div class="glab">What kind of card do you want?</div>'+
             '<div class="gchoice">'+
@@ -3734,7 +3901,7 @@
     return '<div class="content-block" style="max-width:640px;text-align:center;">'+giftNavHTML("mine")+
       giftCardHTML(findGiftDesign(g.designId),{lg:true,amount:g.amount})+
       '<h1 style="font-family:var(--font-bang);text-transform:uppercase;margin:16px 0 8px;">Gift locked in</h1>'+
-      '<p>Send this unveil to '+esc(g.to)+'. They get 8–9 seconds, then a random bonus (avg +35%).</p>'+
+      '<p>Send this unveil to '+esc(g.to)+'. They get 8–9 seconds, then a random bonus. '+giftOddsNote()+'</p>'+
       '<p style="font-family:var(--font-type);margin:12px 0;word-break:break-all;">'+esc(url)+'</p>'+
       '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">'+
         '<button class="btn btn-primary" type="button" id="gift-copy" data-url="'+esc(url)+'">Copy share link</button>'+
@@ -3749,7 +3916,7 @@
     var d = findGiftDesign(g.designId);
     var tr = findTrack(g.song) || TRACKS[0];
     var opened = g.opened
-      ? '<div class="unveil-boom">'+formatMult(g.mult)+'</div><p>'+money(g.amount)+' became <b>'+money(g.payout)+'</b> hall credit.</p>'
+      ? giftOpenedHTML(g)
       : '<p class="unveil-sub">Ready when you are</p><div class="unveil-num" id="unveil-count">9</div>';
     return '<div class="unveil">'+giftNavHTML("redeem")+
       '<canvas id="unveil-cv" width="720" height="720"></canvas>'+
@@ -3852,7 +4019,8 @@
     }
     var groups = lastOrder.groups.map(function(g){
       var bottles = g.bottles.map(function(b){
-        var isUpgrade = b.value > g.pricePerBottle;
+        var floor = g.lockerPrice != null ? g.lockerPrice : g.pricePerBottle;
+        var isUpgrade = b.value > floor;
         return '<div class="bottle-card'+(isUpgrade ? ' upgrade':'')+'">' +
           (isUpgrade ? '<span class="upgrade-flag">'+t("upgrade")+'</span>' : '') +
           bottleIconSVG() +
@@ -4222,9 +4390,9 @@
       var p = locProduct(findProduct(item.slug));
       var bottles = [];
       for (var u=0; u<item.qty; u++){
-        for (var b=0; b<3; b++){ bottles.push(weightedPick(p.pool)); }
+        for (var b=0; b<3; b++){ bottles.push(cloneBottle(weightedPick(p.pool))); }
       }
-      return { name: p.name + " ×" + item.qty, pricePerBottle: p.price / 3, bottles: bottles };
+      return { name: p.name + " ×" + item.qty, lockerPrice: p.price, pricePerBottle: p.price, bottles: bottles };
     });
     var value = 0;
     groups.forEach(function(g){ g.bottles.forEach(function(b){ value += b.value; }); });
@@ -4237,6 +4405,7 @@
     };
     cart = [];
     renderCartCount();
+    saveLastOrder();
     navigate("/confirmation");
   }
 
@@ -4272,6 +4441,7 @@
       if (sess && sess.email) currentUser = sess;
     } catch (e) {}
     loadGifts();
+    loadLastOrder();
   }
 
   function wireChrome(){
