@@ -536,10 +536,15 @@
   .qty-control span{padding:0 14px;font-family:var(--font-type);min-width:20px;text-align:center;}
   .add-row{display:flex;gap:12px;margin-top:22px;}
   .pool{margin-top:28px;}
-  .pool h3{font-family:var(--font-bang);font-size:24px;margin-bottom:14px;text-transform:uppercase;}
+  .pool h3{font-family:var(--font-bang);font-size:24px;margin-bottom:6px;text-transform:uppercase;}
+  .pool-lede{font-size:13px;color:var(--page-muted);margin:0 0 14px;max-width:56ch;}
   .pool-list{display:flex;flex-direction:column;gap:1px;background:var(--rule);}
-  .pool-row{background:var(--page);display:flex;justify-content:space-between;padding:12px 14px;font-size:14px;}
-  .pool-row .val{font-family:var(--font-type);color:var(--gold);}
+  .pool-row{background:var(--page);display:grid;grid-template-columns:1fr auto;gap:8px 14px;padding:12px 14px;font-size:14px;align-items:start;}
+  .pool-row b{display:block;font-weight:700;}
+  .pool-row .meta{display:block;margin-top:3px;font-size:12px;color:var(--page-muted);font-style:italic;}
+  .pool-row .notes{display:block;margin-top:4px;font-size:12.5px;color:var(--page-text);max-width:52ch;}
+  .pool-row .val{font-family:var(--font-type);color:var(--gold);white-space:nowrap;}
+  .bottle-card .meta{font-size:12px;color:var(--page-muted);margin-top:4px;}
   .added-toast{
     position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120%);
     background:var(--cubs-blue);color:#fff;
@@ -602,6 +607,7 @@
   .bottle-card .upgrade-flag{font-family:var(--font-bang);font-size:16px;color:var(--gold);display:block;margin-bottom:8px;letter-spacing:.08em;}
   .bottle-icon{width:34px;height:60px;margin:0 auto 10px;}
   .bottle-card h4{font-size:14.5px;line-height:1.3;}
+  .bottle-card .notes{font-size:12px;color:var(--page-muted);margin:8px 0 0;line-height:1.4;}
   .bottle-card .val{font-family:var(--font-bang);font-size:22px;margin-top:8px;color:var(--gold);}
   @keyframes revealIn{to{opacity:1;transform:translateY(0) scale(1);}}
   @media (prefers-reduced-motion: reduce){
@@ -1346,46 +1352,57 @@
   var PRODUCTS = [
     {
       slug: "study-hall-sauvignon-blanc",
-      price: 59, srpLow: 59, srpHigh: 140, stockCap: 96, flash: true,
+      price: 64, srpLow: 64, srpHigh: 148, stockCap: 84, flash: true,
       pool: [
-        {name:"Sable Ridge Sauvignon Blanc", value:59, weight:50},
-        {name:"Thistle & Vine Fumé Blanc", value:65, weight:25},
-        {name:"Highbeam Cellars Reserve Sauvignon Blanc", value:79, weight:14},
-        {name:"Marrow Creek Estate Sauvignon Blanc", value:95, weight:8},
-        {name:"Stonecrop Vineyard Select Sauvignon Blanc", value:140, weight:3}
+        {producer:"Driftline", cuvee:"Estate Sauvignon Blanc", vintage:2023, ava:"Happy Canyon of Santa Barbara", grapes:"Sauvignon Blanc", abv:"13.4%", cases:"1,840", notes:"Meyer lemon, crushed oyster shell, wet flint. Stainless, no malolactic.", value:64, weight:42},
+        {producer:"Salt Chapel", cuvee:"Coastal Sauvignon Blanc", vintage:2023, ava:"Santa Ynez Valley", grapes:"Sauvignon Blanc", abv:"13.2%", cases:"1,120", notes:"White grapefruit, lemongrass, sea spray. Picked in two passes.", value:72, weight:24},
+        {producer:"Paperorchard", cuvee:"Fumé Blanc", vintage:2022, ava:"Lake County", grapes:"Sauvignon Blanc", abv:"13.6%", cases:"640", notes:"Smoke-kissed citrus, beeswax, crushed thyme. 18% neutral oak.", value:88, weight:16},
+        {producer:"Quiet Annex", cuvee:"Vineyard Select Sauvignon Blanc", vintage:2023, ava:"Fort Ross-Seaview", grapes:"Sauvignon Blanc", abv:"13.1%", cases:"310", notes:"Key lime, wet slate, white flowers. Extreme coastal hang-time.", value:112, weight:12},
+        {producer:"Trestle & Thorn", cuvee:"Reserve Sauvignon Blanc", vintage:2022, ava:"Napa Valley", grapes:"Sauvignon Blanc", abv:"13.8%", cases:"180", notes:"Ripe melon, lemon curd, crushed rock. Tiny lot from a cool pocket of Yountville.", value:148, weight:6}
       ]
     },
     {
       slug: "chardonnay-class-reunion",
-      price: 69, srpLow: 69, srpHigh: 160, stockCap: 74, flash: true,
+      price: 78, srpLow: 78, srpHigh: 185, stockCap: 62, flash: true,
       pool: [
-        {name:"Copper Hollow Chardonnay", value:69, weight:50},
-        {name:"Vantage Point Barrel-Aged Chardonnay", value:75, weight:25},
-        {name:"Longshadow Estate Chardonnay", value:89, weight:14},
-        {name:"Nightshade Vineyards Reserve Chardonnay", value:110, weight:8},
-        {name:"Faultline Cellars Grand Chardonnay", value:160, weight:3}
+        {producer:"Glasswing", cuvee:"Russian River Chardonnay", vintage:2022, ava:"Russian River Valley", grapes:"Chardonnay", abv:"13.7%", cases:"2,200", notes:"Yellow apple, lemon oil, toasted hazelnut. 11 months in 20% new French oak.", value:78, weight:40},
+        {producer:"Salt Chapel", cuvee:"Sonoma Coast Chardonnay", vintage:2022, ava:"Sonoma Coast", grapes:"Chardonnay", abv:"13.3%", cases:"980", notes:"Pear skin, oyster shell, cold butter. High-acid coastal fruit, native ferment.", value:92, weight:24},
+        {producer:"Paperorchard", cuvee:"Carneros Chardonnay", vintage:2021, ava:"Los Carneros", grapes:"Chardonnay", abv:"13.9%", cases:"540", notes:"White peach, brioche, lemon blossom. Partial malolactic, lees-stirred.", value:118, weight:18},
+        {producer:"Quiet Annex", cuvee:"Estate Chardonnay", vintage:2021, ava:"Fort Ross-Seaview", grapes:"Chardonnay", abv:"13.2%", cases:"265", notes:"Green mango, struck match, sea fog. Whole-cluster press, 14 months oak.", value:145, weight:12},
+        {producer:"Second Bell", cuvee:"Reserve Chardonnay", vintage:2021, ava:"Napa Valley", grapes:"Chardonnay", abv:"14.1%", cases:"140", notes:"Bergamot, toasted almond, wet stone. Winery-only until this locker.", value:185, weight:6}
+      ]
+    },
+    {
+      slug: "night-watch-pinot-noir",
+      price: 86, srpLow: 86, srpHigh: 210, stockCap: 54, flash: true,
+      pool: [
+        {producer:"Lumenwell", cuvee:"Estate Pinot Noir", vintage:2022, ava:"Sta. Rita Hills", grapes:"Pinot Noir", abv:"13.5%", cases:"1,460", notes:"Crushed raspberry, dried rose, turned earth. 30% whole cluster.", value:86, weight:40},
+        {producer:"Glasswing", cuvee:"Russian River Pinot Noir", vintage:2022, ava:"Russian River Valley", grapes:"Pinot Noir", abv:"13.8%", cases:"820", notes:"Wild strawberry, cola, forest floor. 10 months in 25% new oak.", value:98, weight:24},
+        {producer:"Salt Chapel", cuvee:"Sonoma Coast Pinot Noir", vintage:2021, ava:"Sonoma Coast", grapes:"Pinot Noir", abv:"13.4%", cases:"410", notes:"Blood orange, thyme, cold stone. Windy-site fruit, long maceration.", value:128, weight:18},
+        {producer:"Quiet Annex", cuvee:"Fort Ross Pinot Noir", vintage:2021, ava:"Fort Ross-Seaview", grapes:"Pinot Noir", abv:"13.2%", cases:"190", notes:"Pomegranate, crushed fennel, iron. 1,200-ft elevation, 18 months oak.", value:165, weight:12},
+        {producer:"Lumenwell", cuvee:"Single Block Pinot Noir", vintage:2021, ava:"Sta. Rita Hills", grapes:"Pinot Noir", abv:"13.6%", cases:"95", notes:"Red cherry, sandalwood, sea salt. One block, 4 barrels.", value:210, weight:6}
       ]
     },
     {
       slug: "cabernet-cram-session",
-      price: 89, srpLow: 89, srpHigh: 220, stockCap: 48, flash: false,
+      price: 98, srpLow: 98, srpHigh: 265, stockCap: 42, flash: false,
       pool: [
-        {name:"Iron Gate Cellars Cabernet Sauvignon", value:89, weight:48},
-        {name:"Wolfsbane Vineyards Cabernet Sauvignon", value:95, weight:25},
-        {name:"Sable Ridge Reserve Cabernet", value:120, weight:15},
-        {name:"Stonecrop Mountain Cabernet", value:150, weight:8},
-        {name:"Longshadow Estate Cabernet", value:220, weight:4}
+        {producer:"Trestle & Thorn", cuvee:"Cabernet Sauvignon", vintage:2021, ava:"Alexander Valley", grapes:"Cabernet Sauvignon", abv:"14.4%", cases:"2,800", notes:"Blackcurrant, cedar, cocoa nib. 18 months American and French oak.", value:98, weight:38},
+        {producer:"Ironbriar", cuvee:"Napa Cabernet", vintage:2021, ava:"Napa Valley", grapes:"Cabernet Sauvignon", abv:"14.6%", cases:"1,050", notes:"Cassis, graphite, dried violet. Valley-floor fruit with 8% Merlot.", value:118, weight:26},
+        {producer:"North Palisade", cuvee:"Rutherford Cabernet", vintage:2020, ava:"Rutherford", grapes:"Cabernet Sauvignon", abv:"14.7%", cases:"480", notes:"Dust, black cherry, espresso. Classic Rutherford dust on a warm vintage.", value:155, weight:18},
+        {producer:"Ironbriar", cuvee:"Oakville Cabernet", vintage:2020, ava:"Oakville", grapes:"Cabernet Sauvignon", abv:"14.8%", cases:"220", notes:"Blackberry, iron, crushed mint. 22 months new French oak.", value:198, weight:12},
+        {producer:"Second Bell", cuvee:"Reserve Cabernet", vintage:2019, ava:"Yountville", grapes:"Cabernet Sauvignon", abv:"14.5%", cases:"125", notes:"Plum skin, cigar box, wet gravel. Held two extra years in bottle.", value:265, weight:6}
       ]
     },
     {
       slug: "icon-detention-rare-reds",
-      price: 149, srpLow: 149, srpHigh: 450, stockCap: 18, flash: false,
+      price: 189, srpLow: 189, srpHigh: 520, stockCap: 16, flash: false,
       pool: [
-        {name:"Marrow Creek Icon Red Blend", value:149, weight:46},
-        {name:"Nightshade Vineyards Grand Reserve", value:175, weight:26},
-        {name:"Faultline Cellars Icon Cabernet", value:225, weight:16},
-        {name:"Highbeam Cellars Rare Reserve", value:300, weight:9},
-        {name:"Vantage Point Legacy Bottling", value:450, weight:3}
+        {producer:"Redact", cuvee:"Howell Mountain Cabernet", vintage:2019, ava:"Howell Mountain", grapes:"Cabernet Sauvignon", abv:"14.9%", cases:"380", notes:"Blueberry, crushed rock, dark chocolate. Volcanic soils, 2,000-ft elevation.", value:189, weight:36},
+        {producer:"Black Ledger", cuvee:"Spring Mountain Red", vintage:2019, ava:"Spring Mountain District", grapes:"Cabernet Sauvignon / Cabernet Franc", abv:"14.7%", cases:"210", notes:"Black tea, cassis, bay leaf. 12% Cabernet Franc, 24 months oak.", value:240, weight:26},
+        {producer:"North Palisade", cuvee:"Proprietary Red", vintage:2018, ava:"Rutherford", grapes:"Bordeaux blend", abv:"14.8%", cases:"160", notes:"Fig, graphite, rose petal. 72/18/10 Cabernet, Merlot, Petit Verdot.", value:310, weight:18},
+        {producer:"Ironbriar", cuvee:"Oakville Reserve", vintage:2018, ava:"Oakville", grapes:"Cabernet Sauvignon", abv:"15.0%", cases:"90", notes:"Black olive, cocoa, crushed violet. Winery library release.", value:390, weight:13},
+        {producer:"Redact", cuvee:"Estate Icon", vintage:2017, ava:"Howell Mountain", grapes:"Cabernet Sauvignon", abv:"14.8%", cases:"48", notes:"Tar, black cherry, iron filings. Four barrels. Collector allocation only.", value:520, weight:7}
       ]
     }
   ];
@@ -1428,14 +1445,14 @@
     return Math.max(15, Math.min(100, base + wobble));
   }
   var FEED = [
-    {who:"M. in Austin", hit:"Faultline Grand Chardonnay", extra:91},
-    {who:"D. in Chicago", hit:"Longshadow Estate Cabernet", extra:131},
-    {who:"R. in Miami", hit:"Stonecrop Vineyard Select", extra:81},
-    {who:"T. in Denver", hit:"Nightshade Grand Reserve", extra:26},
-    {who:"A. in Brooklyn", hit:"Vantage Point Legacy", extra:301},
-    {who:"K. in Seattle", hit:"Highbeam Rare Reserve", extra:151},
-    {who:"J. in Phoenix", hit:"Sable Ridge Reserve Cab", extra:31},
-    {who:"L. in Atlanta", hit:"Marrow Creek Estate SB", extra:36}
+    {who:"M. in Austin", hit:"2021 Quiet Annex Estate Chardonnay", extra:67},
+    {who:"D. in Chicago", hit:"2020 North Palisade Rutherford Cabernet", extra:57},
+    {who:"R. in Miami", hit:"2023 Quiet Annex Vineyard Select SB", extra:48},
+    {who:"T. in Denver", hit:"2019 Redact Howell Mountain Cabernet", extra:0},
+    {who:"A. in Brooklyn", hit:"2017 Redact Estate Icon", extra:331},
+    {who:"K. in Seattle", hit:"2018 Ironbriar Oakville Reserve", extra:201},
+    {who:"J. in Phoenix", hit:"2021 Lumenwell Single Block Pinot", extra:124},
+    {who:"L. in Atlanta", hit:"2022 Trestle & Thorn Reserve SB", extra:84}
   ];
   function tickerHTML(){
     var bits = FEED.concat(FEED).map(function(e){
@@ -1540,10 +1557,11 @@
         {q:"Do I need to be 21 to browse?", a:"Yes. You must be 21 or older to purchase or browse product collections on a real version of a site like this, which is why we show an age check on entry."}
       ],
       products:{
-        "study-hall-sauvignon-blanc":{tag:"3 BOTTLES", name:"Sauvignon Blanc Study Hall", varietal:"Sauvignon Blanc & Fumé Blanc, California", desc:"A crisp assignment in citrus and cut grass. Every bottle in this collection is a Sauvignon Blanc or Fumé Blanc worth at least what you paid — some students get held back for extra credit."},
-        "chardonnay-class-reunion":{tag:"3 BOTTLES", name:"Chardonnay Class Reunion", varietal:"Chardonnay, Sonoma & Napa County", desc:"Buttery, barrel-aged, and built for a reunion toast. Three Chardonnays assigned at random, every one worth at least your buy-in."},
-        "cabernet-cram-session":{tag:"3 BOTTLES", name:"Cabernet Cram Session", varietal:"Cabernet Sauvignon, Napa Valley", desc:"Late-night studying pays off. A classic Napa Cabernet lineup with a real shot at pulling a bottle worth more than double your tuition."},
-        "icon-detention-rare-reds":{tag:"3 BOTTLES", name:"Icon Detention: Rare Reds", varietal:"Icon & Collector Reds, Napa Valley", desc:"The advanced class. Icon-tier reds from small-lot producers, with a rare shot at an ultra-limited bottling worth three times the buy-in."}
+        "study-hall-sauvignon-blanc":{tag:"3 BOTTLES", name:"Sauvignon Blanc Study Hall", varietal:"Sauvignon Blanc · Happy Canyon, Santa Ynez, Fort Ross-Seaview, Napa", desc:"Three bottles from cool California sites — Happy Canyon, the Santa Ynez, Fort Ross-Seaview, and a rare Napa lot. Meyer lemon, wet stone, and sea spray. Floor is a $64 estate bottling. The top of the locker is a 180-case Yountville reserve."},
+        "chardonnay-class-reunion":{tag:"3 BOTTLES", name:"Chardonnay Class Reunion", varietal:"Chardonnay · Russian River Valley, Sonoma Coast, Carneros, Napa", desc:"Coastal and valley Chardonnay with real oak and lees work — not a butter bomb. Russian River, Sonoma Coast, Carneros, and a Napa reserve. Every bottle is at least the $78 buy-in."},
+        "night-watch-pinot-noir":{tag:"3 BOTTLES", name:"Night Watch Pinot Noir", varietal:"Pinot Noir · Sta. Rita Hills, Russian River Valley, Sonoma Coast", desc:"Whole-cluster coastal Pinot: Sta. Rita Hills, Russian River, Fort Ross-Seaview. Raspberry, dried rose, iron. The single-block lot is four barrels."},
+        "cabernet-cram-session":{tag:"3 BOTTLES", name:"Cabernet Cram Session", varietal:"Cabernet Sauvignon · Alexander Valley, Rutherford, Oakville, Yountville", desc:"Napa and Sonoma Cabernet with AVA on the label — Alexander Valley through Oakville. Cassis, graphite, Rutherford dust. The 2019 Yountville reserve sat two extra years in bottle."},
+        "icon-detention-rare-reds":{tag:"3 BOTTLES", name:"Icon Detention: Rare Reds", varietal:"Cabernet & Bordeaux blends · Howell Mountain, Spring Mountain, Oakville", desc:"Mountain and library Cabernet. Howell Mountain volcanic fruit, Spring Mountain, a Rutherford proprietary red, and a 48-case 2017 icon. This locker is sixteen deep."}
       }
     },
     es: {
@@ -1641,10 +1659,11 @@
         {q:"¿Hay que tener 21 para navegar?", a:"Sí. Debes tener 21 o más para comprar o ver colecciones en una versión real, por eso hay un control de edad."}
       ],
       products:{
-        "study-hall-sauvignon-blanc":{tag:"3 BOTELLAS", name:"Sala de estudio Sauvignon Blanc", varietal:"Sauvignon Blanc y Fumé Blanc, California", desc:"Una tarea crujiente de cítricos y hierba recién cortada. Cada botella es Sauvignon Blanc o Fumé Blanc que vale al menos lo que pagaste — algunos alumnos se quedan a crédito extra."},
-        "chardonnay-class-reunion":{tag:"3 BOTELLAS", name:"Reunión de clase Chardonnay", varietal:"Chardonnay, condados de Sonoma y Napa", desc:"Mantecoso, criado en barrica y hecho para un brindis de reunión. Tres Chardonnays al azar, cada uno vale al menos tu entrada."},
-        "cabernet-cram-session":{tag:"3 BOTELLAS", name:"Atrancón de Cabernet", varietal:"Cabernet Sauvignon, Valle de Napa", desc:"Estudiar de madrugada rinde. Un elenco clásico de Cabernet de Napa, con chance real de una botella que vale más del doble de la matrícula."},
-        "icon-detention-rare-reds":{tag:"3 BOTELLAS", name:"Detención ícono: tintos raros", varietal:"Tintos ícono y de coleccionista, Valle de Napa", desc:"La clase avanzada. Tintos de lote pequeño, con una chance rara de un embotellado ultra limitado que vale tres veces la entrada."}
+        "study-hall-sauvignon-blanc":{tag:"3 BOTELLAS", name:"Sala de estudio Sauvignon Blanc", varietal:"Sauvignon Blanc · Happy Canyon, Santa Ynez, Fort Ross-Seaview, Napa", desc:"Tres botellas de sitios frescos de California: Happy Canyon, Santa Ynez, Fort Ross-Seaview y un lote raro de Napa. Limón Meyer, piedra húmeda y brisa marina. El piso es un estate de $64. Arriba, un reserva de Yountville de 180 cajas."},
+        "chardonnay-class-reunion":{tag:"3 BOTELLAS", name:"Reunión de clase Chardonnay", varietal:"Chardonnay · Russian River Valley, Sonoma Coast, Carneros, Napa", desc:"Chardonnay de costa y valle, con roble y lías de verdad — no una bomba de mantequilla. Russian River, Sonoma Coast, Carneros y un reserva de Napa. Cada botella vale al menos los $78 de entrada."},
+        "night-watch-pinot-noir":{tag:"3 BOTELLAS", name:"Pinot Noir de ronda nocturna", varietal:"Pinot Noir · Sta. Rita Hills, Russian River Valley, Sonoma Coast", desc:"Pinot de costa con racimo entero: Sta. Rita Hills, Russian River, Fort Ross-Seaview. Frambuesa, rosa seca, hierro. El lote de un solo bloque son cuatro barricas."},
+        "cabernet-cram-session":{tag:"3 BOTELLAS", name:"Atrancón de Cabernet", varietal:"Cabernet Sauvignon · Alexander Valley, Rutherford, Oakville, Yountville", desc:"Cabernet de Napa y Sonoma con AVA en la etiqueta — de Alexander Valley a Oakville. Cassis, grafito, polvo de Rutherford. El reserva 2019 de Yountville descansó dos años extra en botella."},
+        "icon-detention-rare-reds":{tag:"3 BOTELLAS", name:"Detención ícono: tintos raros", varietal:"Cabernet y cortes de Burdeos · Howell Mountain, Spring Mountain, Oakville", desc:"Cabernet de montaña y de biblioteca. Fruta volcánica de Howell Mountain, Spring Mountain, un tinto propietario de Rutherford y un ícono 2017 de 48 cajas. Dieciséis lockers profundos."}
       }
     },
     fr: {
@@ -1742,10 +1761,11 @@
         {q:"Faut-il avoir 21 ans pour naviguer ?", a:"Oui. Il faut 21 ans ou plus pour acheter ou parcourir les collections en version réelle, d'où le contrôle d'âge."}
       ],
       products:{
-        "study-hall-sauvignon-blanc":{tag:"3 BOUTEILLES", name:"Étude surveillée Sauvignon Blanc", varietal:"Sauvignon Blanc et Fumé Blanc, Californie", desc:"Un devoir vif, agrumes et herbe coupée. Chaque bouteille est un Sauvignon Blanc ou Fumé Blanc qui vaut au moins ce que tu as payé — certains élèves restent pour des points bonus."},
-        "chardonnay-class-reunion":{tag:"3 BOUTEILLES", name:"Réunion de classe Chardonnay", varietal:"Chardonnay, comtés de Sonoma et Napa", desc:"Beurré, élevé en fût, pensé pour un toast de retrouvailles. Trois Chardonnays au hasard, chacun vaut au moins ta mise."},
-        "cabernet-cram-session":{tag:"3 BOUTEILLES", name:"Bachotage Cabernet", varietal:"Cabernet Sauvignon, Napa Valley", desc:"Réviser tard paie. Une ligne classique de Cabernet de Napa, avec une vraie chance de tirer une bouteille valant plus du double de tes frais."},
-        "icon-detention-rare-reds":{tag:"3 BOUTEILLES", name:"Retenue icône : rouges rares", varietal:"Rouges icônes et de collection, Napa Valley", desc:"La classe avancée. Rouges de petits lots, avec une chance rare d'une cuvée ultra limitée valant trois fois la mise."}
+        "study-hall-sauvignon-blanc":{tag:"3 BOUTEILLES", name:"Étude surveillée Sauvignon Blanc", varietal:"Sauvignon Blanc · Happy Canyon, Santa Ynez, Fort Ross-Seaview, Napa", desc:"Trois bouteilles de sites frais californiens — Happy Canyon, Santa Ynez, Fort Ross-Seaview, et un lot rare de Napa. Citron Meyer, pierre mouillée, embruns. Le plancher est un estate à 64 $. En haut, une réserve de Yountville de 180 caisses."},
+        "chardonnay-class-reunion":{tag:"3 BOUTEILLES", name:"Réunion de classe Chardonnay", varietal:"Chardonnay · Russian River Valley, Sonoma Coast, Carneros, Napa", desc:"Chardonnay côtier et de vallée, vrai élevage en fût et sur lies — pas une bombe beurrée. Russian River, Sonoma Coast, Carneros, et une réserve de Napa. Chaque bouteille vaut au moins les 78 $ de mise."},
+        "night-watch-pinot-noir":{tag:"3 BOUTEILLES", name:"Pinot Noir de ronde de nuit", varietal:"Pinot Noir · Sta. Rita Hills, Russian River Valley, Sonoma Coast", desc:"Pinot côtier en grappes entières : Sta. Rita Hills, Russian River, Fort Ross-Seaview. Framboise, rose séchée, fer. Le lot d'un seul bloc : quatre fûts."},
+        "cabernet-cram-session":{tag:"3 BOUTEILLES", name:"Bachotage Cabernet", varietal:"Cabernet Sauvignon · Alexander Valley, Rutherford, Oakville, Yountville", desc:"Cabernet de Napa et Sonoma avec AVA sur l'étiquette — d'Alexander Valley à Oakville. Cassis, graphite, poussière de Rutherford. La réserve 2019 de Yountville a dormi deux ans de plus en bouteille."},
+        "icon-detention-rare-reds":{tag:"3 BOUTEILLES", name:"Retenue icône : rouges rares", varietal:"Cabernet et assemblages bordelais · Howell Mountain, Spring Mountain, Oakville", desc:"Cabernet de montagne et de bibliothèque. Fruit volcanique de Howell Mountain, Spring Mountain, un rouge propriétaire de Rutherford, et une icône 2017 de 48 caisses. Seize lockers de profondeur."}
       }
     },
     it: {
@@ -1843,10 +1863,11 @@
         {q:"Devo avere 21 anni per navigare?", a:"Sì. Devi avere 21 anni o più per acquistare o vedere le collezioni in una versione reale, per questo c'è il controllo dell'età."}
       ],
       products:{
-        "study-hall-sauvignon-blanc":{tag:"3 BOTTIGLIE", name:"Studio Sauvignon Blanc", varietal:"Sauvignon Blanc e Fumé Blanc, California", desc:"Un compito croccante di agrumi ed erba tagliata. Ogni bottiglia è Sauvignon Blanc o Fumé Blanc che vale almeno quanto hai pagato — alcuni restano per crediti extra."},
-        "chardonnay-class-reunion":{tag:"3 BOTTIGLIE", name:"Riunione di classe Chardonnay", varietal:"Chardonnay, contee di Sonoma e Napa", desc:"Burroso, affinato in botte, pensato per un brindisi di reunion. Tre Chardonnay a caso, ognuno vale almeno la tua quota."},
-        "cabernet-cram-session":{tag:"3 BOTTIGLIE", name:"Ripasso Cabernet", varietal:"Cabernet Sauvignon, Napa Valley", desc:"Studiare di notte paga. Una linea classica di Cabernet di Napa, con una chance reale di una bottiglia che vale più del doppio della retta."},
-        "icon-detention-rare-reds":{tag:"3 BOTTIGLIE", name:"Pena icona: rossi rari", varietal:"Rossi icona e da collezione, Napa Valley", desc:"La classe avanzata. Rossi di piccoli lotti, con una chance rara di un'imbottigliatura ultra limitata che vale tre volte la quota."}
+        "study-hall-sauvignon-blanc":{tag:"3 BOTTIGLIE", name:"Studio Sauvignon Blanc", varietal:"Sauvignon Blanc · Happy Canyon, Santa Ynez, Fort Ross-Seaview, Napa", desc:"Tre bottiglie da siti freschi della California — Happy Canyon, Santa Ynez, Fort Ross-Seaview e un lotto raro di Napa. Limone Meyer, pietra bagnata, salsedine. Il pavimento è un estate da 64 $. In cima, una riserva di Yountville da 180 casse."},
+        "chardonnay-class-reunion":{tag:"3 BOTTIGLIE", name:"Riunione di classe Chardonnay", varietal:"Chardonnay · Russian River Valley, Sonoma Coast, Carneros, Napa", desc:"Chardonnay di costa e di valle, vero legno e fecce — non una bomba di burro. Russian River, Sonoma Coast, Carneros e una riserva di Napa. Ogni bottiglia vale almeno i 78 $ di quota."},
+        "night-watch-pinot-noir":{tag:"3 BOTTIGLIE", name:"Pinot Nero di ronda notturna", varietal:"Pinot Nero · Sta. Rita Hills, Russian River Valley, Sonoma Coast", desc:"Pinot costiero a grappolo intero: Sta. Rita Hills, Russian River, Fort Ross-Seaview. Lampone, rosa secca, ferro. Il lotto di un solo blocco sono quattro barriques."},
+        "cabernet-cram-session":{tag:"3 BOTTIGLIE", name:"Ripasso Cabernet", varietal:"Cabernet Sauvignon · Alexander Valley, Rutherford, Oakville, Yountville", desc:"Cabernet di Napa e Sonoma con AVA in etichetta — da Alexander Valley a Oakville. Cassis, grafite, polvere di Rutherford. La riserva 2019 di Yountville è restata due anni extra in bottiglia."},
+        "icon-detention-rare-reds":{tag:"3 BOTTIGLIE", name:"Pena icona: rossi rari", varietal:"Cabernet e blend bordolesi · Howell Mountain, Spring Mountain, Oakville", desc:"Cabernet di montagna e di biblioteca. Frutto vulcanico di Howell Mountain, Spring Mountain, un rosso proprietario di Rutherford e un'icona 2017 da 48 casse. Sedici locker di profondità."}
       }
     },
     zh: {
@@ -1944,10 +1965,11 @@
         {q:"浏览也必须年满 21 岁吗？", a:"是。在真实站点上购买或浏览系列须年满 21 岁，所以进入时会有年龄确认。"}
       ],
       products:{
-        "study-hall-sauvignon-blanc":{tag:"3 瓶", name:"长相思自习室", varietal:"长相思与熏白酒，加州", desc:"柑橘与青草的清爽作业。此系列每瓶都是至少值你所付价格的长相思或熏白酒——有的学生会被留下加学分。"},
-        "chardonnay-class-reunion":{tag:"3 瓶", name:"霞多丽同学聚会", varietal:"霞多丽，索诺玛与纳帕县", desc:"黄油感、桶陈，为重逢干杯而备。随机三瓶霞多丽，每瓶至少值入场价。"},
-        "cabernet-cram-session":{tag:"3 瓶", name:"赤霞珠突击复习", varietal:"赤霞珠，纳帕谷", desc:"开夜车值得。经典纳帕赤霞珠阵容，很有机会抽到价值超过学费两倍的一瓶。"},
-        "icon-detention-rare-reds":{tag:"3 瓶", name:"偶像罚留：稀有红葡萄酒", varietal:"偶像级与收藏级红酒，纳帕谷", desc:"高级班。小产量偶像级红酒，稀有机会抽到价值三倍入场价的限量装瓶。"}
+        "study-hall-sauvignon-blanc":{tag:"3 瓶", name:"长相思自习室", varietal:"长相思 · Happy Canyon、Santa Ynez、Fort Ross-Seaview、纳帕", desc:"来自加州凉爽产区的三瓶：Happy Canyon、Santa Ynez、Fort Ross-Seaview，以及稀有纳帕批次。迈尔柠檬、湿石、海风。底价是 64 美元庄园装。顶层是 180 箱的 Yountville 珍藏。"},
+        "chardonnay-class-reunion":{tag:"3 瓶", name:"霞多丽同学聚会", varietal:"霞多丽 · Russian River Valley、Sonoma Coast、Carneros、纳帕", desc:"海岸与谷地霞多丽，真正的橡木与酒泥——不是黄油炸弹。Russian River、Sonoma Coast、Carneros，加一款纳帕珍藏。每瓶至少值 78 美元入场价。"},
+        "night-watch-pinot-noir":{tag:"3 瓶", name:"夜巡黑皮诺", varietal:"黑皮诺 · Sta. Rita Hills、Russian River Valley、Sonoma Coast", desc:"整串发酵的海岸黑皮诺：Sta. Rita Hills、Russian River、Fort Ross-Seaview。覆盆子、干玫瑰、铁。单一地块仅四桶。"},
+        "cabernet-cram-session":{tag:"3 瓶", name:"赤霞珠突击复习", varietal:"赤霞珠 · Alexander Valley、Rutherford、Oakville、Yountville", desc:"纳帕与索诺玛赤霞珠，标签上写着 AVA——从 Alexander Valley 到 Oakville。黑醋栗、石墨、Rutherford 尘土。2019 年 Yountville 珍藏多在瓶中静置两年。"},
+        "icon-detention-rare-reds":{tag:"3 瓶", name:"偶像罚留：稀有红葡萄酒", varietal:"赤霞珠与波尔多混酿 · Howell Mountain、Spring Mountain、Oakville", desc:"山地与酒窖赤霞珠。Howell Mountain 火山果、Spring Mountain、Rutherford 庄主红，以及 48 箱的 2017 偶像酒。本柜仅十六份。"}
       }
     }
   };
@@ -2035,9 +2057,10 @@
   ];
 
   var ROOMS = [
-    {id:"whatnot", host:"Coach Vale", title:"Whatnot locker raid", chat:"NY just jumped a $220 cab", viewers:41, product:"cabernet-cram-session"},
+    {id:"whatnot", host:"Coach Vale", title:"Whatnot locker raid", chat:"NY just jumped a 2020 Oakville cab", viewers:41, product:"cabernet-cram-session"},
     {id:"douyin", host:"Night Market Mei", title:"Douyin night crush", chat:"HK crew at 11/12 for the bonus", viewers:67, product:"icon-detention-rare-reds"},
-    {id:"tiktok", host:"Hall Monitor Jax", title:"TikTok shop flash", chat:"Don't blink the sauvignon", viewers:28, product:"study-hall-sauvignon-blanc"}
+    {id:"tiktok", host:"Hall Monitor Jax", title:"TikTok shop flash", chat:"Don't blink the Fort Ross SB", viewers:28, product:"study-hall-sauvignon-blanc"},
+    {id:"pinot", host:"Vale.Napa", title:"Night Watch Pinot", chat:"Sta. Rita Hills just popped +$124", viewers:36, product:"night-watch-pinot-noir"}
   ];
 
   var TRACKS = [
@@ -2113,7 +2136,7 @@
 
   var GIVEAWAYS = [
     {id:"raid", name:"Friday Cellar Raid", cost:200, prize:"Case of today's drop + a mystery icon", ends:"tonight"},
-    {id:"icon", name:"1-of-1 Stonecrop", cost:500, prize:"Single bottle, $450 SRP, never recast", ends:"Sunday"},
+    {id:"icon", name:"1-of-1 Redact Estate Icon", cost:500, prize:"2017 Howell Mountain Cabernet, $520 SRP, 48 cases ever", ends:"Sunday"},
     {id:"crew", name:"Whole-hall crew prize", cost:80, prize:"If 100 people enter, everyone who entered gets 50 pts back plus a merch stamp", ends:"always on"}
   ];
 
@@ -2165,6 +2188,13 @@
 
   function L(){ return STR[lang] || STR.en; }
   function t(key){ var s=L(); return (s && s[key] != null) ? s[key] : (STR.en[key] != null ? STR.en[key] : key); }
+  function bottleLabel(b){
+    if (b.producer) return (b.vintage?b.vintage+" ":"")+b.producer+(b.cuvee?" "+b.cuvee:"");
+    return b.name || "House bottling";
+  }
+  function bottleSub(b){
+    return [b.ava, b.grapes, b.abv].filter(Boolean).join(" · ");
+  }
   function locProduct(p){
     var pack = (L().products && L().products[p.slug]) || STR.en.products[p.slug];
     return Object.assign({}, p, pack);
@@ -2924,7 +2954,7 @@
     if (/gift|bonus|unveil|card/.test(s)) return "A pleasure. Gift cards are issued from ten to five hundred dollars. After they are sent, a private unveiling reveals a courtesy multiple — never less than four percent, customarily near one and a third, and on rare evenings, considerably more. This preview is ceremonial; no funds are taken.";
     if (/music|jukebox|party|song|play|radio/.test(s)) return "Detention Radio is composed for the hall — original house loops, never a licensed catalog. The player at the foot of the page will play, pause, and skip. Party is the full salon if you wish to request a track.";
     if (/login|account|sign|pass/.test(s)) return "LOG IN is the single key in the header, as a maison would have it. Should you be new, a quiet link inside the sheet will open a hall pass. It remains on this device only.";
-    if (/drop|wine|buy|shop|sentence|locker/.test(s)) return "Today's Sentence is the allocation now on the floor. Place a bottle on your Hall Pass when you are ready. This maison preview does not ship alcohol.";
+    if (/drop|wine|buy|shop|sentence|locker|pinot|cabernet|chardonnay|sauvignon|bottle/.test(s)) return "Five lockers are open: Sauvignon Blanc from Happy Canyon and Fort Ross-Seaview, coastal Chardonnay, Sta. Rita Hills Pinot, Rutherford-to-Oakville Cabernet, and a mountain Icon Detention. Every bottle lists vintage, AVA, and suggested retail. The floor is always the buy-in. This maison preview does not ship alcohol.";
     if (/age|21|legal/.test(s)) return "Entry is reserved for guests twenty-one and over. We are a demonstration, not a licensed merchant.";
     if (/pt|point|pts|quest/.test(s)) return "PTS are marks of attendance on this device. Purchases, shares, and quests add to your standing. Forty points will bump a jukebox request.";
     if (/ship|deliver|hk|napa|moscow/.test(s)) return "We sketch bonded lanes from Napa toward Hong Kong, Shanghai, Moscow, Tokyo, London, and Dubai. Fulfilment remains a courtesy sketch until licensed shipping is appointed.";
@@ -3284,7 +3314,10 @@
     if (!raw) return '<div class="content-block"><h2>'+t("notFound")+'</h2><p>'+t("notFoundP")+' <a href="#/collections">'+t("backCols")+'</a>.</p></div>';
     var p = locProduct(raw);
     var poolRows = p.pool.map(function(b){
-      return '<div class="pool-row"><span>'+b.name+'</span><span class="val">'+money(b.value)+'</span></div>';
+      return '<div class="pool-row"><span><b>'+esc(bottleLabel(b))+'</b>'+
+        '<span class="meta">'+esc(bottleSub(b))+(b.cases?' · '+esc(b.cases)+' cases':'')+'</span>'+
+        (b.notes?'<span class="notes">'+esc(b.notes)+'</span>':'')+
+        '</span><span class="val">'+money(b.value)+' SRP</span></div>';
     }).join("");
     return '' +
     '<div class="product-detail">' +
@@ -3317,6 +3350,7 @@
         '</div>' +
         '<div class="pool">' +
           '<h3>'+t("possible")+'</h3>' +
+          '<p class="pool-lede">Vintage, AVA, and suggested retail as printed. Weighted toward the floor; the rare lots are the extra credit.</p>' +
           '<div class="pool-list">'+poolRows+'</div>' +
         '</div>' +
       '</div>' +
@@ -3814,8 +3848,10 @@
         return '<div class="bottle-card'+(isUpgrade ? ' upgrade':'')+'">' +
           (isUpgrade ? '<span class="upgrade-flag">'+t("upgrade")+'</span>' : '') +
           bottleIconSVG() +
-          '<h4>'+b.name+'</h4>' +
-          '<div class="val">'+money(b.value)+'</div>' +
+          '<h4>'+esc(bottleLabel(b))+'</h4>' +
+          '<div class="meta">'+esc(bottleSub(b))+'</div>' +
+          (b.notes ? '<p class="notes">'+esc(b.notes)+'</p>' : '') +
+          '<div class="val">'+money(b.value)+' SRP</div>' +
         '</div>';
       }).join("");
       return '<div class="reveal-group"><h3>'+g.name+'</h3><div class="reveal-bottles">'+bottles+'</div></div>';
