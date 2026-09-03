@@ -27,6 +27,10 @@
     --font-type:'IBM Plex Mono',monospace;
     --font-body:'IBM Plex Sans',sans-serif;
     --font-bang:'Anton',sans-serif;
+    --rail-w:64px;
+    --luxe-gold:#C9A962;
+    --luxe-ivory:#F6F1E6;
+    --luxe-ink:#0E3386;
   }
 
   [data-theme="light"]{
@@ -82,7 +86,7 @@
   }
 
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
   body{
     margin:0;
     font-family:var(--font-body);
@@ -97,10 +101,13 @@
     );
     line-height:1.5;
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    max-width:100%;
   }
   img,svg{display:block;max-width:100%;}
   a{color:inherit;text-decoration:none;}
-  button{font-family:inherit;cursor:pointer;}
+  button,a,input,select,textarea{font-family:inherit;touch-action:manipulation;}
+  button{cursor:pointer;}
   h1,h2,h3,h4{margin:0;font-weight:600;}
   p{margin:0;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
@@ -279,7 +286,7 @@
   [data-theme="light"] .menu-toggle,[data-theme="light"] .desk-more{border-color:var(--header-border);}
   .desk-more{display:inline-flex;align-items:center;}
   .urgency-end{white-space:nowrap;}
-  .tabbar,.more-sheet,.more-backdrop{display:none;}
+  .tabbar,.more-sheet,.more-backdrop,.desk-more,.menu-toggle{display:none !important;}
 
   .hero{
     background:
@@ -650,43 +657,98 @@
   .more-sheet.open,.more-backdrop.open{display:block;}
   body.more-open{overflow:hidden;}
 
+  @media (hover:none){
+    .btn:hover{transform:none;}
+  }
+
   @media(max-width:1023px){
-    .ticker{font-size:11px;}
-    .ticker-track{padding:6px 0;}
-    .urgency{gap:8px;padding:6px 10px;font-size:11px;letter-spacing:.03em;}
+    :root{ --rail-w:56px; }
+    .ticker{display:none !important;}
+    header.site{position:sticky;top:0;}
+    .urgency{
+      gap:8px;padding:8px 128px 8px 10px;font-size:11px;letter-spacing:.03em;
+      min-height:48px;flex-wrap:nowrap;justify-content:flex-start;
+    }
     .urgency-end{display:none;}
     .clock{font-size:15px;padding:1px 7px;}
-    .nav-row{padding:8px 12px;gap:8px;}
-    .brand{font-size:22px;gap:8px;}
+    .nav-row{
+      position:absolute;top:0;right:0;left:auto;height:48px;width:auto;
+      margin:0;padding:4px 8px;background:transparent;border:0;
+    }
+    .brand,.brand-kicker{display:none;}
     .brand-mark{width:36px;height:36px;filter:none;}
-    .brand-kicker{display:none;}
-    nav.links,.desk-more,.lang-select,.chrome-tools .btn-ghost,.menu-toggle{display:none !important;}
+    nav.links,.desk-more,.lang-select,.chrome-tools .btn-ghost,.menu-toggle,.nav-row .brand{display:none !important;}
     #cart-label{display:none;}
-    .cart-link{padding:8px 10px;}
-    .login-link,.account-link{padding:8px 12px;font-size:11px;}
-    .tabbar{display:grid;}
-    main#app{padding-bottom:24px;}
-    footer.site{padding-bottom:88px;}
-    .hud,.chat-root,.added-toast{
-      bottom:calc(80px + env(safe-area-inset-bottom,0px));
+    .cart-link{padding:6px 8px;min-height:36px;}
+    .login-link,.account-link{padding:6px 12px;font-size:11px;min-height:36px;}
+    header.site,main#app,footer.site{margin-left:var(--rail-w);}
+    main#app{padding-bottom:12px;}
+    footer.site{padding-bottom:calc(140px + env(safe-area-inset-bottom,0px));}
+    .added-toast{
+      bottom:calc(124px + env(safe-area-inset-bottom,0px));
     }
-    .hud{
-      right:12px;left:auto;
+    .action-rail{display:none !important;}
+    .left-rail{
+      width:var(--rail-w);padding:8px 3px calc(130px + env(safe-area-inset-bottom,0px));
+      -webkit-overflow-scrolling:touch;
     }
-    .hud.raised{
-      bottom:calc(136px + env(safe-area-inset-bottom,0px));
+    .left-rail a.rail-link{
+      min-height:52px;padding:6px 2px;font-size:8px;gap:3px;margin:1px 0;
     }
-    .hero{padding:24px 16px 32px;}
-    .hero h1{font-size:clamp(34px,11vw,56px);}
-    section{padding:40px 16px;}
-    .wrap{padding:0 16px;}
-    .hero-ctas .btn{width:100%;text-align:center;}
+    .left-rail a.rail-link svg{width:24px;height:24px;}
+    .rail-logo{padding:8px 0 6px;}
+    .rail-logo svg{width:34px;height:34px;}
+    .nowbar{
+      left:calc(var(--rail-w) + 6px);right:6px;max-width:none;
+      bottom:calc(64px + env(safe-area-inset-bottom,0px));
+      padding:6px 8px 6px 6px;border-radius:12px;gap:4px;
+    }
+    .now-art{width:36px;height:36px;}
+    .now-meta b{font-size:13px;}
+    .now-meta span{font-size:10px;}
+    .now-pts{display:none;}
+    .now-ctrl button{width:34px;height:34px;}
+    .now-ctrl button svg{width:18px;height:18px;}
+    .now-play{width:38px !important;height:38px !important;}
+    .chat-root{left:var(--rail-w);right:0;bottom:0;width:auto;}
+    .concierge-dock{
+      min-height:48px;gap:10px;
+      padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));
+    }
+    .concierge-copy b{font-size:10px;letter-spacing:.2em;}
+    .concierge-copy small{font-size:12px;}
+    .concierge-salon{max-height:min(58vh, 440px);}
+    .concierge-head{padding:14px 16px 6px;}
+    .concierge-head strong{font-size:20px;}
+    .concierge-avail,.chat-chips{padding-left:16px;padding-right:16px;}
+    .chat-log{padding:14px 16px;min-height:120px;}
+    .chat-form input{font-size:16px;padding:14px;}
+    .hero{padding:18px 14px 24px;}
+    .hero h1{font-size:clamp(30px,11vw,44px);line-height:.92;}
+    .hero p.sub{font-size:14px;margin-top:10px;}
+    .hero-ctas{flex-direction:column;gap:8px;margin-top:16px;}
+    .hero-ctas .btn{width:100%;text-align:center;min-height:48px;padding:14px 18px;}
+    .hero-card{padding:16px;box-shadow:6px 6px 0 var(--cubs-red);}
+    .hero-card .price{font-size:40px;}
+    .deal-stat-row{margin-top:14px;gap:6px;}
+    .page-hero{padding:22px 14px 18px;}
+    .page-hero h1{font-size:clamp(28px,10vw,40px);}
+    section{padding:28px 14px;}
+    .section-head{margin-bottom:18px;}
+    .section-head h2{font-size:clamp(26px,8vw,36px);}
+    .wrap{padding:0 14px;}
     .composer{flex-direction:column;}
     .newsletter-form{flex-direction:column;}
     .footer-grid{grid-template-columns:1fr;gap:22px;}
+    .board-row{grid-template-columns:28px 1fr auto;gap:8px;padding:10px;}
+    .play-head{padding:16px;}
+    .auth-overlay{padding:20px 12px 140px;align-items:center;}
+    .gifts-hero h1{font-size:clamp(32px,12vw,48px);}
+    .slip{padding:16px;}
+    body.chat-open .nowbar{opacity:.35;pointer-events:none;}
   }
   @media(min-width:1024px){
-    .tabbar{display:none !important;}
+    :root{ --rail-w:220px; }
   }
   .room-vid{
     height:168px;background:
@@ -754,71 +816,143 @@
     color:var(--cubs-blue);font-size:28px;line-height:1;padding:6px 10px;cursor:pointer;
   }
   .auth-card h1{font-family:var(--font-bang);font-size:clamp(28px,6vw,40px);text-transform:uppercase;margin-bottom:8px;}
-  .auth-tabs{display:grid;grid-template-columns:1fr 1fr;margin:0 0 18px;border:2px solid var(--cubs-blue);border-radius:6px;overflow:hidden;}
-  .auth-tabs a{
-    text-align:center;padding:12px 8px;font-family:var(--font-type);font-size:12px;font-weight:800;
-    letter-spacing:.08em;text-transform:uppercase;color:var(--cubs-blue);text-decoration:none;
-  }
-  .auth-tabs a.on{background:var(--cubs-blue);color:#fff;}
+  .auth-switch{margin-top:16px;text-align:center;font-size:14px;color:var(--page-muted);}
+  .auth-switch a{color:var(--cubs-red);font-weight:800;text-decoration:underline;}
   .auth-msg{margin-top:12px;font-family:var(--font-type);font-size:13px;color:var(--cubs-red);}
 
-  .hud{
-    position:fixed;right:10px;left:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:185;
-    display:flex;align-items:center;gap:0;
+  .hud{display:none !important;}
+
+  .nowbar{
+    position:fixed;left:12px;right:88px;z-index:186;
+    bottom:16px;display:flex;flex-direction:column;gap:6px;
+    background:rgba(14,51,134,.94);color:#fff;
+    border:0;border-radius:14px;
+    padding:8px 10px 8px 8px;
+    box-shadow:0 10px 28px rgba(14,51,134,.28);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    max-width:560px;
   }
-  .hud-card{
-    background:#fff;border:2px solid var(--cubs-blue);color:var(--cubs-blue);
-    padding:5px 6px 5px 10px;font-family:var(--font-type);font-size:11px;
-    box-shadow:3px 3px 0 var(--cubs-red);display:flex;align-items:center;gap:8px;
-    border-radius:22px;
+  .nowbar-inner{display:flex;align-items:center;gap:10px;width:100%;}
+  .now-art{
+    width:44px;height:44px;flex-shrink:0;border-radius:8px;
+    background:
+      radial-gradient(circle at 30% 30%, #fff 0 8%, transparent 9%),
+      conic-gradient(from 40deg,#0E3386,#CC3433,#fff,#0E3386);
+    border:2px solid #fff;
   }
-  .hud-pts{display:flex;align-items:baseline;gap:4px;white-space:nowrap;}
-  .hud-card b{font-family:var(--font-bang);font-size:16px;color:var(--cubs-red);letter-spacing:.03em;}
-  .hud-actions{display:flex;gap:4px;}
-  .hud-actions button,.hud-actions a{
-    text-align:center;border:2px solid var(--cubs-blue);background:transparent;color:var(--cubs-blue);
-    font-family:var(--font-type);font-size:10px;font-weight:700;padding:6px 8px;min-height:32px;
-    border-radius:16px;text-decoration:none;line-height:1;
+  .now-meta{flex:1;min-width:0;color:#fff;text-decoration:none;}
+  .now-meta b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .now-meta span{display:block;font-size:11px;opacity:.82;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .now-pts{
+    font-family:var(--font-type);font-size:10px;font-weight:800;letter-spacing:.04em;
+    opacity:.8;flex-shrink:0;
   }
-  .hud-actions button.on{background:var(--cubs-red);border-color:var(--cubs-red);color:#fff;}
-  .hud-x{
-    border:none;background:transparent;color:var(--cubs-blue);
-    font-size:18px;line-height:1;padding:4px 6px;cursor:pointer;flex-shrink:0;
+  .now-ctrl{display:flex;align-items:center;gap:2px;flex-shrink:0;}
+  .now-ctrl button{
+    background:transparent;color:#fff;border:none;width:36px;height:36px;
+    display:grid;place-items:center;padding:0;min-height:0;
   }
-  .hud-fab,.chat-fab{
-    min-width:44px;height:36px;border-radius:18px;border:2px solid var(--cubs-blue);
-    background:var(--cubs-red);color:#fff;font-family:var(--font-bang);font-size:13px;
-    box-shadow:3px 3px 0 var(--cubs-blue);letter-spacing:.03em;padding:0 10px;cursor:pointer;
+  .now-ctrl button svg{width:22px;height:22px;fill:currentColor;}
+  .now-play{
+    width:40px !important;height:40px !important;border-radius:50% !important;
+    background:#fff !important;color:var(--cubs-blue) !important;
   }
-  .hud.collapsed .hud-card{display:none;}
-  .hud:not(.collapsed) .hud-fab{display:none;}
-  .hud.raised{bottom:calc(64px + env(safe-area-inset-bottom,0px));}
+  .now-prog{height:3px;background:rgba(255,255,255,.22);border-radius:99px;overflow:hidden;}
+  .now-prog i{display:block;height:100%;width:0;background:#fff;border-radius:99px;}
 
   .chat-root{
-    position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));
-    z-index:165;display:flex;flex-direction:column;align-items:flex-end;gap:8px;
-    width:min(360px, calc(100vw - 24px));
+    position:fixed;left:var(--rail-w);right:0;bottom:0;z-index:188;
+    display:flex;flex-direction:column;align-items:stretch;
+    width:auto;max-width:none;pointer-events:none;
   }
-  .chat-fab{align-self:flex-end;width:auto;border-radius:28px;padding:0 16px;font-size:14px;}
-  .chat-panel{
-    width:100%;background:#fff;border:3px solid var(--cubs-blue);color:var(--cubs-blue);
-    box-shadow:8px 8px 0 var(--cubs-red);max-height:min(70vh, 480px);
-    display:flex;flex-direction:column;overflow:hidden;
+  .chat-root > *{pointer-events:auto;}
+  .concierge-salon{
+    display:flex;flex-direction:column;
+    background:var(--luxe-ivory);color:var(--luxe-ink);
+    border-top:1px solid var(--luxe-gold);
+    max-height:min(62vh, 540px);
+    box-shadow:0 -18px 40px rgba(14,51,134,.12);
   }
-  .chat-panel.hidden{display:none;}
-  .chat-head{
-    background:var(--cubs-blue);color:#fff;padding:10px 12px;
-    display:flex;justify-content:space-between;align-items:center;gap:8px;
-    font-family:var(--font-type);font-size:12px;font-weight:700;
+  .concierge-salon.hidden{display:none;}
+  .concierge-head{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    padding:18px 20px 8px;gap:12px;
   }
-  .chat-head button{background:transparent;border:none;color:#fff;font-size:20px;padding:4px 8px;}
-  .chat-log{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:180px;}
-  .chat-bubble{padding:10px 12px;font-size:14px;max-width:90%;line-height:1.35;}
-  .chat-bubble.bot{background:#E8EEF9;align-self:flex-start;}
-  .chat-bubble.me{background:var(--cubs-red);color:#fff;align-self:flex-end;}
-  .chat-form{display:flex;border-top:2px solid var(--cubs-blue);}
-  .chat-form input{flex:1;border:none;padding:12px;font:inherit;min-width:0;}
-  .chat-form button{border:none;background:var(--cubs-blue);color:#fff;padding:12px 14px;font-family:var(--font-type);font-size:12px;}
+  .concierge-kicker{
+    display:block;font-family:var(--font-type);font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--luxe-gold);margin-bottom:4px;
+  }
+  .concierge-head strong{
+    display:block;font-family:var(--font-body);font-weight:500;font-size:22px;letter-spacing:.04em;
+  }
+  .concierge-head button{
+    background:transparent;border:none;color:var(--luxe-ink);font-size:22px;line-height:1;padding:4px 6px;
+  }
+  .concierge-avail{
+    padding:0 20px 12px;font-size:13px;letter-spacing:.04em;color:#5C6B8A;
+    border-bottom:1px solid rgba(201,169,98,.35);
+  }
+  .chat-log{
+    flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:14px;min-height:160px;
+  }
+  .chat-bubble{
+    max-width:92%;font-size:15px;line-height:1.55;padding:0;border-radius:0;
+  }
+  .chat-bubble.bot{
+    align-self:flex-start;background:transparent;border-left:1px solid var(--luxe-gold);padding:2px 0 2px 14px;
+  }
+  .chat-bubble.me{
+    align-self:flex-end;background:transparent;color:var(--luxe-ink);text-align:right;
+    border-right:1px solid var(--cubs-blue);padding:2px 14px 2px 0;
+  }
+  .chat-chips{display:flex;flex-wrap:wrap;gap:10px 16px;padding:4px 20px 14px;}
+  .chat-chips button{
+    border:none;background:transparent;color:var(--luxe-ink);
+    border-bottom:1px solid var(--luxe-gold);border-radius:0;
+    padding:4px 0;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  }
+  .chat-form{display:flex;align-items:center;border-top:1px solid rgba(201,169,98,.45);background:#FBF8F1;}
+  .chat-form input{
+    flex:1;border:none;background:transparent;padding:16px 18px;font:inherit;min-width:0;
+    font-size:15px;letter-spacing:.01em;color:var(--luxe-ink);
+  }
+  .chat-form input::placeholder{color:#8A93A8;}
+  .chat-form button{
+    border:none;background:transparent;color:var(--luxe-ink);
+    padding:16px 20px;font-family:var(--font-type);font-size:11px;font-weight:600;
+    letter-spacing:.18em;text-transform:uppercase;
+  }
+  .concierge-dock{
+    display:flex;align-items:center;gap:14px;width:100%;
+    background:var(--luxe-ivory);color:var(--luxe-ink);
+    border:none;border-top:1px solid var(--luxe-gold);
+    padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));
+    text-align:left;min-height:56px;cursor:pointer;
+  }
+  .concierge-gem{
+    width:8px;height:8px;flex-shrink:0;background:var(--luxe-gold);transform:rotate(45deg);
+  }
+  .concierge-copy{flex:1;min-width:0;}
+  .concierge-copy b{
+    display:block;font-family:var(--font-body);font-weight:600;font-size:11px;
+    letter-spacing:.26em;text-transform:uppercase;
+  }
+  .concierge-copy small{
+    display:block;margin-top:2px;font-size:13px;font-weight:400;letter-spacing:.02em;color:#5C6B8A;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .concierge-cta{
+    font-family:var(--font-type);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--luxe-ink);border-bottom:1px solid var(--luxe-gold);padding-bottom:2px;flex-shrink:0;
+  }
+  [data-theme="dark"] .concierge-salon,[data-theme="dark"] .concierge-dock,[data-theme="dark"] .chat-form{
+    background:#0A2768;color:#fff;border-color:var(--luxe-gold);
+  }
+  [data-theme="dark"] .concierge-head strong,[data-theme="dark"] .concierge-copy b,[data-theme="dark"] .chat-form button{
+    color:#fff;
+  }
+  [data-theme="dark"] .concierge-avail,[data-theme="dark"] .concierge-copy small{color:#D6E4FF;}
+  [data-theme="dark"] .chat-bubble.bot,[data-theme="dark"] .chat-bubble.me{color:#fff;}
 
   .footer-socials{max-width:1120px;margin:28px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.22);}
   .footer-socials h4{color:#fff;font-size:13px;letter-spacing:.5px;margin-bottom:12px;font-family:var(--font-type);}
@@ -830,27 +964,76 @@
   .footer-socials-wrap a:hover,.footer-socials-wrap a.live{opacity:1;border-color:#fff;}
   .footer-brand{cursor:pointer;}
 
-  .nowbar{
-    position:fixed;left:0;right:0;z-index:175;
-    bottom:0;display:none;
-    background:var(--cubs-blue);color:#fff;
-    border-top:3px solid var(--cubs-red);
-    padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px));
+  .right-rail{display:none;}
+  .left-rail{
+    display:flex;flex-direction:column;
+    position:fixed;top:0;left:0;bottom:0;width:var(--rail-w);z-index:120;
+    background:#fff;border-right:2px solid var(--cubs-blue);
+    padding:8px 6px 96px;overflow-x:hidden;overflow-y:auto;
   }
-  .nowbar.on{display:block;}
-  .nowbar-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:12px;}
-  .now-art{
-    width:44px;height:44px;flex-shrink:0;
-    background:linear-gradient(135deg,#CC3433,#0E3386);border:2px solid #fff;
+  .rail-logo{
+    display:grid;place-items:center;padding:6px 0 10px;color:var(--cubs-blue);text-decoration:none;
   }
-  .now-meta{flex:1;min-width:0;}
-  .now-meta b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .now-meta span{font-size:12px;opacity:.85;}
-  .nowbar button{
-    background:#fff;color:var(--cubs-blue);border:none;
-    font-family:var(--font-type);font-size:11px;font-weight:700;
-    padding:8px 10px;min-height:40px;
+  .rail-logo svg{width:40px;height:40px;}
+  .rail-logo span{display:none;}
+  .left-rail .rail-kicker,.left-rail .rail-sub,.rail-tools{display:none;}
+  .left-rail a.rail-link{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:2px;padding:8px 4px;border-radius:10px;margin:2px 0;
+    font-family:var(--font-type);font-size:8px;font-weight:800;
+    letter-spacing:.04em;text-transform:uppercase;color:var(--cubs-blue);
   }
+  .left-rail a.rail-link svg{width:22px;height:22px;fill:currentColor;flex-shrink:0;}
+  .left-rail a.rail-link.on,.left-rail a.rail-link:hover{background:#E8EEF9;}
+  .left-rail a.rail-link.on{color:var(--cubs-red);}
+  .rail-pts{
+    margin-top:auto;text-align:center;padding:8px 0 4px;
+    font-family:var(--font-type);font-size:10px;font-weight:800;color:var(--cubs-red);
+  }
+  .action-rail{
+    position:fixed;right:10px;z-index:184;
+    bottom:calc(76px + env(safe-area-inset-bottom,0px));
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  body.chat-open .action-rail{visibility:hidden;pointer-events:none;}
+  .action-btn{
+    width:52px;min-height:52px;border-radius:50%;
+    background:var(--cubs-blue);color:#fff;border:2px solid #fff;
+    box-shadow:0 6px 16px rgba(14,51,134,.28);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:1px;padding:6px 4px;
+    font-family:var(--font-type);font-size:9px;font-weight:800;
+    letter-spacing:.04em;text-transform:uppercase;
+  }
+  .action-btn b{font-family:var(--font-bang);font-size:16px;line-height:1;letter-spacing:0;font-weight:400;}
+  .slip-head{
+    background:var(--cubs-blue);color:#fff;padding:14px;border-radius:10px;
+    display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
+  }
+  .slip-head span{font-family:var(--font-type);font-size:11px;letter-spacing:.12em;font-weight:800;width:100%;}
+  .slip-head b{font-family:var(--font-bang);font-size:36px;line-height:1;}
+  .slip-watch{font-size:13px;color:var(--page-muted);}
+  .slip-now{background:#E8EEF9;padding:12px;border-radius:10px;}
+  .slip-now span{font-family:var(--font-type);font-size:10px;letter-spacing:.1em;font-weight:800;color:var(--cubs-red);}
+  .slip-now b{display:block;font-size:15px;margin-top:4px;}
+  .slip-now small{display:block;opacity:.8;}
+  .right-rail{
+    position:fixed;right:0;top:0;bottom:0;width:292px;z-index:90;
+    background:#fff;border-left:2px solid var(--cubs-blue);
+    padding:16px 14px 24px;overflow-y:auto;flex-direction:column;gap:10px;
+  }
+  .right-rail .btn{width:100%;text-align:center;}
+  [data-theme="dark"] .left-rail,[data-theme="dark"] .right-rail{
+    background:var(--cubs-blue-deep);color:#fff;border-color:rgba(255,255,255,.28);
+  }
+  [data-theme="dark"] .left-rail a.rail-link,[data-theme="dark"] .rail-logo{color:#fff;}
+  [data-theme="dark"] .left-rail a.rail-link.on,[data-theme="dark"] .left-rail a.rail-link:hover{background:rgba(255,255,255,.12);}
+  [data-theme="dark"] .slip-now{background:rgba(255,255,255,.1);color:#fff;}
+
+  header.site,main#app,footer.site{margin-left:var(--rail-w);}
+  nav.links{display:none !important;}
+  .nav-row{max-width:none;}
+
   .play-head{
     max-width:1120px;margin:0 auto 22px;
     display:grid;grid-template-columns:160px 1fr;gap:20px;align-items:center;
@@ -897,10 +1080,53 @@
     .track-row{grid-template-columns:24px 1fr auto; }
     .track-row .dur, .track-row [data-play]{display:none;}
     .queue-box{grid-template-columns:1fr;}
-    .nowbar.on ~ .tabbar, .nowbar.on{ }
   }
   @media(max-width:1023px){
-    .nowbar.on{bottom:calc(56px + env(safe-area-inset-bottom,0px));padding-bottom:8px;}
+    .nowbar{
+      left:calc(var(--rail-w) + 6px);right:6px;max-width:none;
+      bottom:calc(64px + env(safe-area-inset-bottom,0px));
+      padding:6px 8px 6px 6px;border-radius:12px;gap:4px;
+    }
+    .now-art{width:36px;height:36px;}
+    .now-pts{display:none;}
+    .now-ctrl button{width:34px;height:34px;}
+    .now-play{width:38px !important;height:38px !important;}
+    .nav-row .brand{display:none !important;}
+    .chat-root{left:var(--rail-w);right:0;bottom:0;width:auto;z-index:188;}
+    .concierge-dock{min-height:48px;}
+    body.chat-open .nowbar{opacity:.35;pointer-events:none;}
+  }
+  @media(min-width:1024px){
+    .action-rail{display:none !important;}
+    .nav-row .brand{display:none !important;}
+    .nav-row{padding-left:20px;padding-right:20px;}
+    .left-rail{width:var(--rail-w);padding:12px 10px 24px;}
+    .rail-logo{display:flex;align-items:center;justify-content:flex-start;gap:8px;padding:4px 8px 16px;}
+    .rail-logo span{display:block;font-family:var(--font-chalk);font-size:22px;line-height:1;}
+    .left-rail .rail-kicker{
+      display:block;font-family:var(--font-type);font-size:10px;letter-spacing:.14em;
+      color:var(--cubs-red);font-weight:800;padding:4px 12px 10px;
+    }
+    .left-rail a.rail-link{
+      flex-direction:row;justify-content:flex-start;gap:10px;
+      padding:10px 12px;font-size:14px;text-transform:none;letter-spacing:0;font-weight:700;
+    }
+    .left-rail a.rail-link.on{box-shadow:inset 3px 0 0 var(--cubs-red);}
+    .left-rail .rail-sub{display:flex;flex-direction:column;margin-top:8px;}
+    .left-rail .rail-sub a{padding:8px 12px;font-size:13px;font-weight:600;opacity:.85;color:inherit;border-radius:8px;}
+    .left-rail .rail-sub a:hover{background:#E8EEF9;}
+    .rail-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;padding:0 8px;}
+    .rail-pts{text-align:left;padding:10px 12px;font-size:12px;}
+    footer.site{padding-bottom:168px;}
+    .nowbar{left:calc(var(--rail-w) + 12px);right:12px;bottom:calc(62px + env(safe-area-inset-bottom,0px));max-width:none;}
+    .chat-root{left:var(--rail-w);right:0;bottom:0;width:auto;}
+  }
+  @media(min-width:1280px){
+    .right-rail{display:flex;}
+    header.site,main#app,footer.site{margin-right:292px;}
+    .nowbar{right:304px;bottom:calc(62px + env(safe-area-inset-bottom,0px));}
+    .chat-root{right:292px;width:auto;}
+    .right-rail{top:0;}
   }
 
   .rooms{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
@@ -1066,9 +1292,39 @@
   <div class="more-links" id="more-links"></div>
   <div class="more-tools" id="more-tools"></div>
 </aside>
+<aside class="left-rail" id="left-rail" aria-label="Primary"></aside>
+<aside class="right-rail" id="right-rail" aria-label="Hall slip"></aside>
+<div class="action-rail" id="action-rail"></div>
 <div id="auth-overlay" class="auth-overlay hidden" hidden></div>
 <div class="hud" id="hud"></div>
 <div class="nowbar" id="nowbar"></div>
+<div class="chat-root" id="chat-root">
+  <div class="concierge-salon hidden" id="chat-panel" role="dialog" aria-label="Private client concierge">
+    <div class="concierge-head">
+      <div>
+        <span class="concierge-kicker">Private client</span>
+        <strong>Concierge</strong>
+      </div>
+      <button type="button" id="chat-x" aria-label="Close concierge">×</button>
+    </div>
+    <p class="concierge-avail">A specialist is available now · 21 and over</p>
+    <div class="chat-log" id="chat-log"></div>
+    <div class="chat-chips" id="chat-chips"></div>
+    <form class="chat-form" id="chat-form">
+      <label class="visually-hidden" for="chat-in">Message the concierge</label>
+      <input id="chat-in" maxlength="240" placeholder="Write a note to the cellar…" autocomplete="off">
+      <button type="submit">Send</button>
+    </form>
+  </div>
+  <button class="concierge-dock" type="button" id="chat-fab" aria-expanded="false" aria-controls="chat-panel">
+    <span class="concierge-gem" aria-hidden="true"></span>
+    <span class="concierge-copy">
+      <b>Concierge</b>
+      <small>How may we assist you?</small>
+    </span>
+    <span class="concierge-cta" id="chat-cta">Write</span>
+  </button>
+</div>
 
 <main id="app"></main>
 
@@ -1888,10 +2144,16 @@
   var farmCount = 0;
   var questsDone = {};
   var points = 0;
-  var hudCollapsed = true;
   var musicOn = false;
   var audioCtx = null;
   var musicHandles = [];
+  var musicStarted = Date.now();
+  var pausedElapsed = 0;
+  var progressTimer = null;
+  var chatOpen = false;
+  var chatLog = [];
+  var chatReady = false;
+  var chatUnread = true;
 
   var cart = [];
   var lastOrder = null;
@@ -2058,32 +2320,16 @@
       return '<a href="#/live" data-social="'+s.id+'" class="'+(s.live?"live":"")+'">'+s.name+'</a>';
     }).join("");
   }
-  function setHudCollapsed(on){
-    hudCollapsed = !!on;
-    persist();
-    renderHud();
-  }
   function renderHud(){
-    var el = document.getElementById("hud");
-    if (!el) return;
     BOARD[BOARD.length-1].pts = points;
-    el.className = "hud"+(hudCollapsed?" collapsed":"")+(musicOn?" raised":"");
-    el.innerHTML =
-      '<button class="hud-fab" type="button" id="hud-open" aria-label="Show points">PTS '+points+'</button>'+
-      '<div class="hud-card">'+
-        '<span class="hud-pts">'+t("pointsWord")+' <b id="pts-val">'+points+'</b></span>'+
-        '<div class="hud-actions">'+
-          '<button type="button" id="party-btn" class="'+(musicOn?"on":"")+'">'+(musicOn?t("partyOff"):t("partyOn"))+'</button>'+
-          '<a href="#/party">Jukebox</a>'+
-        '</div>'+
-        '<button class="hud-x" type="button" id="hud-min" aria-label="Minimize">–</button>'+
-      '</div>';
-    var open = document.getElementById("hud-open");
-    var min = document.getElementById("hud-min");
-    var pb = document.getElementById("party-btn");
-    if (open) open.onclick = function(){ setHudCollapsed(false); };
-    if (min) min.onclick = function(){ setHudCollapsed(true); };
-    if (pb) pb.onclick = toggleMusic;
+    var n = document.getElementById("now-pts");
+    if (n) n.textContent = points+" PTS";
+    var a = document.getElementById("rail-pts-n");
+    if (a) a.textContent = String(points);
+    var r = document.getElementById("slip-pts");
+    if (r) r.textContent = String(points);
+    var lp = document.getElementById("left-pts");
+    if (lp) lp.textContent = points+" PTS";
   }
   function crushGrape(){
     farmCount += 1;
@@ -2104,8 +2350,23 @@
     for (var i=0;i<TRACKS.length;i++){ if (TRACKS[i].id===id) return TRACKS[i]; }
     return TRACKS[0];
   }
+  function iconPlay(){ return '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'; }
+  function iconPause(){ return '<svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>'; }
+  function iconPrev(){ return '<svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zM9 12l9-6v12z"/></svg>'; }
+  function iconNext(){ return '<svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18V6l9 6z"/></svg>'; }
+  function parseDur(s){
+    var p = String(s||"0:00").split(":");
+    return (parseInt(p[0],10)||0)*60 + (parseInt(p[1],10)||0) || 180;
+  }
   function toggleMusic(){
-    if (musicOn){ stopMusic(); musicOn=false; renderHud(); renderNowBar(); return; }
+    if (musicOn){
+      pausedElapsed = (Date.now()-musicStarted)/1000;
+      stopMusic();
+      musicOn = false;
+      renderNowBar();
+      renderHud();
+      return;
+    }
     playTrack(nowPlayingId);
   }
   function stopMusic(){
@@ -2115,14 +2376,38 @@
   }
   function playTrack(id){
     var tr = findTrack(id);
+    if (tr.id !== nowPlayingId) pausedElapsed = 0;
     nowPlayingId = tr.id;
     if (!audioCtx || audioCtx.state==="closed") audioCtx = new (window.AudioContext||window.webkitAudioContext)();
     if (audioCtx.state==="suspended") audioCtx.resume();
     stopMusic();
     startParty(tr);
     musicOn = true;
+    musicStarted = Date.now() - pausedElapsed*1000;
+    pausedElapsed = 0;
     renderHud();
     renderNowBar();
+    startProgressLoop();
+  }
+  function skipTrack(dir){
+    var i = 0;
+    for (var n=0;n<TRACKS.length;n++) if (TRACKS[n].id===nowPlayingId){ i=n; break; }
+    var next = TRACKS[(i+dir+TRACKS.length)%TRACKS.length];
+    pausedElapsed = 0;
+    if (musicOn) playTrack(next.id);
+    else { nowPlayingId = next.id; renderNowBar(); }
+    if (currentRoute().split("?")[0]==="/party") render();
+  }
+  function startProgressLoop(){
+    if (progressTimer) return;
+    progressTimer = setInterval(updateNowProgress, 400);
+  }
+  function updateNowProgress(){
+    var el = document.getElementById("now-fill");
+    if (!el) return;
+    var dur = parseDur(findTrack(nowPlayingId).dur);
+    var elapsed = musicOn ? (Date.now()-musicStarted)/1000 : pausedElapsed;
+    el.style.width = (Math.min(0.999, (elapsed % dur) / dur) * 100) + "%";
   }
   var audioMaster = null;
   function startParty(tr){
@@ -2166,17 +2451,27 @@
   function renderNowBar(){
     var el = document.getElementById("nowbar");
     if (!el) return;
-    if (!musicOn){ el.className="nowbar"; el.innerHTML=""; return; }
     var tr = findTrack(nowPlayingId);
-    el.className="nowbar on";
+    el.className = "nowbar on";
     el.innerHTML = '<div class="nowbar-inner">'+
-      '<div class="now-art" aria-hidden="true"></div>'+
-      '<div class="now-meta"><b>'+esc(tr.title)+'</b><span>'+esc(tr.artist)+' · Detention Radio</span></div>'+
-      '<button type="button" id="now-pause">Pause</button>'+
-      '<a class="btn btn-primary" href="#/party" style="flex:none;padding:8px 12px;">Party</a>'+
-    '</div>';
+      '<a class="now-art" href="#/party" aria-hidden="true"></a>'+
+      '<a class="now-meta" href="#/party"><b>'+esc(tr.title)+'</b><span>'+esc(tr.artist)+' · '+esc(tr.album)+'</span></a>'+
+      '<span class="now-pts" id="now-pts">'+points+' PTS</span>'+
+      '<div class="now-ctrl">'+
+        '<button type="button" id="now-prev" aria-label="Previous">'+iconPrev()+'</button>'+
+        '<button type="button" class="now-play" id="now-pause" aria-label="'+(musicOn?"Pause":"Play")+'">'+(musicOn?iconPause():iconPlay())+'</button>'+
+        '<button type="button" id="now-next" aria-label="Next">'+iconNext()+'</button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="now-prog"><i id="now-fill"></i></div>';
     var p = document.getElementById("now-pause");
+    var prev = document.getElementById("now-prev");
+    var next = document.getElementById("now-next");
     if (p) p.onclick = toggleMusic;
+    if (prev) prev.onclick = function(){ skipTrack(-1); };
+    if (next) next.onclick = function(){ skipTrack(1); };
+    startProgressLoop();
+    updateNowProgress();
   }
   function requestTrack(id){
     if (!currentUser){ showToast("Log in to request"); navigate("/login"); return; }
@@ -2493,11 +2788,7 @@
     var isUp = mode==="signup";
     return '<div class="auth-card">'+
       '<button type="button" class="auth-close" id="auth-close" aria-label="Close">×</button>'+
-      '<div class="auth-tabs">'+
-        '<a href="#/login" class="'+(!isUp?"on":"")+'">Log in</a>'+
-        '<a href="#/signup" class="'+(isUp?"on":"")+'">Sign up</a>'+
-      '</div>'+
-      '<h1>'+(isUp?"Sign up":"Log in")+'</h1>'+
+      '<h1>'+(isUp?"Join the hall":"Log in")+'</h1>'+
       '<p style="margin-bottom:18px;color:var(--page-muted);">'+(isUp?"Founding crew only takes a minute. Stays in this browser — demo login.":"Welcome back. This demo keeps your pass on this device.")+'</p>'+
       '<form id="auth-form">'+
         (isUp?'<div class="form-row"><label for="auth-name">Name</label><input id="auth-name" required autocomplete="name"></div>':'')+
@@ -2506,6 +2797,9 @@
         '<button class="btn btn-primary btn-block" type="submit">'+(isUp?"Sign up":"Log in")+'</button>'+
         '<div class="auth-msg" id="auth-msg"></div>'+
       '</form>'+
+      (isUp
+        ? '<p class="auth-switch">Already have a pass? <a href="#/login">Log in</a></p>'
+        : '<p class="auth-switch">New to Wine Detention? <a href="#/signup">Sign up</a></p>')+
     '</div>';
   }
   function pageAccount(){
@@ -2531,38 +2825,175 @@
     if (kind==="shop") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>';
     if (kind==="party") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 16V5l9-2v11"/><circle cx="8" cy="17" r="2.4"/><circle cx="17" cy="14" r="2.4"/></svg>';
     if (kind==="pass") return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 12h18"/></svg>';
+    if (kind==="gift") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v10H3zM3 10V7h18v3M12 7V20M8 7c0-2 1.2-3.5 4-3.5S16 5 16 7"/></svg>';
+    if (kind==="board") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10h3v10H5zm6 0V4h3v16h-3zm6 0v-7h3v7h-3z"/></svg>';
     return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/></svg>';
   }
 
-  function renderNav(){
-    document.getElementById("nav-links").innerHTML =
-      '<a href="#/" data-route="/">'+t("navHome")+'</a>'+
-      '<a href="#/gifts" data-route="/gifts">Gifts</a>'+
-      '<a href="#/live" data-route="/live">'+t("navLive")+'</a>'+
-      '<a href="#/party" data-route="/party">Party</a>'+
-      '<a href="#/collections" data-route="/collections">Shop</a>';
+  function railActive(route, match){
+    return route===match || (match==="/collections" && route.indexOf("/product/")===0) || (match==="/gifts" && route.indexOf("/gifts")===0) || (match==="/" && route==="/");
   }
 
-  function renderTabbar(){
-    var el = document.getElementById("tabbar");
+  function renderNav(){
+    var links = document.getElementById("nav-links");
+    if (links) links.innerHTML = "";
+    renderLeftRail();
+    renderRightRail();
+    renderActionRail();
+    ensureChat();
+  }
+
+  function renderLeftRail(){
+    var el = document.getElementById("left-rail");
     if (!el) return;
-    var route = currentRoute();
-    var tabs = [
+    var route = currentRoute().split("?")[0];
+    var items = [
       {href:"#/", match:"/", kind:"home", label:t("navHome")},
       {href:"#/party", match:"/party", kind:"party", label:"Party"},
       {href:"#/collections", match:"/collections", kind:"shop", label:"Shop"},
+      {href:"#/gifts", match:"/gifts", kind:"gift", label:"Gifts"},
+      {href:"#/live", match:"/live", kind:"live", label:t("navLive")},
       {href:"#/cart", match:"/cart", kind:"pass", label:"Pass"},
-      {kind:"more", label:"More"}
+      {href:"#/leaderboard", match:"/leaderboard", kind:"board", label:"Board"}
     ];
-    el.innerHTML = tabs.map(function(tab){
-      var on = tab.match && (route===tab.match || (tab.match==="/collections" && route.indexOf("/product/")===0) || (tab.match==="/" && route==="/"));
-      if (tab.kind==="more"){
-        return '<button type="button" class="tab-more" id="tab-more">'+tabSvg("more")+'<span>'+tab.label+'</span></button>';
-      }
-      return '<a href="'+tab.href+'" class="'+(tab.extra||"")+(on?" active":"")+'" data-tab="'+tab.match+'">'+tabSvg(tab.kind)+'<span>'+tab.label+'</span></a>';
-    }).join("");
-    var moreBtn = document.getElementById("tab-more");
-    if (moreBtn) moreBtn.onclick = openMore;
+    var extra = [
+      {href:"#/quests", label:t("navQuests")},
+      {href:"#/how-it-works", label:t("navHow")},
+      {href:"#/about", label:t("navAbout")},
+      {href:"#/faq", label:t("navFaq")},
+      {href: currentUser ? "#/account" : "#/login", label: currentUser ? "Account" : "Log in"}
+    ];
+    el.innerHTML =
+      '<a class="rail-logo" href="#/">'+brandMarkSVG()+'<span>Wine Detention</span></a>'+
+      '<div class="rail-kicker">DETENTION</div>'+
+      items.map(function(item){
+        return '<a class="rail-link'+(railActive(route, item.match)?" on":"")+'" href="'+item.href+'">'+tabSvg(item.kind)+'<span>'+item.label+'</span></a>';
+      }).join("")+
+      '<div class="rail-sub">'+extra.map(function(item){
+        return '<a href="'+item.href+'">'+item.label+'</a>';
+      }).join("")+'</div>'+
+      '<div class="rail-tools">'+
+        '<button class="btn btn-dark" type="button" id="rail-theme">'+(theme==="dark"?t("themeLight"):t("themeDark"))+'</button>'+
+      '</div>'+
+      '<div class="rail-pts" id="left-pts">'+points+' PTS</div>';
+    var th = document.getElementById("rail-theme");
+    if (th) th.onclick = function(){
+      theme = theme === "dark" ? "light" : "dark";
+      persist(); applyPrefs(); render();
+    };
+  }
+
+  function renderRightRail(){
+    var el = document.getElementById("right-rail");
+    if (!el) return;
+    var tr = findTrack(nowPlayingId);
+    el.innerHTML =
+      '<div class="slip-head"><span>HALL SLIP</span><b id="slip-pts">'+points+'</b><small>PTS</small></div>'+
+      '<p class="slip-watch" id="slip-watch"></p>'+
+      '<div class="slip-now"><span>ON DECK</span><b>'+esc(tr.title)+'</b><small>'+esc(tr.artist)+'</small></div>'+
+      '<button class="btn btn-primary" type="button" id="slip-chat">Concierge</button>'+
+      '<a class="btn btn-dark" href="#/collections">Shop the drop</a>'+
+      '<a class="btn btn-dark" href="#/gifts">Send a gift</a>'+
+      '<a class="btn btn-dark" href="#/cart">Hall Pass</a>';
+    var sc = document.getElementById("slip-chat");
+    if (sc) sc.onclick = function(){ chatOpen = true; chatUnread = false; ensureChat(); paintChat(); };
+  }
+
+  function renderActionRail(){
+    var el = document.getElementById("action-rail");
+    if (!el) return;
+    el.innerHTML = '<button class="action-btn" type="button" id="rail-pts" aria-label="Points"><b id="rail-pts-n">'+points+'</b><span>PTS</span></button>';
+    var rp = document.getElementById("rail-pts");
+    if (rp) rp.onclick = function(){ navigate("/leaderboard"); };
+  }
+
+  function renderTabbar(){
+    renderLeftRail();
+    renderRightRail();
+    renderActionRail();
+    ensureChat();
+  }
+
+  function conciergeHello(){
+    var h = new Date().getHours();
+    var when = h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+    return when + ". I am the Wine Detention concierge. How may I be of assistance?";
+  }
+  function hallReply(q){
+    var s = String(q||"").toLowerCase();
+    if (/gift|bonus|unveil|card/.test(s)) return "A pleasure. Gift cards are issued from ten to five hundred dollars. After they are sent, a private unveiling reveals a courtesy multiple — never less than four percent, customarily near one and a third, and on rare evenings, considerably more. This preview is ceremonial; no funds are taken.";
+    if (/music|jukebox|party|song|play|radio/.test(s)) return "Detention Radio is composed for the hall — original house loops, never a licensed catalog. The player at the foot of the page will play, pause, and skip. Party is the full salon if you wish to request a track.";
+    if (/login|account|sign|pass/.test(s)) return "LOG IN is the single key in the header, as a maison would have it. Should you be new, a quiet link inside the sheet will open a hall pass. It remains on this device only.";
+    if (/drop|wine|buy|shop|sentence|locker/.test(s)) return "Today's Sentence is the allocation now on the floor. Place a bottle on your Hall Pass when you are ready. This maison preview does not ship alcohol.";
+    if (/age|21|legal/.test(s)) return "Entry is reserved for guests twenty-one and over. We are a demonstration, not a licensed merchant.";
+    if (/pt|point|pts|quest/.test(s)) return "PTS are marks of attendance on this device. Purchases, shares, and quests add to your standing. Forty points will bump a jukebox request.";
+    if (/ship|deliver|hk|napa|moscow/.test(s)) return "We sketch bonded lanes from Napa toward Hong Kong, Shanghai, Moscow, Tokyo, London, and Dubai. Fulfilment remains a courtesy sketch until licensed shipping is appointed.";
+    if (/help|hi|hey|hello|thanks|thank/.test(s)) return conciergeHello();
+    return "Of course. I can speak to today's allocation, a gift, Detention Radio, your points, or your pass. Choose a line below, or write freely.";
+  }
+
+  function ensureChat(){
+    var root = document.getElementById("chat-root");
+    if (!root) return;
+    if (!chatLog.length) chatLog.push({who:"bot", text: conciergeHello()});
+    if (!chatReady){
+      chatReady = true;
+      var fab = document.getElementById("chat-fab");
+      var xc = document.getElementById("chat-x");
+      var form = document.getElementById("chat-form");
+      if (fab) fab.onclick = function(){
+        chatOpen = !chatOpen;
+        if (chatOpen) chatUnread = false;
+        paintChat();
+      };
+      if (xc) xc.onclick = function(){ chatOpen=false; paintChat(); };
+      if (form) form.onsubmit = function(e){
+        e.preventDefault();
+        var inp = document.getElementById("chat-in");
+        var q = (inp && inp.value || "").trim();
+        if (!q) return;
+        inp.value = "";
+        chatLog.push({who:"me", text:q});
+        chatLog.push({who:"bot", text:hallReply(q)});
+        chatOpen = true;
+        chatUnread = false;
+        paintChat();
+      };
+    }
+    paintChat();
+  }
+
+  function paintChat(){
+    var panel = document.getElementById("chat-panel");
+    var log = document.getElementById("chat-log");
+    var chips = document.getElementById("chat-chips");
+    var fab = document.getElementById("chat-fab");
+    var cta = document.getElementById("chat-cta");
+    if (!panel) return;
+    panel.classList.toggle("hidden", !chatOpen);
+    document.body.classList.toggle("chat-open", chatOpen);
+    if (fab) fab.setAttribute("aria-expanded", chatOpen ? "true" : "false");
+    if (cta) cta.textContent = chatOpen ? "Close" : "Write";
+    if (log){
+      log.innerHTML = chatLog.map(function(m){
+        return '<div class="chat-bubble '+(m.who==="me"?"me":"bot")+'">'+esc(m.text)+'</div>';
+      }).join("");
+      log.scrollTop = log.scrollHeight;
+    }
+    if (chips){
+      var qs = ["Today's allocation","A gift for someone","The cellar radio"];
+      chips.innerHTML = qs.map(function(q){ return '<button type="button" data-chip="'+esc(q)+'">'+esc(q)+'</button>'; }).join("");
+      chips.querySelectorAll("[data-chip]").forEach(function(b){
+        b.onclick = function(){
+          var q = b.getAttribute("data-chip");
+          chatLog.push({who:"me", text:q});
+          chatLog.push({who:"bot", text:hallReply(q)});
+          chatOpen = true;
+          chatUnread = false;
+          paintChat();
+        };
+      });
+    }
   }
 
   function moreItems(){
@@ -2961,7 +3392,9 @@
             '<h2>'+esc(tr.title)+'</h2>'+
             '<p>'+esc(tr.artist)+' — '+esc(tr.album)+'</p>'+
             '<div class="play-actions">'+
+              '<button class="btn btn-dark" type="button" id="play-prev">Previous</button>'+
               '<button class="btn btn-primary" type="button" id="play-now">'+(musicOn?"Pause the party":"Play for the hall")+'</button>'+
+              '<button class="btn btn-dark" type="button" id="play-next">Next</button>'+
               '<button class="btn btn-dark" type="button" data-req="'+tr.id+'">Bump this · 40 pts</button>'+
             '</div>'+
             '<p style="margin-top:10px;font-size:13px;opacity:.85;">Browser-made beats. No Apple Music catalog, no copyrighted tracks.</p>'+
@@ -3493,7 +3926,7 @@
     bindPageEvents(isAuth ? under : route);
     if (isAuth) bindAuth(route);
     closeMore();
-    renderTabbar();
+    renderNav();
     renderHud();
     renderNowBar();
   }
@@ -3563,6 +3996,10 @@
     if (route === "/party"){
       var pn = document.getElementById("play-now");
       if (pn) pn.addEventListener("click", toggleMusic);
+      var pprev = document.getElementById("play-prev");
+      var pnext = document.getElementById("play-next");
+      if (pprev) pprev.addEventListener("click", function(){ skipTrack(-1); });
+      if (pnext) pnext.addEventListener("click", function(){ skipTrack(1); });
       document.querySelectorAll("[data-play]").forEach(function(btn){
         btn.addEventListener("click", function(){ playTrack(btn.getAttribute("data-play")); });
       });
@@ -3767,7 +4204,6 @@
       localStorage.setItem("wd-quests", JSON.stringify(questsDone));
       localStorage.setItem("wd-farm", String(farmCount));
       localStorage.setItem("wd-gate", gateShown ? "1" : "0");
-      localStorage.setItem("wd-hud", hudCollapsed ? "1" : "0");
       if (currentUser) localStorage.setItem("wd-session", JSON.stringify(currentUser));
     } catch (e) {}
   }
@@ -3785,7 +4221,6 @@
       if (qd && typeof qd==="object") questsDone = qd;
       farmCount = parseInt(localStorage.getItem("wd-farm")||"0",10)||0;
       if (localStorage.getItem("wd-gate")==="1") gateShown = true;
-      hudCollapsed = localStorage.getItem("wd-hud") !== "0";
       var sess = JSON.parse(localStorage.getItem("wd-session")||"null");
       if (sess && sess.email) currentUser = sess;
     } catch (e) {}
@@ -3826,6 +4261,8 @@
     if (clock) clock.textContent = formatRemain(endOfDay() - Date.now());
     var w = document.getElementById("watchers");
     if (w) w.textContent = watchersNow().toLocaleString() + " watching";
+    var sw = document.getElementById("slip-watch");
+    if (sw) sw.textContent = watchersNow().toLocaleString() + " watching";
     var lyric = document.getElementById("lyric-line");
     var beat = Math.floor(Date.now()/3000);
     if (lyric && beat !== lyricIdx){
