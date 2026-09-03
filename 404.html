@@ -667,7 +667,13 @@
     main#app{padding-bottom:24px;}
     footer.site{padding-bottom:88px;}
     .hud,.chat-root,.added-toast{
-      bottom:calc(68px + env(safe-area-inset-bottom,0px));
+      bottom:calc(80px + env(safe-area-inset-bottom,0px));
+    }
+    .hud{
+      right:12px;left:auto;
+    }
+    .hud.raised{
+      bottom:calc(136px + env(safe-area-inset-bottom,0px));
     }
     .hero{padding:24px 16px 32px;}
     .hero h1{font-size:clamp(34px,11vw,56px);}
@@ -739,32 +745,36 @@
   .auth-msg{margin-top:12px;font-family:var(--font-type);font-size:13px;color:var(--cubs-red);}
 
   .hud{
-    position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:160;
-    display:flex;flex-direction:column;gap:8px;align-items:flex-start;
+    position:fixed;right:10px;left:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:185;
+    display:flex;align-items:center;gap:0;
   }
   .hud-card{
-    background:#fff;border:3px solid var(--cubs-blue);color:var(--cubs-blue);
-    padding:10px 12px;font-family:var(--font-type);font-size:12px;min-width:168px;
-    box-shadow:6px 6px 0 var(--cubs-red);position:relative;
+    background:#fff;border:2px solid var(--cubs-blue);color:var(--cubs-blue);
+    padding:5px 6px 5px 10px;font-family:var(--font-type);font-size:11px;
+    box-shadow:3px 3px 0 var(--cubs-red);display:flex;align-items:center;gap:8px;
+    border-radius:22px;
   }
-  .hud-card b{font-family:var(--font-bang);font-size:28px;display:block;color:var(--cubs-red);letter-spacing:.04em;}
-  .hud-actions{display:flex;gap:6px;margin-top:8px;}
+  .hud-pts{display:flex;align-items:baseline;gap:4px;white-space:nowrap;}
+  .hud-card b{font-family:var(--font-bang);font-size:16px;color:var(--cubs-red);letter-spacing:.03em;}
+  .hud-actions{display:flex;gap:4px;}
   .hud-actions button,.hud-actions a{
-    flex:1;text-align:center;border:2px solid var(--cubs-blue);background:transparent;color:var(--cubs-blue);
-    font-family:var(--font-type);font-size:11px;padding:8px 4px;min-height:40px;
+    text-align:center;border:2px solid var(--cubs-blue);background:transparent;color:var(--cubs-blue);
+    font-family:var(--font-type);font-size:10px;font-weight:700;padding:6px 8px;min-height:32px;
+    border-radius:16px;text-decoration:none;line-height:1;
   }
   .hud-actions button.on{background:var(--cubs-red);border-color:var(--cubs-red);color:#fff;}
   .hud-x{
-    position:absolute;top:4px;right:4px;border:none;background:transparent;
-    color:var(--cubs-blue);font-size:18px;line-height:1;padding:6px 8px;
+    border:none;background:transparent;color:var(--cubs-blue);
+    font-size:18px;line-height:1;padding:4px 6px;cursor:pointer;flex-shrink:0;
   }
   .hud-fab,.chat-fab{
-    width:52px;height:52px;border-radius:50%;border:3px solid var(--cubs-blue);
+    min-width:44px;height:36px;border-radius:18px;border:2px solid var(--cubs-blue);
     background:var(--cubs-red);color:#fff;font-family:var(--font-bang);font-size:13px;
-    box-shadow:4px 4px 0 var(--cubs-blue);letter-spacing:.04em;
+    box-shadow:3px 3px 0 var(--cubs-blue);letter-spacing:.03em;padding:0 10px;cursor:pointer;
   }
   .hud.collapsed .hud-card{display:none;}
   .hud:not(.collapsed) .hud-fab{display:none;}
+  .hud.raised{bottom:calc(64px + env(safe-area-inset-bottom,0px));}
 
   .chat-root{
     position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));
@@ -879,6 +889,99 @@
   @media(max-width:860px){.rooms{grid-template-columns:1fr;}}
   .room{
     background:#fff;border:2px solid var(--cubs-blue);position:relative;overflow:hidden;min-height:240px;
+  }
+
+  .gift-nav{display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center;padding:4px 0 18px;font-weight:700;font-size:14px;}
+  .gift-nav a{color:var(--page-muted);text-decoration:none;border-bottom:2px solid transparent;padding-bottom:4px;}
+  .gift-nav a.on,.gift-nav a:hover{color:var(--page-text);border-bottom-color:var(--cubs-red);}
+  .gifts-hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;padding:8px 0 22px;}
+  .gifts-hero h1{font-family:var(--font-bang);font-size:clamp(40px,7vw,72px);letter-spacing:.01em;line-height:.92;margin:8px 0 12px;text-transform:uppercase;}
+  .gifts-hero p{color:var(--page-muted);max-width:46ch;font-size:16px;}
+  .gifts-stack{position:relative;height:240px;}
+  .gifts-stack .gc{position:absolute;width:72%;box-shadow:0 18px 40px rgba(14,51,134,.28);}
+  .gifts-stack .gc:nth-child(1){left:0;top:28px;transform:rotate(-8deg);}
+  .gifts-stack .gc:nth-child(2){left:16%;top:8px;transform:rotate(3deg);z-index:2;}
+  .gifts-stack .gc:nth-child(3){right:0;top:36px;transform:rotate(10deg);}
+  .gpills{display:flex;gap:8px;overflow:auto;padding:4px 0 18px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .gpills::-webkit-scrollbar{display:none;}
+  .gpill{flex:0 0 auto;border:2px solid var(--cubs-blue);background:#fff;color:var(--cubs-blue);border-radius:999px;padding:8px 14px;font-weight:800;font-size:13px;cursor:pointer;font-family:var(--font-body);}
+  .gpill.on{background:var(--cubs-blue);color:#fff;}
+  .grow{margin:0 0 28px;}
+  .grow h3{font-family:var(--font-bang);font-size:22px;letter-spacing:.04em;text-transform:uppercase;margin:0 0 10px;}
+  .ggrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .gc-link{display:block;text-decoration:none;color:inherit;}
+  .gc{aspect-ratio:16/10;border-radius:16px;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;border:2px solid rgba(255,255,255,.35);background:
+    radial-gradient(circle at 18% 18%, hsla(var(--h),90%,72%,.55), transparent 42%),
+    radial-gradient(circle at 88% 120%, rgba(204,52,51,.55), transparent 46%),
+    linear-gradient(135deg, hsl(var(--h),72%,34%) 0%, #0E3386 62%, #CC3433 130%);
+  }
+  .gc .gc-mark{position:absolute;top:12px;left:14px;font-family:var(--font-bang);letter-spacing:.08em;font-size:15px;}
+  .gc .gc-emoji{position:absolute;top:10px;right:12px;font-size:28px;filter:drop-shadow(0 4px 0 rgba(0,0,0,.18));}
+  .gc .gc-title{font-weight:800;font-size:15px;}
+  .gc .gc-cat{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;}
+  .gc .gc-amt{font-family:var(--font-bang);font-size:28px;line-height:1;margin-top:4px;}
+  .gc.lg{aspect-ratio:16/10;min-height:220px;padding:18px;}
+  .gc.lg .gc-mark{font-size:20px;}
+  .gc.lg .gc-title{font-size:22px;}
+  .gift-layout{display:grid;grid-template-columns:1fr 1fr;gap:36px;max-width:1100px;margin:0 auto;padding:8px 0 48px;align-items:start;}
+  .gift-form h2{font-family:var(--font-bang);font-size:clamp(28px,4vw,40px);letter-spacing:.02em;text-transform:uppercase;margin:0 0 8px;line-height:1;}
+  .gift-form .lede{color:var(--page-muted);margin:0 0 18px;}
+  .gfield{margin:0 0 18px;}
+  .gfield label,.gfield .glab{display:flex;justify-content:space-between;gap:8px;font-weight:800;font-size:14px;margin-bottom:8px;}
+  .gfield .hint{font-weight:600;color:var(--page-muted);font-size:12px;}
+  .gchoice{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .gchoice button,.gamt button{
+    border:2px solid var(--card-border);background:var(--card);color:var(--page-text);border-radius:12px;padding:14px 10px;font-weight:800;font-family:var(--font-body);cursor:pointer;
+  }
+  .gchoice button.on,.gamt button.on{border-color:#fff;box-shadow:0 0 0 2px var(--cubs-blue);background:var(--cubs-blue);color:#fff;}
+  .gamt{display:flex;flex-wrap:wrap;gap:8px;}
+  .gamt button{min-width:64px;}
+  .gamt .other{display:flex;align-items:center;gap:6px;border:2px solid var(--card-border);border-radius:12px;padding:8px 10px;background:var(--card);}
+  .gamt .other.on{border-color:var(--cubs-blue);box-shadow:0 0 0 2px #fff,0 0 0 4px var(--cubs-blue);}
+  .gamt .other input{width:72px;border:0;background:transparent;color:inherit;font-weight:800;font-size:16px;font-family:var(--font-body);}
+  .gift-form input[type="text"],.gift-form textarea,.gift-form select,#gift-code{
+    width:100%;border:2px solid var(--card-border);border-radius:12px;padding:12px 14px;font:inherit;background:var(--ivory-deep);color:var(--page-text);
+  }
+  .gift-form textarea{min-height:88px;resize:vertical;}
+  .gift-offer{margin-top:16px;background:var(--cubs-blue);color:#fff;border-radius:16px;padding:14px;}
+  .gift-offer h3{margin:0 0 10px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;}
+  .badge-row{display:flex;gap:10px;}
+  .badge-chip{flex:1;background:rgba(255,255,255,.12);border-radius:12px;padding:10px 8px;text-align:center;font-size:12px;font-weight:700;}
+  .badge-chip b{display:block;font-size:22px;margin-bottom:4px;}
+  .gift-legal{font-size:12px;color:var(--page-muted);margin-top:10px;line-height:1.45;}
+  .gmini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;}
+  .gmini .gc{min-height:0;aspect-ratio:16/10;padding:8px;}
+  .gmini .gc .gc-mark,.gmini .gc .gc-emoji{font-size:11px;}
+  .gmini .gc .gc-title{font-size:11px;}
+  .how-buy{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 28px;}
+  .how-buy article{background:var(--card);border:2px solid var(--card-border);border-radius:14px;padding:16px;}
+  .how-buy h3{margin:0 0 8px;font-size:16px;}
+  .gift-strip{background:var(--cubs-blue);color:#fff;border-radius:18px;padding:22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;margin:8px auto 28px;max-width:1120px;}
+  .gift-strip h2{font-family:var(--font-bang);margin:0 0 6px;letter-spacing:.04em;text-transform:uppercase;}
+  .gift-strip p{margin:0;opacity:.9;}
+  .unveil{position:relative;max-width:640px;margin:0 auto;padding:12px 0 60px;text-align:center;}
+  .unveil-stage{position:relative;border-radius:20px;overflow:hidden;background:#0A2768;min-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:24px;}
+  .unveil-num{font-family:var(--font-bang);font-size:clamp(88px,22vw,168px);line-height:1;color:#fff;}
+  .unveil-sub{letter-spacing:.14em;text-transform:uppercase;font-weight:800;opacity:.8;}
+  .unveil-boom{font-family:var(--font-bang);font-size:clamp(42px,10vw,84px);color:#fff;text-shadow:0 8px 0 #CC3433;}
+  .unveil-note{margin-top:16px;color:var(--page-muted);}
+  .fx-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .fx-dot{position:absolute;width:8px;height:8px;border-radius:50%;animation:fx-pop 1.1s ease-out forwards;}
+  @keyframes fx-pop{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+  .fx-boom{position:absolute;width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 2px #fff;animation:fx-burst .9s ease-out forwards;}
+  @keyframes fx-burst{to{transform:scale(18);opacity:0}}
+  .gift-list{display:flex;flex-direction:column;gap:12px;}
+  .gift-row{display:grid;grid-template-columns:120px 1fr auto;gap:14px;align-items:center;background:var(--card);border:2px solid var(--card-border);border-radius:14px;padding:10px;}
+  .gift-row .gc{aspect-ratio:16/10;min-height:0;}
+  #unveil-cv{position:absolute;left:-9999px;width:720px;height:720px;}
+  .gift-rec-ok{margin-top:12px;display:none;}
+  .gift-rec-ok.on{display:block;}
+  @media(max-width:860px){
+    .gifts-hero,.gift-layout,.how-buy,.ggrid{grid-template-columns:1fr;}
+    .ggrid{grid-template-columns:repeat(2,1fr);}
+    .gift-row{grid-template-columns:88px 1fr; }
+    .gift-row .g-actions{grid-column:1/-1;}
+    .gifts-stack{height:180px;}
   }
 </style>
 </head>
@@ -1672,6 +1775,44 @@
     {id:"bubble", title:"Champagne Frequency", artist:"Detention Radio", album:"Pop The Locker", dur:"2:22", bpm:128, kick:469, hat:234, notes:[65,73,82,98]},
     {id:"lastcall", title:"Last Call Locker", artist:"Hall Monitor Band", album:"Detention Radio Vol. 1", dur:"3:44", bpm:96, kick:625, hat:312, notes:[46,55,62,69]}
   ];
+  var GIFT_CATS = [
+    {id:"launch", name:"Launch weekend", emoji:"🏆", hues:[210,0,348], titles:["Founding Cellar","Night Game","First Sentence"]},
+    {id:"birthday", name:"Birthday", emoji:"🎈", hues:[348,210,32], titles:["Cake locker","Balloon pour","Sparkler toast"]},
+    {id:"congrats", name:"Congratulations", emoji:"🎉", hues:[145,210,48], titles:["Trophy pour","Fireworks cork","You did it"]},
+    {id:"thanks", name:"Thank you", emoji:"🙏", hues:[18,210,160], titles:["Grateful pour","Hall pass thanks","Cheers to you"]},
+    {id:"thinking", name:"Thinking of you", emoji:"💭", hues:[200,260,330], titles:["Across the ivy","Night note","Save a glass"]},
+    {id:"getwell", name:"Get well soon", emoji:"🌿", hues:[150,190,120], titles:["Rest locker","Soft pour","Back in the hall"]},
+    {id:"bereavement", name:"Bereavement", emoji:"🕯️", hues:[220,230,200], titles:["Quiet cellar","Candle light","In memory"]},
+    {id:"baby", name:"Baby", emoji:"🍼", hues:[190,340,30], titles:["Tiny cork","New vintage","Welcome home"]},
+    {id:"wedding", name:"Wedding", emoji:"💍", hues:[330,45,210], titles:["Ivy aisle","Two glasses","Forever pour"]},
+    {id:"community", name:"Community", emoji:"🤝", hues:[210,160,20], titles:["Crew locker","Block party","We showed up"]},
+    {id:"office", name:"Office celebration", emoji:"📁", hues:[210,0,260], titles:["Closed the deal","Desk cork","Friday detention"]},
+    {id:"teacher", name:"Teacher appreciation", emoji:"🍎", hues:[0,145,210], titles:["Gold star pour","After class","Favorite hall"]},
+    {id:"eats", name:"Eats", emoji:"🍜", hues:[12,32,145], titles:["Noodle night","Pizza locker","Late bite"]},
+    {id:"rides", name:"Night out", emoji:"🚕", hues:[210,260,348], titles:["Last call ride","City lights","After the game"]}
+  ];
+  var GIFT_DESIGNS = [];
+  GIFT_CATS.forEach(function(c){
+    c.titles.forEach(function(title, i){
+      GIFT_DESIGNS.push({id:c.id+"-"+i, cat:c.id, catName:c.name, title:title, h:c.hues[i%c.hues.length], emoji:c.emoji});
+    });
+  });
+  var LAUNCH_BADGES = [
+    {id:"cellar", name:"Founding Cellar", emoji:"🏰", blurb:"You were in the hall the first weekend."},
+    {id:"night", name:"Night Game", emoji:"🌙", blurb:"Lights on. Corks off."},
+    {id:"sentence", name:"First Sentence", emoji:"📜", blurb:"Opening drop, founding crew."}
+  ];
+  var GIFT_MULTS = [
+    {w:45, m:1.04}, {w:22, m:1.18}, {w:14, m:1.35}, {w:10, m:1.55},
+    {w:5, m:1.90}, {w:2.2, m:2.50}, {w:1.1, m:5}, {w:0.5, m:10}, {w:0.2, m:18}
+  ];
+  var giftDraft = {designId:"launch-0", format:"digital", amount:50, custom:false, who:"friend", to:"", from:"", note:"", song:"cork"};
+  var gifts = [];
+  var userBadges = [];
+  var unveilHandles = [];
+  var unveilRec = null;
+  var unveilChunks = [];
+  var giftReturnTo = "";
   var nowPlayingId = "cork";
   var jukeQueue = [
     {id:"wrigley", by:"Mei.HK", pts:40},
@@ -1727,6 +1868,7 @@
   var farmCount = 0;
   var questsDone = {};
   var points = 0;
+  var hudCollapsed = true;
   var musicOn = false;
   var audioCtx = null;
   var musicHandles = [];
@@ -1749,10 +1891,120 @@
     for (var i=0;i<PRODUCTS.length;i++){ if (PRODUCTS[i].slug===slug) return PRODUCTS[i]; }
     return null;
   }
-  function money(n){ return "$" + n.toFixed(2).replace(/\.00$/,""); }
+  function money(n){ return "$" + Number(n).toFixed(2).replace(/\.00$/,""); }
   function cartCount(){ var c=0; cart.forEach(function(i){ c+=i.qty; }); return c; }
   function cartTotal(){
-    var tot=0; cart.forEach(function(i){ var p=findProduct(i.slug); if(p) tot+=p.price*i.qty; }); return tot;
+    var tot=0;
+    cart.forEach(function(i){
+      if (i.kind==="gift") tot += (i.amount||0)*i.qty;
+      else { var p=findProduct(i.slug); if(p) tot+=p.price*i.qty; }
+    });
+    return tot;
+  }
+  function loadGifts(){
+    try { gifts = JSON.parse(localStorage.getItem("wd-gifts")||"[]")||[]; } catch(e){ gifts=[]; }
+    try { userBadges = JSON.parse(localStorage.getItem("wd-badges")||"[]")||[]; } catch(e){ userBadges=[]; }
+  }
+  function saveGifts(){
+    try { localStorage.setItem("wd-gifts", JSON.stringify(gifts)); } catch(e){}
+    try { localStorage.setItem("wd-badges", JSON.stringify(userBadges)); } catch(e){}
+  }
+  function findGiftDesign(id){
+    for (var i=0;i<GIFT_DESIGNS.length;i++){ if (GIFT_DESIGNS[i].id===id) return GIFT_DESIGNS[i]; }
+    return GIFT_DESIGNS[0];
+  }
+  function findGift(code){
+    code = decodeURIComponent(code||"");
+    for (var i=0;i<gifts.length;i++){ if (gifts[i].code===code) return gifts[i]; }
+    return null;
+  }
+  function giftCardHTML(d, opts){
+    opts = opts||{};
+    d = d || findGiftDesign(giftDraft.designId);
+    var amt = opts.amount != null ? '<span class="gc-amt">'+money(opts.amount)+'</span>' : '';
+    return '<div class="gc'+(opts.lg?' lg':'')+'" style="--h:'+d.h+'">'+
+      '<span class="gc-mark">WINE DETENTION</span>'+
+      '<span class="gc-emoji">'+d.emoji+'</span>'+
+      '<span class="gc-cat">'+esc(d.catName)+'</span>'+
+      '<span class="gc-title">'+esc(d.title)+'</span>'+
+      amt+
+    '</div>';
+  }
+  function giftNavHTML(on){
+    return '<div class="gift-nav">'+
+      '<a href="#/gifts" class="'+(on==="shop"?"on":"")+'">Shop gift cards</a>'+
+      '<a href="#/gifts/redeem" class="'+(on==="redeem"?"on":"")+'">Redeem gift card</a>'+
+      '<a href="#/gifts/mine" class="'+(on==="mine"?"on":"")+'">My gifts</a>'+
+    '</div>';
+  }
+  function rollGiftMult(){
+    var total=0; GIFT_MULTS.forEach(function(x){ total+=x.w; });
+    var r=Math.random()*total, acc=0;
+    for (var i=0;i<GIFT_MULTS.length;i++){
+      acc+=GIFT_MULTS[i].w;
+      if (r<=acc) return GIFT_MULTS[i].m;
+    }
+    return 1.35;
+  }
+  function formatMult(m){
+    if (m>=2) return (Math.round(m*10)/10)+"×";
+    return "+" + Math.round((m-1)*100) + "%";
+  }
+  function giftCode(){
+    var s="ABCDEFGHJKLMNPQRSTUVWXYZ23456789", out="WD-";
+    for (var i=0;i<8;i++) out += s.charAt(Math.floor(Math.random()*s.length));
+    return out;
+  }
+  function giftShareUrl(code){
+    return location.href.split("#")[0] + "#/gifts/open/" + encodeURIComponent(code);
+  }
+  function awardLaunchBadges(){
+    LAUNCH_BADGES.forEach(function(b){
+      if (!userBadges.some(function(x){ return x.id===b.id; })){
+        userBadges.push({id:b.id, name:b.name, emoji:b.emoji, at:Date.now()});
+      }
+    });
+    saveGifts();
+  }
+  function buildGiftFrom(src){
+    var d = findGiftDesign(src.designId);
+    var who = src.who||"friend";
+    var to = (src.to||"").trim() || (who==="me" ? ((currentUser&&currentUser.name)||"You") : "Friend");
+    var from = (src.from||"").trim() || ((currentUser&&currentUser.name)||"A friend in the hall");
+    return {
+      code: giftCode(),
+      designId: d.id,
+      amount: Math.max(10, Math.min(500, Number(src.amount)||50)),
+      format: src.format||"digital",
+      who: who,
+      to: to.slice(0,30),
+      from: from.slice(0,30),
+      note: String(src.note||"").slice(0,250),
+      song: src.song||"cork",
+      fromEmail: currentUser && currentUser.email,
+      created: Date.now(),
+      opened: false,
+      mult: null,
+      payout: null,
+      badges: LAUNCH_BADGES.map(function(b){ return b.id; })
+    };
+  }
+  function persistGift(g){
+    gifts.unshift(g);
+    saveGifts();
+    awardLaunchBadges();
+    addPoints(40, "buy");
+    return g;
+  }
+  function stopUnveil(){
+    unveilHandles.forEach(function(h){
+      try { clearTimeout(h); } catch(e){}
+    });
+    unveilHandles = [];
+    if (unveilRec && unveilRec.state==="recording"){
+      try { unveilRec.stop(); } catch(e){}
+    }
+    unveilRec = null;
   }
   function addToCart(slug, qty){
     var existing = null;
@@ -1786,23 +2038,32 @@
       return '<a href="#/live" data-social="'+s.id+'" class="'+(s.live?"live":"")+'">'+s.name+'</a>';
     }).join("");
   }
+  function setHudCollapsed(on){
+    hudCollapsed = !!on;
+    persist();
+    renderHud();
+  }
   function renderHud(){
     var el = document.getElementById("hud");
     if (!el) return;
     BOARD[BOARD.length-1].pts = points;
+    el.className = "hud"+(hudCollapsed?" collapsed":"")+(musicOn?" raised":"");
     el.innerHTML =
+      '<button class="hud-fab" type="button" id="hud-open" aria-label="Show points">PTS '+points+'</button>'+
       '<div class="hud-card">'+
-        '<span>'+t("pointsWord")+'</span><b id="pts-val">'+points+'</b>'+
+        '<span class="hud-pts">'+t("pointsWord")+' <b id="pts-val">'+points+'</b></span>'+
         '<div class="hud-actions">'+
           '<button type="button" id="party-btn" class="'+(musicOn?"on":"")+'">'+(musicOn?t("partyOff"):t("partyOn"))+'</button>'+
           '<a href="#/party">Jukebox</a>'+
-          '<button type="button" id="farm-btn">'+t("farmBtn")+'</button>'+
         '</div>'+
+        '<button class="hud-x" type="button" id="hud-min" aria-label="Minimize">–</button>'+
       '</div>';
+    var open = document.getElementById("hud-open");
+    var min = document.getElementById("hud-min");
     var pb = document.getElementById("party-btn");
-    var fb = document.getElementById("farm-btn");
+    if (open) open.onclick = function(){ setHudCollapsed(false); };
+    if (min) min.onclick = function(){ setHudCollapsed(true); };
     if (pb) pb.onclick = toggleMusic;
-    if (fb) fb.onclick = crushGrape;
   }
   function crushGrape(){
     farmCount += 1;
@@ -1919,6 +2180,170 @@
     cart = cart.filter(function(i){ return i.slug!==slug; });
     renderCartCount();
     render();
+  }
+  function addGiftToCart(){
+    var g = giftDraft;
+    if (g.who==="friend" && !currentUser){
+      giftReturnTo = currentRoute();
+      showToast("Log in to send a gift.");
+      navigate("/login");
+      return;
+    }
+    if (g.who==="friend" && !(g.to||"").trim()){
+      showToast("Who is this for? Add their name.");
+      return;
+    }
+    cart.push({
+      kind:"gift", slug:"gift-"+Date.now(), qty:1,
+      amount: Math.max(10, Math.min(500, Number(g.amount)||50)),
+      designId:g.designId, format:g.format, who:g.who,
+      to:g.to, from:g.from, note:g.note, song:g.song,
+      name:"Gift card · "+money(g.amount)
+    });
+    addPoints(80, "buy");
+    renderCartCount();
+    showToast("Gift card added to your hall pass.");
+    updateLiveChrome();
+    renderHud();
+  }
+  function sendGiftNow(){
+    if (giftDraft.who==="friend" && !currentUser){
+      giftReturnTo = currentRoute();
+      showToast("Log in to send a gift.");
+      navigate("/login");
+      return;
+    }
+    if (giftDraft.who==="friend" && !(giftDraft.to||"").trim()){
+      showToast("Who is this for? Add their name.");
+      return;
+    }
+    var made = persistGift(buildGiftFrom(giftDraft));
+    showToast("Gift locked. Share the unveil.");
+    navigate("/gifts/sent/"+made.code);
+  }
+  function readGiftForm(){
+    var to = document.getElementById("gift-to");
+    var from = document.getElementById("gift-from");
+    var note = document.getElementById("gift-note");
+    var song = document.getElementById("gift-song");
+    var other = document.getElementById("gift-other");
+    if (to) giftDraft.to = to.value;
+    if (from) giftDraft.from = from.value;
+    if (note) giftDraft.note = note.value;
+    if (song) giftDraft.song = song.value;
+    if (giftDraft.custom && other) giftDraft.amount = Math.max(10, Math.min(500, Number(other.value)||50));
+  }
+  function burstFx(){
+    var layer = document.getElementById("fx-layer");
+    if (!layer) return;
+    layer.innerHTML = "";
+    for (var i=0;i<52;i++){
+      var d = document.createElement("span");
+      d.className = i%6===0 ? "fx-boom" : "fx-dot";
+      d.style.left = (12+Math.random()*76)+"%";
+      d.style.top = (18+Math.random()*54)+"%";
+      d.style.background = i%2 ? "#CC3433" : "#FFFFFF";
+      d.style.setProperty("--dx", (Math.random()*260-130)+"px");
+      d.style.setProperty("--dy", (Math.random()*-240-30)+"px");
+      layer.appendChild(d);
+    }
+  }
+  function paintUnveil(ctx, g, left, boom){
+    ctx.fillStyle = "#0A2768";
+    ctx.fillRect(0,0,720,720);
+    ctx.fillStyle = "#CC3433";
+    ctx.beginPath();
+    ctx.arc(360, 300, boom ? 220 : 70, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = "#fff";
+    ctx.textAlign = "center";
+    ctx.font = "800 26px sans-serif";
+    ctx.fillText("WINE DETENTION", 360, 70);
+    if (boom){
+      ctx.font = "800 120px sans-serif";
+      ctx.fillText(formatMult(g.mult), 360, 340);
+      ctx.font = "700 32px sans-serif";
+      ctx.fillText(money(g.amount)+" → "+money(g.payout), 360, 400);
+    } else {
+      ctx.font = "800 180px sans-serif";
+      ctx.fillText(String(Math.max(1, Math.ceil(left/1000))), 360, 380);
+    }
+    ctx.font = "600 22px sans-serif";
+    ctx.fillText("To "+g.to+"  ·  from "+g.from, 360, 640);
+    ctx.font = "600 16px sans-serif";
+    ctx.fillText("Launch weekend unveil", 360, 672);
+  }
+  function startUnveil(code, record){
+    var g = findGift(code);
+    if (!g || g.opened) return;
+    var duration = 8000 + Math.random()*1000;
+    var start = Date.now();
+    var recBtn = document.getElementById("unveil-rec");
+    var goBtn = document.getElementById("unveil-go");
+    if (recBtn) recBtn.disabled = true;
+    if (goBtn) goBtn.disabled = true;
+    playTrack(g.song);
+    var canvas = document.getElementById("unveil-cv");
+    var ctx = canvas ? canvas.getContext("2d") : null;
+    if (record && canvas && window.MediaRecorder){
+      var mime = "";
+      ["video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm","video/mp4"].some(function(m){
+        if (MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)){ mime=m; return true; }
+      });
+      try {
+        var stream = canvas.captureStream(30);
+        if (audioMaster && audioCtx){
+          try {
+            var dest = audioCtx.createMediaStreamDestination();
+            audioMaster.connect(dest);
+            if (dest.stream.getAudioTracks()[0]) stream.addTrack(dest.stream.getAudioTracks()[0]);
+          } catch(err){}
+        }
+        unveilChunks = [];
+        unveilRec = mime ? new MediaRecorder(stream, {mimeType:mime}) : new MediaRecorder(stream);
+        unveilRec.ondataavailable = function(e){ if (e.data && e.data.size) unveilChunks.push(e.data); };
+        unveilRec.onstop = function(){
+          var type = (unveilRec && unveilRec.mimeType) || "video/webm";
+          var blob = new Blob(unveilChunks, {type:type});
+          var a = document.getElementById("gift-dl");
+          var box = document.getElementById("gift-rec-ok");
+          if (a){
+            a.href = URL.createObjectURL(blob);
+            a.download = "wine-detention-unveil."+(type.indexOf("mp4")>=0?"mp4":"webm");
+          }
+          if (box) box.classList.add("on");
+        };
+        unveilRec.start(200);
+      } catch(err){
+        showToast("This browser won't record. The unveil still slams.");
+      }
+    } else if (record){
+      showToast("Recording isn't available here. Unveiling anyway.");
+    }
+    function tick(){
+      var left = duration - (Date.now()-start);
+      var body = document.getElementById("unveil-body");
+      if (left > 0){
+        if (body) body.innerHTML = '<p class="unveil-sub">Unveiling</p><div class="unveil-num">'+Math.max(1, Math.ceil(left/1000))+'</div>';
+        if (ctx) paintUnveil(ctx, g, left, false);
+        unveilHandles.push(setTimeout(tick, 90));
+      } else {
+        g.mult = rollGiftMult();
+        g.payout = Math.round(g.amount * g.mult * 100)/100;
+        g.opened = true;
+        saveGifts();
+        awardLaunchBadges();
+        addPoints(25);
+        if (body) body.innerHTML = '<div class="unveil-boom">'+formatMult(g.mult)+'</div><p>'+money(g.amount)+' became <b>'+money(g.payout)+'</b> hall credit.</p>';
+        if (ctx) paintUnveil(ctx, g, 0, true);
+        burstFx();
+        showToast("Bonus "+formatMult(g.mult)+" · "+money(g.payout));
+        if (unveilRec && unveilRec.state==="recording"){
+          unveilHandles.push(setTimeout(function(){ try{ unveilRec.stop(); }catch(e){} }, 1600));
+        }
+      }
+    }
+    tick();
   }
   function setQty(slug, qty){
     cart.forEach(function(i){ if(i.slug===slug) i.qty = Math.max(1, qty); });
@@ -2074,10 +2499,17 @@
   }
   function pageAccount(){
     if (!currentUser) return pageAuth("login");
+    var badges = userBadges.length
+      ? '<div class="badge-row" style="margin:16px 0;">'+userBadges.map(function(b){
+          return '<div class="badge-chip" style="background:var(--cubs-blue);color:#fff;"><b>'+b.emoji+'</b>'+esc(b.name)+'</div>';
+        }).join("")+'</div>'
+      : '<p style="color:var(--page-muted);">Send or open a launch-weekend gift card to unlock 3 digital badges.</p>';
     return '<div class="auth-card">'+
       '<h1>Your pass</h1>'+
       '<p style="margin:12px 0;"><strong>'+esc(currentUser.name)+'</strong><br>'+esc(currentUser.email)+'</p>'+
-      '<p style="margin-bottom:18px;color:var(--page-muted);">'+points+' detention points on this device.</p>'+
+      '<p style="margin-bottom:12px;color:var(--page-muted);">'+points+' detention points on this device.</p>'+
+      '<h3 style="margin:8px 0;">Launch badges</h3>'+badges+
+      '<a class="btn btn-dark btn-block" href="#/gifts/mine" style="margin-bottom:10px;text-align:center;">My gifts</a>'+
       '<button class="btn btn-dark btn-block" type="button" id="logout-btn">Log out</button>'+
     '</div>';
   }
@@ -2094,10 +2526,10 @@
   function renderNav(){
     document.getElementById("nav-links").innerHTML =
       '<a href="#/" data-route="/">'+t("navHome")+'</a>'+
+      '<a href="#/gifts" data-route="/gifts">Gifts</a>'+
       '<a href="#/live" data-route="/live">'+t("navLive")+'</a>'+
       '<a href="#/party" data-route="/party">Party</a>'+
-      '<a href="#/collections" data-route="/collections">Shop</a>'+
-      '<a href="#/giveaways" data-route="/giveaways">'+t("navGive")+'</a>';
+      '<a href="#/collections" data-route="/collections">Shop</a>';
   }
 
   function renderTabbar(){
@@ -2127,6 +2559,9 @@
       ? [{href:"#/account", label:"Account"}]
       : [{href:"#/login", label:"Log in"}, {href:"#/signup", label:"Sign up"}];
     return auth.concat([
+      {href:"#/gifts", label:"Shop gift cards"},
+      {href:"#/gifts/redeem", label:"Redeem gift card"},
+      {href:"#/gifts/mine", label:"My gifts"},
       {href:"#/live", label:t("navLive")},
       {href:"#/party", label:"Party / Jukebox"},
       {href:"#/trade", label:t("navTrade")},
@@ -2200,6 +2635,8 @@
         '</ul></div>'+
         '<div><h4>'+t("footShop")+'</h4><ul>'+
           '<li><a href="#/collections">'+t("footAll")+'</a></li>'+
+          '<li><a href="#/gifts">Gift cards</a></li>'+
+          '<li><a href="#/gifts/redeem">Redeem a gift</a></li>'+
           '<li><a href="#/giveaways">'+t("navGive")+'</a></li>'+
           '<li><a href="#/quests">'+t("navQuests")+'</a></li>'+
           '<li><a href="#/cart">'+t("footCart")+'</a></li>'+
@@ -2279,6 +2716,12 @@
           '<div class="stock-meta"><span>'+left+' / '+feat.stockCap+' '+t("leftLabel")+'</span><span data-countdown="day">'+formatRemain(endOfDay()-Date.now())+'</span></div>' +
           '<p class="odds"><b>'+watchersNow()+'</b> '+t("watching")+' · '+upgradeChance(feat)+'% '+t("upgradeOdds")+'</p>' +
         '</div>' +
+      '</div>' +
+    '</section>' +
+    '<section>' +
+      '<div class="gift-strip">' +
+        '<div><h2>Gift cards · avg +35% more</h2><p>Send a friend an 8-second unveil. Launch weekend: 3 digital badges. Floor +4%. Jackpot 18×.</p></div>' +
+        '<a class="btn btn-primary" href="#/gifts">Shop gift cards</a>' +
       '</div>' +
     '</section>' +
     '<section>' +
@@ -2649,6 +3092,200 @@
     '<div class="content-block"><p>'+body+'</p></div>';
   }
 
+  function pageGiftsShop(){
+    var featured = GIFT_DESIGNS.filter(function(d){ return d.cat==="launch"; });
+    var rows = GIFT_CATS.map(function(cat){
+      var cards = GIFT_DESIGNS.filter(function(d){ return d.cat===cat.id; }).map(function(d){
+        return '<a class="gc-link" href="#/gifts/new/'+d.id+'">'+giftCardHTML(d)+'</a>';
+      }).join("");
+      return '<div class="grow" id="cat-'+cat.id+'"><h3>'+esc(cat.name)+'</h3><div class="ggrid">'+cards+'</div></div>';
+    }).join("");
+    var pills = GIFT_CATS.map(function(c){
+      return '<button type="button" class="gpill" data-jump="'+c.id+'">'+c.emoji+' '+esc(c.name)+'</button>';
+    }).join("");
+    var faqs = [
+      ["How do I redeem a Wine Detention gift card?","Open the link, or paste the code on Redeem. After the countdown, hall credit lands in this demo locker. Not real money, not real alcohol."],
+      ["What's the 35% bonus?","Every unveil rolls a weighted bonus. Common hits are +4% to +55%. Average across all rolls is about +35%. Ultra-rare unseals go 5×, 10×, even 18×."],
+      ["Can I send this to a friend?","Yes — digital cards include a share link. They get an 8–9 second countdown, confetti, and a recordable unveil for socials."],
+      ["What are launch-weekend badges?","Founding Cellar, Night Game, and First Sentence. Send or open a gift this weekend and they pin to your hall pass."]
+    ].map(function(f){
+      return '<div class="faq-item"><button class="faq-q" type="button">'+f[0]+'<span class="plus">+</span></button><div class="faq-a"><p>'+f[1]+'</p></div></div>';
+    }).join("");
+    return '<div class="content-block" style="max-width:1120px;">'+giftNavHTML("shop")+
+      '<div class="gifts-hero">'+
+        '<div><span class="kicker">WINE DETENTION GIFTS</span><h1>Gift cards</h1>'+
+        '<p>Choose a design. Add an amount, a name, a note, and a Detention Radio song. They get a countdown, fireworks, and about 35% extra hall credit on average.</p>'+
+        '<a class="btn btn-primary" href="#/gifts/new/'+featured[0].id+'">Customize a card</a></div>'+
+        '<div class="gifts-stack">'+featured.map(function(d){ return giftCardHTML(d); }).join("")+'</div>'+
+      '</div>'+
+      '<div class="gpills">'+pills+'</div>'+rows+
+      '<div class="section-head"><span class="kicker">HOW TO REDEEM</span><h2>Open it like a locker.</h2></div>'+
+      '<div class="faq-list">'+
+        '<div class="faq-item open"><button class="faq-q" type="button">Redeem on your phone<span class="plus">+</span></button><div class="faq-a"><p>Tap the share link. Hit Record &amp; unveil. Screenshot the slam. Credit stays in this browser demo.</p></div></div>'+
+        '<div class="faq-item"><button class="faq-q" type="button">Redeem on a computer<span class="plus">+</span></button><div class="faq-a"><p>Paste the code on Redeem gift card, then run the countdown.</p></div></div>'+
+      '</div>'+
+      '<div class="section-head" style="margin-top:28px;"><span class="kicker">MORE WAYS</span><h2>Send it how they party.</h2></div>'+
+      '<div class="how-buy">'+
+        '<article><h3>Purchase for your crew</h3><p>Demo bulk: send more than one from My gifts. A live version would open a corporate portal at 10+ cards.</p></article>'+
+        '<article><h3>Buy from stores</h3><p>Physical cards are a sketch — we do not mail plastic or alcohol. Digital is instant.</p></article>'+
+        '<article><h3>Send with a song</h3><p>Attach a Detention Radio loop. The unveil plays it while the multiplier slams.</p></article>'+
+      '</div>'+
+      '<div class="section-head"><span class="kicker">FAQ</span><h2>Gift card questions</h2></div>'+
+      '<div class="faq-list">'+faqs+'</div>'+
+      '<p class="gift-legal">Demo only. Gift amounts are hall credit in this locker, not cash and not a real wine shipment. Bonus math is a weighted roll with expected value near 1.35×. Terms apply in a live store.</p>'+
+    '</div>';
+  }
+  function pageGiftNew(route){
+    var id = route.replace("/gifts/new","").replace(/^\//,"");
+    if (id) giftDraft.designId = id;
+    var d = findGiftDesign(giftDraft.designId);
+    giftDraft.designId = d.id;
+    var alts = GIFT_DESIGNS.filter(function(x){ return x.cat===d.cat; });
+    var songOpts = TRACKS.map(function(tr){
+      return '<option value="'+tr.id+'"'+(giftDraft.song===tr.id?" selected":"")+'>'+esc(tr.title)+' — '+esc(tr.artist)+'</option>';
+    }).join("");
+    var amts = [25,50,100,200,500];
+    var amtBtns = amts.map(function(n){
+      return '<button type="button" data-amt="'+n+'" class="'+(giftDraft.amount===n && !giftDraft.custom?"on":"")+'">$'+n+'</button>';
+    }).join("");
+    return '<div class="content-block" style="max-width:1100px;">'+giftNavHTML("shop")+
+      '<a href="#/gifts" class="gift-nav" style="padding:0 0 12px;">← Back to all gift cards</a>'+
+      '<div class="gift-layout">'+
+        '<div>'+
+          '<div id="gift-preview">'+giftCardHTML(d,{lg:true,amount:giftDraft.amount})+'</div>'+
+          '<p style="margin:12px 0 6px;font-weight:800;">Choose another design</p>'+
+          '<div class="gmini">'+alts.map(function(x){
+            return '<button type="button" class="gc-link" data-des="'+x.id+'" style="border:0;padding:0;background:none;cursor:pointer;">'+giftCardHTML(x)+'</button>';
+          }).join("")+'</div>'+
+          '<div class="gift-offer">'+
+            '<h3>Limited-time · launch weekend</h3>'+
+            '<div class="badge-row">'+LAUNCH_BADGES.map(function(b){
+              return '<div class="badge-chip"><b>'+b.emoji+'</b>'+esc(b.name)+'</div>';
+            }).join("")+'</div>'+
+            '<p style="margin:10px 0 0;font-size:13px;opacity:.9;">Get Founding Cellar, Night Game, and First Sentence with this purchase. Average unveil bonus +35%.</p>'+
+          '</div>'+
+        '</div>'+
+        '<div class="gift-form">'+
+          '<h2>Enjoy about 35% more with a gift card.</h2>'+
+          '<p class="lede">Digital cards send a shareable countdown. Physical is a demo — we don\'t mail cards.</p>'+
+          '<div class="gfield"><div class="glab">What kind of card do you want?</div>'+
+            '<div class="gchoice">'+
+              '<button type="button" data-fmt="digital" class="'+(giftDraft.format==="digital"?"on":"")+'">Digital Card</button>'+
+              '<button type="button" data-fmt="physical" class="'+(giftDraft.format==="physical"?"on":"")+'">Physical Card</button>'+
+            '</div>'+
+          '</div>'+
+          '<div class="gfield"><div class="glab">How much do you want to send? <span class="hint">$10 – $500 · USD</span></div>'+
+            '<div class="gamt">'+amtBtns+
+              '<label class="other'+(giftDraft.custom?" on":"")+'">$<input id="gift-other" type="number" min="10" max="500" value="'+(giftDraft.custom?giftDraft.amount:500)+'"></label>'+
+            '</div>'+
+            '<p class="hint" id="gift-amt-err"></p>'+
+          '</div>'+
+          '<div class="gfield"><div class="glab">Who is this for?</div>'+
+            '<div class="gchoice">'+
+              '<button type="button" data-who="me" class="'+(giftDraft.who==="me"?"on":"")+'">For me</button>'+
+              '<button type="button" data-who="friend" class="'+(giftDraft.who==="friend"?"on":"")+'">For a friend</button>'+
+            '</div>'+
+          '</div>'+
+          '<div class="gfield" id="gift-to-wrap"'+(giftDraft.who==="me"?' style="display:none;"':'')+'>'+
+            '<label>Who\'s this gift for? <span class="hint" id="to-count">'+(giftDraft.to||"").length+'/30</span></label>'+
+            '<input id="gift-to" maxlength="30" placeholder="Enter their name or nickname" value="'+esc(giftDraft.to)+'">'+
+          '</div>'+
+          '<div class="gfield">'+
+            '<label>Who\'s this gift card from? <span class="hint" id="from-count">'+(giftDraft.from||"").length+'/30</span></label>'+
+            '<input id="gift-from" maxlength="30" placeholder="Let them know who it is from" value="'+esc(giftDraft.from)+'">'+
+          '</div>'+
+          '<div class="gfield">'+
+            '<label>Add a message (optional) <span class="hint" id="note-count">'+(giftDraft.note||"").length+'/250</span></label>'+
+            '<textarea id="gift-note" maxlength="250" placeholder="You can add a text message.">'+esc(giftDraft.note)+'</textarea>'+
+          '</div>'+
+          '<div class="gfield">'+
+            '<label>Attach a song</label>'+
+            '<select id="gift-song">'+songOpts+'</select>'+
+          '</div>'+
+          '<button class="btn btn-primary btn-block" type="button" id="gift-send">Send gift · demo checkout</button>'+
+          '<button class="btn btn-dark btn-block" type="button" id="gift-cart" style="margin-top:8px;">Add to Cart</button>'+
+          '<p class="gift-legal">Clicking Send creates a shareable unveil in this browser. Not a real payment. Cards are issued as demo hall credit by Wine Detention — not a bank, not Roblox, not Uber.</p>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }
+  function pageGiftRedeem(){
+    return '<div class="content-block" style="max-width:560px;">'+giftNavHTML("redeem")+
+      '<h1 style="font-family:var(--font-bang);text-transform:uppercase;">Redeem gift card</h1>'+
+      '<p style="color:var(--page-muted);margin:8px 0 18px;">Paste a code from a text, email, or My gifts.</p>'+
+      '<div class="gfield"><label for="gift-code">Gift code</label><input id="gift-code" placeholder="WD-XXXXXXXX" maxlength="16"></div>'+
+      '<button class="btn btn-primary btn-block" type="button" id="gift-go">Open the unveil</button>'+
+      '<p class="gift-legal">If you received a card by message, the link already includes the code.</p>'+
+    '</div>';
+  }
+  function pageGiftMine(){
+    var mine = gifts;
+    if (!mine.length){
+      return '<div class="content-block" style="max-width:760px;">'+giftNavHTML("mine")+
+        '<div class="empty-state"><h2>No gifts yet</h2><p>Send one with a song and a note. Launch weekend pins 3 badges to your pass.</p>'+
+        '<a class="btn btn-primary" href="#/gifts">Shop gift cards</a></div></div>';
+    }
+    var rows = mine.map(function(g){
+      var d = findGiftDesign(g.designId);
+      var st = g.opened ? ('Opened · '+formatMult(g.mult)+' · '+money(g.payout)) : 'Waiting to unveil';
+      return '<div class="gift-row">'+giftCardHTML(d,{amount:g.amount})+
+        '<div><h4>'+esc(g.to)+' · from '+esc(g.from)+'</h4><p class="hint">'+g.code+' · '+st+'</p>'+
+        (g.note?'<p style="margin-top:6px;">“'+esc(g.note)+'”</p>':'')+'</div>'+
+        '<div class="g-actions"><a class="btn btn-primary" href="#/gifts/open/'+g.code+'">'+(g.opened?'Watch again':'Unveil')+'</a></div>'+
+      '</div>';
+    }).join("");
+    return '<div class="content-block" style="max-width:860px;">'+giftNavHTML("mine")+
+      '<h1 style="font-family:var(--font-bang);text-transform:uppercase;margin-bottom:16px;">My gifts</h1>'+
+      (userBadges.length?'<div class="badge-row" style="margin-bottom:16px;">'+userBadges.map(function(b){
+        return '<div class="badge-chip" style="background:var(--cubs-blue);color:#fff;"><b>'+b.emoji+'</b>'+esc(b.name)+'</div>';
+      }).join("")+'</div>':'')+
+      '<div class="gift-list">'+rows+'</div></div>';
+  }
+  function pageGiftSent(code){
+    var g = findGift(code);
+    if (!g) return '<div class="content-block"><h2>Gift not found</h2><p><a href="#/gifts">Shop gift cards</a></p></div>';
+    var url = giftShareUrl(g.code);
+    return '<div class="content-block" style="max-width:640px;text-align:center;">'+giftNavHTML("mine")+
+      giftCardHTML(findGiftDesign(g.designId),{lg:true,amount:g.amount})+
+      '<h1 style="font-family:var(--font-bang);text-transform:uppercase;margin:16px 0 8px;">Gift locked in</h1>'+
+      '<p>Send this unveil to '+esc(g.to)+'. They get 8–9 seconds, then a random bonus (avg +35%).</p>'+
+      '<p style="font-family:var(--font-type);margin:12px 0;word-break:break-all;">'+esc(url)+'</p>'+
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">'+
+        '<button class="btn btn-primary" type="button" id="gift-copy" data-url="'+esc(url)+'">Copy share link</button>'+
+        '<a class="btn btn-dark" href="#/gifts/open/'+g.code+'">Preview the countdown</a>'+
+      '</div>'+
+      '<p class="gift-legal">Launch badges are on your hall pass. Demo credit only.</p>'+
+    '</div>';
+  }
+  function pageGiftOpen(code){
+    var g = findGift(code);
+    if (!g) return '<div class="content-block"><h2>That code is cold</h2><p>Check My gifts or Redeem.</p><a class="btn btn-primary" href="#/gifts/redeem">Redeem</a></div>';
+    var d = findGiftDesign(g.designId);
+    var tr = findTrack(g.song) || TRACKS[0];
+    var opened = g.opened
+      ? '<div class="unveil-boom">'+formatMult(g.mult)+'</div><p>'+money(g.amount)+' became <b>'+money(g.payout)+'</b> hall credit.</p>'
+      : '<p class="unveil-sub">Ready when you are</p><div class="unveil-num" id="unveil-count">9</div>';
+    return '<div class="unveil">'+giftNavHTML("redeem")+
+      '<canvas id="unveil-cv" width="720" height="720"></canvas>'+
+      '<div class="unveil-stage" id="unveil-stage">'+
+        '<div class="fx-layer" id="fx-layer"></div>'+
+        giftCardHTML(d,{amount:g.amount})+
+        '<p style="margin-top:14px;">To '+esc(g.to)+' · from '+esc(g.from)+'</p>'+
+        (g.note?'<p style="max-width:36ch;">“'+esc(g.note)+'”</p>':'')+
+        '<p class="hint">Song: '+esc(tr.title)+'</p>'+
+        '<div id="unveil-body">'+opened+'</div>'+
+      '</div>'+
+      (g.opened
+        ? '<div style="margin-top:16px;"><a class="btn btn-primary" href="#/gifts">Send another</a></div>'
+        : '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px;">'+
+            '<button class="btn btn-primary" type="button" id="unveil-rec" data-code="'+g.code+'">Record &amp; unveil</button>'+
+            '<button class="btn btn-dark" type="button" id="unveil-go" data-code="'+g.code+'">Just unveil</button>'+
+          '</div>')+
+      '<div class="gift-rec-ok" id="gift-rec-ok"><a class="btn btn-primary" id="gift-dl" download="wine-detention-unveil.webm">Download video</a></div>'+
+      '<p class="unveil-note">8–9 second countdown. Confetti on the slam. Share the clip — demo hall credit, not cash.</p>'+
+    '</div>';
+  }
+
   function pageCart(){
     if (cart.length===0){
       return '<div class="cart-page"><div class="empty-state">' +
@@ -2658,6 +3295,15 @@
       '</div></div>';
     }
     var rows = cart.map(function(item){
+      if (item.kind==="gift"){
+        var gd = findGiftDesign(item.designId);
+        return '<div class="cart-item">' +
+          '<div><h4>Gift card · '+esc(gd.title)+'</h4><span class="meta">'+money(item.amount)+' · '+(item.who==="me"?"For me":"For "+esc(item.to||"a friend"))+'</span></div>' +
+          '<div></div>' +
+          '<div style="font-family:var(--font-type);">'+money(item.amount)+'</div>' +
+          '<button class="remove-link" data-remove="'+item.slug+'">Remove</button>' +
+        '</div>';
+      }
       var p = locProduct(findProduct(item.slug));
       return '<div class="cart-item">' +
         '<div><h4>'+p.name+'</h4><span class="meta">'+money(p.price)+' &times; '+item.qty+'</span></div>' +
@@ -2741,6 +3387,11 @@
         '<div class="big">'+t("youGot")+' '+money(lastOrder.value)+' '+t("retail")+'</div>' +
       '</div>' +
       groups +
+      (lastOrder.gifts && lastOrder.gifts.length
+        ? '<div class="reveal-group"><h3>Gift cards sent</h3><p>'+lastOrder.gifts.map(function(g){
+            return esc(g.code)+' → '+esc(g.to);
+          }).join(" · ")+'</p><a href="#/gifts/mine">Open My gifts</a></div>'
+        : '') +
       '<div style="text-align:center;margin-top:30px;">' +
         '<a class="btn btn-primary" href="#/collections">'+t("another")+'</a>' +
       '</div>' +
@@ -2748,7 +3399,8 @@
   }
 
   function render(){
-    var route = currentRoute();
+    var route = currentRoute().split("?")[0];
+    if (route.indexOf("/gifts/open/")!==0) stopUnveil();
     var html = "";
     if (route === "/" ) html = pageHome();
     else if (route === "/collections") html = pageCollections();
@@ -2769,6 +3421,12 @@
     else if (route === "/login") html = pageAuth("login");
     else if (route === "/signup") html = pageAuth("signup");
     else if (route === "/account") html = pageAccount();
+    else if (route === "/gifts") html = pageGiftsShop();
+    else if (route.indexOf("/gifts/new")===0) html = pageGiftNew(route);
+    else if (route === "/gifts/redeem") html = pageGiftRedeem();
+    else if (route === "/gifts/mine") html = pageGiftMine();
+    else if (route.indexOf("/gifts/sent/")===0) html = pageGiftSent(route.replace("/gifts/sent/",""));
+    else if (route.indexOf("/gifts/open/")===0) html = pageGiftOpen(route.replace("/gifts/open/",""));
     else if (route === "/cart") html = pageCart();
     else if (route === "/checkout") html = pageCheckout();
     else if (route === "/confirmation") html = pageConfirmation();
@@ -2786,7 +3444,7 @@
   function highlightNav(route){
     document.querySelectorAll("nav.links a[data-route]").forEach(function(a){
       var r = a.getAttribute("data-route");
-      a.classList.toggle("active", r===route || (r==="/collections" && route.indexOf("/product/")===0));
+      a.classList.toggle("active", r===route || (r==="/collections" && route.indexOf("/product/")===0) || (r==="/gifts" && route.indexOf("/gifts")===0));
     });
   }
 
@@ -2806,9 +3464,10 @@
       });
       document.getElementById("pd-add").addEventListener("click", function(){ addToCart(slug, qty); });
     }
-    if (route === "/faq"){
+    if (route === "/faq" || route === "/gifts"){
       document.querySelectorAll(".faq-item").forEach(function(item){
-        item.querySelector(".faq-q").addEventListener("click", function(){ item.classList.toggle("open"); });
+        var q = item.querySelector(".faq-q");
+        if (q) q.addEventListener("click", function(){ item.classList.toggle("open"); });
       });
     }
     if (route === "/cart"){
@@ -2850,7 +3509,9 @@
         var box = document.getElementById("auth-msg");
         if (msg){ if (box) box.textContent = msg; return; }
         showToast(route==="/signup" ? "Hall pass created." : "You're in.");
-        navigate("/account");
+        var next = giftReturnTo || "/account";
+        giftReturnTo = "";
+        navigate(next);
       });
     }
     if (route === "/account"){
@@ -2925,10 +3586,115 @@
     if (sd) sd.addEventListener("click", shareDrop);
     var fm = document.getElementById("farm-more");
     if (fm) fm.addEventListener("click", crushGrape);
+    document.querySelectorAll("[data-jump]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var el = document.getElementById("cat-"+btn.getAttribute("data-jump"));
+        if (el) el.scrollIntoView({behavior:"smooth", block:"start"});
+      });
+    });
+    if (route.indexOf("/gifts/new")===0){
+      document.querySelectorAll("[data-des]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          readGiftForm();
+          giftDraft.designId = btn.getAttribute("data-des");
+          navigate("/gifts/new/"+giftDraft.designId);
+        });
+      });
+      document.querySelectorAll("[data-fmt]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          giftDraft.format = btn.getAttribute("data-fmt");
+          document.querySelectorAll("[data-fmt]").forEach(function(b){ b.classList.toggle("on", b===btn); });
+        });
+      });
+      document.querySelectorAll("[data-who]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          giftDraft.who = btn.getAttribute("data-who");
+          document.querySelectorAll("[data-who]").forEach(function(b){ b.classList.toggle("on", b===btn); });
+          var wrap = document.getElementById("gift-to-wrap");
+          if (wrap) wrap.style.display = giftDraft.who==="me" ? "none" : "";
+        });
+      });
+      document.querySelectorAll("[data-amt]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          giftDraft.custom = false;
+          giftDraft.amount = Number(btn.getAttribute("data-amt"));
+          document.querySelectorAll("[data-amt]").forEach(function(b){ b.classList.toggle("on", b===btn); });
+          var other = document.querySelector(".gamt .other");
+          if (other) other.classList.remove("on");
+          var prev = document.getElementById("gift-preview");
+          if (prev) prev.innerHTML = giftCardHTML(findGiftDesign(giftDraft.designId), {lg:true, amount:giftDraft.amount});
+        });
+      });
+      var otherIn = document.getElementById("gift-other");
+      if (otherIn){
+        function applyOther(){
+          giftDraft.custom = true;
+          var n = Number(otherIn.value);
+          var err = document.getElementById("gift-amt-err");
+          if (n<10 || n>500){ if (err) err.textContent = "Enter an amount between $10 and $500."; return; }
+          if (err) err.textContent = "";
+          giftDraft.amount = n;
+          document.querySelectorAll("[data-amt]").forEach(function(b){ b.classList.remove("on"); });
+          var lab = otherIn.parentNode;
+          if (lab) lab.classList.add("on");
+          var prev = document.getElementById("gift-preview");
+          if (prev) prev.innerHTML = giftCardHTML(findGiftDesign(giftDraft.designId), {lg:true, amount:giftDraft.amount});
+        }
+        otherIn.addEventListener("focus", applyOther);
+        otherIn.addEventListener("input", applyOther);
+      }
+      function bindCount(id, countId, key, max){
+        var el = document.getElementById(id);
+        var c = document.getElementById(countId);
+        if (!el) return;
+        el.addEventListener("input", function(){
+          giftDraft[key] = el.value;
+          if (c) c.textContent = el.value.length+"/"+max;
+        });
+      }
+      bindCount("gift-to","to-count","to",30);
+      bindCount("gift-from","from-count","from",30);
+      bindCount("gift-note","note-count","note",250);
+      var song = document.getElementById("gift-song");
+      if (song) song.addEventListener("change", function(){ giftDraft.song = song.value; });
+      var send = document.getElementById("gift-send");
+      if (send) send.addEventListener("click", function(){ readGiftForm(); sendGiftNow(); });
+      var addc = document.getElementById("gift-cart");
+      if (addc) addc.addEventListener("click", function(){ readGiftForm(); addGiftToCart(); });
+    }
+    if (route === "/gifts/redeem"){
+      var go = document.getElementById("gift-go");
+      if (go) go.addEventListener("click", function(){
+        var code = (document.getElementById("gift-code").value||"").trim().toUpperCase();
+        if (!findGift(code)){ showToast("No gift with that code."); return; }
+        navigate("/gifts/open/"+code);
+      });
+    }
+    var copy = document.getElementById("gift-copy");
+    if (copy) copy.addEventListener("click", function(){
+      var url = copy.getAttribute("data-url");
+      if (navigator.share){ navigator.share({title:"Wine Detention gift", url:url}).catch(function(){}); }
+      else if (navigator.clipboard) navigator.clipboard.writeText(url).catch(function(){});
+      showToast("Share link copied.");
+    });
+    var uv = document.getElementById("unveil-go");
+    if (uv) uv.addEventListener("click", function(){ startUnveil(uv.getAttribute("data-code"), false); });
+    var ur = document.getElementById("unveil-rec");
+    if (ur) ur.addEventListener("click", function(){ startUnveil(ur.getAttribute("data-code"), true); });
   }
 
   function processOrder(){
-    var groups = cart.map(function(item){
+    var giftItems = cart.filter(function(i){ return i.kind==="gift"; });
+    var wineItems = cart.filter(function(i){ return i.kind!=="gift"; });
+    var made = giftItems.map(function(i){ return persistGift(buildGiftFrom(i)); });
+    if (!wineItems.length){
+      cart = [];
+      renderCartCount();
+      if (made.length===1) navigate("/gifts/sent/"+made[0].code);
+      else navigate("/gifts/mine");
+      return;
+    }
+    var groups = wineItems.map(function(item){
       var p = locProduct(findProduct(item.slug));
       var bottles = [];
       for (var u=0; u<item.qty; u++){
@@ -2942,7 +3708,8 @@
       orderId: "WD-" + Math.floor(100000 + Math.random()*899999),
       paid: cartTotal(),
       value: value,
-      groups: groups
+      groups: groups,
+      gifts: made
     };
     cart = [];
     renderCartCount();
@@ -2958,6 +3725,7 @@
       localStorage.setItem("wd-quests", JSON.stringify(questsDone));
       localStorage.setItem("wd-farm", String(farmCount));
       localStorage.setItem("wd-gate", gateShown ? "1" : "0");
+      localStorage.setItem("wd-hud", hudCollapsed ? "1" : "0");
       if (currentUser) localStorage.setItem("wd-session", JSON.stringify(currentUser));
     } catch (e) {}
   }
@@ -2975,9 +3743,11 @@
       if (qd && typeof qd==="object") questsDone = qd;
       farmCount = parseInt(localStorage.getItem("wd-farm")||"0",10)||0;
       if (localStorage.getItem("wd-gate")==="1") gateShown = true;
+      hudCollapsed = localStorage.getItem("wd-hud") !== "0";
       var sess = JSON.parse(localStorage.getItem("wd-session")||"null");
       if (sess && sess.email) currentUser = sess;
     } catch (e) {}
+    loadGifts();
   }
 
   function wireChrome(){
