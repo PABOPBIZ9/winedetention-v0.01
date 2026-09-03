@@ -662,7 +662,7 @@
     nav.links,.desk-more,.lang-select,.chrome-tools .btn-ghost,.menu-toggle{display:none !important;}
     #cart-label{display:none;}
     .cart-link{padding:8px 10px;}
-    .login-link,.signup-link,.account-link{padding:8px 10px;font-size:11px;}
+    .login-link,.account-link{padding:8px 12px;font-size:11px;}
     .tabbar{display:grid;}
     main#app{padding-bottom:24px;}
     footer.site{padding-bottom:88px;}
@@ -724,24 +724,26 @@
   .prize{background:var(--card);border:1px solid var(--gold);padding:20px;}
   .prize h3{font-family:var(--font-bang);font-size:28px;text-transform:uppercase;}
 
-  .account-link,.login-link,.signup-link{
-    font-family:var(--font-type);font-size:12px;font-weight:700;
-    padding:8px 12px;white-space:nowrap;display:inline-flex;align-items:center;
-    min-height:40px;
+  .account-link,.login-link{
+    font-family:var(--font-type);font-size:12px;font-weight:800;
+    padding:8px 16px;white-space:nowrap;display:inline-flex;align-items:center;
+    min-height:40px;letter-spacing:.06em;text-transform:uppercase;border-radius:4px;
   }
   .login-link{
-    color:#fff;background:transparent;border:2px solid #fff;
-  }
-  .signup-link{
     color:#fff;background:var(--cubs-red);border:2px solid var(--cubs-red);
   }
   .account-link{
-    color:var(--cubs-blue);background:#fff;border:2px solid #fff;
+    color:var(--cubs-blue);background:#fff;border:2px solid #fff;text-transform:none;letter-spacing:0;
   }
-  .auth-slot{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+  .auth-slot{display:flex;align-items:center;flex-shrink:0;}
   .auth-card{max-width:440px;margin:0 auto;padding:40px 20px 64px;}
   .auth-card h1{font-family:var(--font-bang);font-size:clamp(32px,7vw,48px);text-transform:uppercase;margin-bottom:8px;}
-  .auth-switch{margin-top:16px;font-size:14px;}
+  .auth-tabs{display:grid;grid-template-columns:1fr 1fr;margin:0 0 22px;border:2px solid var(--cubs-blue);border-radius:6px;overflow:hidden;}
+  .auth-tabs a{
+    text-align:center;padding:12px 8px;font-family:var(--font-type);font-size:12px;font-weight:800;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--cubs-blue);text-decoration:none;
+  }
+  .auth-tabs a.on{background:var(--cubs-blue);color:#fff;}
   .auth-msg{margin-top:12px;font-family:var(--font-type);font-size:13px;color:var(--cubs-red);}
 
   .hud{
@@ -2444,9 +2446,7 @@
       var nick = (currentUser.name||currentUser.email||"You").split(" ")[0];
       el.innerHTML = '<a href="#/account" class="account-link">'+esc(nick)+'</a>';
     } else {
-      el.innerHTML =
-        '<a href="#/login" class="login-link">Log in</a>'+
-        '<a href="#/signup" class="signup-link">Sign up</a>';
+      el.innerHTML = '<a href="#/login" class="login-link">Log in</a>';
     }
   }
   function setSession(user){
@@ -2485,7 +2485,11 @@
   function pageAuth(mode){
     var isUp = mode==="signup";
     return '<div class="auth-card">'+
-      '<h1>'+(isUp?"Create a hall pass":"Log in")+'</h1>'+
+      '<div class="auth-tabs">'+
+        '<a href="#/login" class="'+(!isUp?"on":"")+'">Log in</a>'+
+        '<a href="#/signup" class="'+(isUp?"on":"")+'">Sign up</a>'+
+      '</div>'+
+      '<h1>'+(isUp?"Sign up":"Log in")+'</h1>'+
       '<p style="margin-bottom:18px;color:var(--page-muted);">'+(isUp?"Founding crew only takes a minute. Stays in this browser — demo login.":"Welcome back. This demo keeps your pass on this device.")+'</p>'+
       '<form id="auth-form">'+
         (isUp?'<div class="form-row"><label for="auth-name">Name</label><input id="auth-name" required autocomplete="name"></div>':'')+
@@ -2494,7 +2498,6 @@
         '<button class="btn btn-primary btn-block" type="submit">'+(isUp?"Sign up":"Log in")+'</button>'+
         '<div class="auth-msg" id="auth-msg"></div>'+
       '</form>'+
-      '<p class="auth-switch">'+(isUp?'Already in the hall? <a href="#/login">Log in</a>':'Need a pass? <a href="#/signup">Sign up</a>')+'</p>'+
     '</div>';
   }
   function pageAccount(){
@@ -2557,7 +2560,7 @@
   function moreItems(){
     var auth = currentUser
       ? [{href:"#/account", label:"Account"}]
-      : [{href:"#/login", label:"Log in"}, {href:"#/signup", label:"Sign up"}];
+      : [{href:"#/login", label:"Log in"}];
     return auth.concat([
       {href:"#/gifts", label:"Shop gift cards"},
       {href:"#/gifts/redeem", label:"Redeem gift card"},
