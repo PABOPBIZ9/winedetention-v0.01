@@ -255,7 +255,7 @@
     display:inline-flex;align-items:center;justify-content:center;
     font-size:11px;padding:0 4px;
   }
-  nav.links{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+  nav.links{display:flex;gap:18px;align-items:center;flex-wrap:nowrap;}
   nav.links a{
     font-size:14px;font-weight:600;
     color:var(--chrome-text);opacity:.85;
@@ -274,21 +274,11 @@
     max-width:128px;
   }
   [data-theme="light"] .lang-select{border-color:rgba(255,255,255,0.35);background:var(--cubs-blue-deep);color:#fff;}
-  .menu-toggle{display:none;background:none;border:1px solid var(--line);color:var(--chrome-text);padding:8px 10px;}
-  [data-theme="light"] .menu-toggle{border-color:var(--header-border);}
-
-  @media(max-width:980px){
-    nav.links{
-      display:none;
-      position:absolute;top:100%;left:0;right:0;
-      background:var(--chrome);
-      flex-direction:column;align-items:flex-start;
-      padding:16px 24px 20px;gap:14px;
-      border-bottom:1px solid var(--header-border);
-    }
-    nav.links.open{display:flex;}
-    .menu-toggle{display:block;}
-  }
+  .menu-toggle,.desk-more{display:none;background:none;border:1px solid var(--line);color:var(--chrome-text);padding:8px 12px;font-family:var(--font-type);font-size:12px;font-weight:700;}
+  [data-theme="light"] .menu-toggle,[data-theme="light"] .desk-more{border-color:var(--header-border);}
+  .desk-more{display:inline-flex;align-items:center;}
+  .urgency-end{white-space:nowrap;}
+  .tabbar,.more-sheet,.more-backdrop{display:none;}
 
   .hero{
     background:
@@ -616,36 +606,80 @@
     outline:2px solid var(--gold);outline-offset:2px;
   }
 
-  .socials-row{
-    display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;
-    padding:8px 24px 10px;max-width:1200px;margin:0 auto;
+  .socials-row{display:none;}
+  .tabbar{
+    display:none;
+    position:fixed;left:0;right:0;bottom:0;z-index:180;
+    grid-template-columns:repeat(5,1fr);
+    background:#fff;border-top:3px solid var(--cubs-blue);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    box-shadow:0 -8px 24px rgba(14,51,134,0.12);
   }
-  .socials-row a{
-    font-size:13px;font-weight:700;
-    color:var(--chrome-text);opacity:.88;
-    padding:3px 2px;border-bottom:2px solid transparent;
+  .tabbar a,.tabbar button{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    min-height:56px;padding:8px 2px 6px;border:none;background:none;
+    color:var(--cubs-blue);font-family:var(--font-type);font-size:10px;font-weight:700;
+    letter-spacing:.04em;text-transform:uppercase;
   }
-  .socials-row a:hover,.socials-row a.live{opacity:1;border-color:#fff;color:#fff;}
-  .hud{
-    position:fixed;left:14px;bottom:14px;z-index:160;
-    display:flex;flex-direction:column;gap:8px;
+  .tabbar a.active,.tabbar button.active{color:var(--cubs-red);}
+  .tabbar svg{width:22px;height:22px;fill:currentColor;stroke:none;}
+  .more-backdrop{
+    position:fixed;inset:0;background:rgba(14,51,134,0.45);z-index:190;border:none;padding:0;margin:0;width:100%;
   }
-  .hud-card{
-    background:#fff;border:3px solid var(--cubs-blue);color:var(--cubs-blue);
-    padding:10px 12px;font-family:var(--font-type);font-size:12px;min-width:168px;
-    box-shadow:6px 6px 0 var(--cubs-red);
+  .more-sheet{
+    position:fixed;left:0;right:0;bottom:0;z-index:195;
+    background:#fff;color:var(--cubs-blue);
+    border-top:4px solid var(--cubs-red);
+    max-height:min(86vh, 640px);
+    padding:8px 16px calc(20px + env(safe-area-inset-bottom,0px));
+    overflow-y:auto;
+    box-shadow:0 -16px 40px rgba(14,51,134,0.2);
   }
-  .hud-card b{font-family:var(--font-bang);font-size:28px;display:block;color:var(--cubs-red);letter-spacing:.04em;}
-  .hud-actions{display:flex;gap:6px;margin-top:8px;}
-  .hud-actions button,.hud-actions a{
-    flex:1;text-align:center;border:2px solid var(--cubs-blue);background:transparent;color:var(--cubs-blue);
-    font-family:var(--font-type);font-size:11px;padding:6px 4px;
+  .more-handle{width:44px;height:5px;border-radius:99px;background:#C9D6F2;margin:6px auto 12px;}
+  .more-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .more-head h2{font-family:var(--font-bang);font-size:28px;text-transform:uppercase;}
+  .more-head button{border:none;background:none;font-size:28px;color:var(--cubs-blue);padding:4px 8px;}
+  .more-links{display:flex;flex-direction:column;}
+  .more-links a,.more-links button.more-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 2px;border:none;border-bottom:1px solid var(--rule);
+    background:none;color:var(--cubs-blue);font-size:16px;font-weight:700;text-align:left;width:100%;
   }
-  .hud-actions button.on{background:var(--cubs-red);border-color:var(--cubs-red);color:#fff;}
-  .rooms{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-  @media(max-width:860px){.rooms{grid-template-columns:1fr;}}
-  .room{
-    background:#fff;border:2px solid var(--cubs-blue);position:relative;overflow:hidden;min-height:240px;
+  .more-tools{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+  .more-sheet.open,.more-backdrop.open{display:block;}
+  body.more-open{overflow:hidden;}
+
+  @media(max-width:1023px){
+    .ticker{font-size:11px;}
+    .ticker-track{padding:6px 0;}
+    .urgency{gap:8px;padding:6px 10px;font-size:11px;letter-spacing:.03em;}
+    .urgency-end{display:none;}
+    .clock{font-size:15px;padding:1px 7px;}
+    .nav-row{padding:8px 12px;gap:8px;}
+    .brand{font-size:22px;gap:8px;}
+    .brand-mark{width:36px;height:36px;filter:none;}
+    .brand-kicker{display:none;}
+    nav.links,.desk-more,.lang-select,.chrome-tools .btn-ghost,.menu-toggle{display:none !important;}
+    #cart-label{display:none;}
+    .cart-link{padding:8px 10px;}
+    .login-link,.signup-link,.account-link{padding:8px 10px;font-size:11px;}
+    .tabbar{display:grid;}
+    main#app{padding-bottom:24px;}
+    footer.site{padding-bottom:88px;}
+    .hud,.chat-root,.added-toast{
+      bottom:calc(68px + env(safe-area-inset-bottom,0px));
+    }
+    .hero{padding:24px 16px 32px;}
+    .hero h1{font-size:clamp(34px,11vw,56px);}
+    section{padding:40px 16px;}
+    .wrap{padding:0 16px;}
+    .hero-ctas .btn{width:100%;text-align:center;}
+    .composer{flex-direction:column;}
+    .newsletter-form{flex-direction:column;}
+    .footer-grid{grid-template-columns:1fr;gap:22px;}
+  }
+  @media(min-width:1024px){
+    .tabbar{display:none !important;}
   }
   .room-vid{
     height:168px;background:
@@ -683,7 +717,169 @@
   .map-wrap{max-width:1120px;margin:0 auto;background:var(--cubs-blue);border:3px solid var(--cubs-red);padding:16px;}
   .prize{background:var(--card);border:1px solid var(--gold);padding:20px;}
   .prize h3{font-family:var(--font-bang);font-size:28px;text-transform:uppercase;}
-  @media(max-width:700px){.hud{left:8px;right:8px;bottom:8px;}.hud-card{min-width:0;}}
+
+  .account-link,.login-link,.signup-link{
+    font-family:var(--font-type);font-size:12px;font-weight:700;
+    padding:8px 12px;white-space:nowrap;display:inline-flex;align-items:center;
+    min-height:40px;
+  }
+  .login-link{
+    color:#fff;background:transparent;border:2px solid #fff;
+  }
+  .signup-link{
+    color:#fff;background:var(--cubs-red);border:2px solid var(--cubs-red);
+  }
+  .account-link{
+    color:var(--cubs-blue);background:#fff;border:2px solid #fff;
+  }
+  .auth-slot{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+  .auth-card{max-width:440px;margin:0 auto;padding:40px 20px 64px;}
+  .auth-card h1{font-family:var(--font-bang);font-size:clamp(32px,7vw,48px);text-transform:uppercase;margin-bottom:8px;}
+  .auth-switch{margin-top:16px;font-size:14px;}
+  .auth-msg{margin-top:12px;font-family:var(--font-type);font-size:13px;color:var(--cubs-red);}
+
+  .hud{
+    position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:160;
+    display:flex;flex-direction:column;gap:8px;align-items:flex-start;
+  }
+  .hud-card{
+    background:#fff;border:3px solid var(--cubs-blue);color:var(--cubs-blue);
+    padding:10px 12px;font-family:var(--font-type);font-size:12px;min-width:168px;
+    box-shadow:6px 6px 0 var(--cubs-red);position:relative;
+  }
+  .hud-card b{font-family:var(--font-bang);font-size:28px;display:block;color:var(--cubs-red);letter-spacing:.04em;}
+  .hud-actions{display:flex;gap:6px;margin-top:8px;}
+  .hud-actions button,.hud-actions a{
+    flex:1;text-align:center;border:2px solid var(--cubs-blue);background:transparent;color:var(--cubs-blue);
+    font-family:var(--font-type);font-size:11px;padding:8px 4px;min-height:40px;
+  }
+  .hud-actions button.on{background:var(--cubs-red);border-color:var(--cubs-red);color:#fff;}
+  .hud-x{
+    position:absolute;top:4px;right:4px;border:none;background:transparent;
+    color:var(--cubs-blue);font-size:18px;line-height:1;padding:6px 8px;
+  }
+  .hud-fab,.chat-fab{
+    width:52px;height:52px;border-radius:50%;border:3px solid var(--cubs-blue);
+    background:var(--cubs-red);color:#fff;font-family:var(--font-bang);font-size:13px;
+    box-shadow:4px 4px 0 var(--cubs-blue);letter-spacing:.04em;
+  }
+  .hud.collapsed .hud-card{display:none;}
+  .hud:not(.collapsed) .hud-fab{display:none;}
+
+  .chat-root{
+    position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));
+    z-index:165;display:flex;flex-direction:column;align-items:flex-end;gap:8px;
+    width:min(360px, calc(100vw - 24px));
+  }
+  .chat-fab{align-self:flex-end;width:auto;border-radius:28px;padding:0 16px;font-size:14px;}
+  .chat-panel{
+    width:100%;background:#fff;border:3px solid var(--cubs-blue);color:var(--cubs-blue);
+    box-shadow:8px 8px 0 var(--cubs-red);max-height:min(70vh, 480px);
+    display:flex;flex-direction:column;overflow:hidden;
+  }
+  .chat-panel.hidden{display:none;}
+  .chat-head{
+    background:var(--cubs-blue);color:#fff;padding:10px 12px;
+    display:flex;justify-content:space-between;align-items:center;gap:8px;
+    font-family:var(--font-type);font-size:12px;font-weight:700;
+  }
+  .chat-head button{background:transparent;border:none;color:#fff;font-size:20px;padding:4px 8px;}
+  .chat-log{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:180px;}
+  .chat-bubble{padding:10px 12px;font-size:14px;max-width:90%;line-height:1.35;}
+  .chat-bubble.bot{background:#E8EEF9;align-self:flex-start;}
+  .chat-bubble.me{background:var(--cubs-red);color:#fff;align-self:flex-end;}
+  .chat-form{display:flex;border-top:2px solid var(--cubs-blue);}
+  .chat-form input{flex:1;border:none;padding:12px;font:inherit;min-width:0;}
+  .chat-form button{border:none;background:var(--cubs-blue);color:#fff;padding:12px 14px;font-family:var(--font-type);font-size:12px;}
+
+  .footer-socials{max-width:1120px;margin:28px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.22);}
+  .footer-socials h4{color:#fff;font-size:13px;letter-spacing:.5px;margin-bottom:12px;font-family:var(--font-type);}
+  .footer-socials-wrap{display:flex;flex-wrap:wrap;gap:8px 12px;}
+  .footer-socials-wrap a{
+    font-size:13px;font-weight:700;color:#fff;opacity:.88;
+    padding:4px 2px;border-bottom:2px solid transparent;
+  }
+  .footer-socials-wrap a:hover,.footer-socials-wrap a.live{opacity:1;border-color:#fff;}
+  .footer-brand{cursor:pointer;}
+
+  .nowbar{
+    position:fixed;left:0;right:0;z-index:175;
+    bottom:0;display:none;
+    background:var(--cubs-blue);color:#fff;
+    border-top:3px solid var(--cubs-red);
+    padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px));
+  }
+  .nowbar.on{display:block;}
+  .nowbar-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:12px;}
+  .now-art{
+    width:44px;height:44px;flex-shrink:0;
+    background:linear-gradient(135deg,#CC3433,#0E3386);border:2px solid #fff;
+  }
+  .now-meta{flex:1;min-width:0;}
+  .now-meta b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .now-meta span{font-size:12px;opacity:.85;}
+  .nowbar button{
+    background:#fff;color:var(--cubs-blue);border:none;
+    font-family:var(--font-type);font-size:11px;font-weight:700;
+    padding:8px 10px;min-height:40px;
+  }
+  .play-head{
+    max-width:1120px;margin:0 auto 22px;
+    display:grid;grid-template-columns:160px 1fr;gap:20px;align-items:center;
+    background:var(--cubs-blue);color:#fff;padding:20px;border:3px solid var(--cubs-red);
+  }
+  .play-art{
+    width:160px;height:160px;
+    background:
+      radial-gradient(circle at 30% 30%, #fff 0 8%, transparent 9%),
+      conic-gradient(from 40deg,#0E3386,#CC3433,#fff,#0E3386);
+    border:4px solid #fff;
+  }
+  .play-head h2{font-family:var(--font-bang);font-size:clamp(28px,5vw,48px);text-transform:uppercase;line-height:.95;}
+  .play-head p{margin-top:8px;opacity:.9;}
+  .play-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .track-list{max-width:1120px;margin:0 auto;}
+  .track-row{
+    display:grid;grid-template-columns:36px 1fr auto auto auto;gap:10px;align-items:center;
+    padding:10px 8px;border-bottom:1px solid var(--rule);
+  }
+  .track-row.playing{background:rgba(204,52,51,0.08);}
+  .track-row .n{font-family:var(--font-type);color:var(--page-muted);font-size:12px;}
+  .track-row h3{font-size:15px;}
+  .track-row .who{font-size:13px;color:var(--page-muted);}
+  .track-row .dur{font-family:var(--font-type);font-size:12px;color:var(--page-muted);}
+  .stage{
+    max-width:1120px;margin:0 auto;
+    background:var(--cubs-blue);color:#fff;border:3px solid var(--cubs-red);
+    min-height:280px;position:relative;overflow:hidden;padding:24px;
+    text-align:center;
+  }
+  .stage-pulse{
+    height:120px;margin:0 auto 16px;max-width:420px;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.2) 0 6px, transparent 6px 18px);
+    animation:roomPulse 1.4s ease-in-out infinite;
+  }
+  .stage h3{font-family:var(--font-bang);font-size:36px;text-transform:uppercase;}
+  .lyric{margin-top:10px;font-family:var(--font-chalk);font-size:28px;}
+  .queue-box{max-width:1120px;margin:18px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:800px){
+    .play-head{grid-template-columns:1fr;}
+    .play-art{width:120px;height:120px;}
+    .track-row{grid-template-columns:24px 1fr auto; }
+    .track-row .dur, .track-row [data-play]{display:none;}
+    .queue-box{grid-template-columns:1fr;}
+    .nowbar.on ~ .tabbar, .nowbar.on{ }
+  }
+  @media(max-width:1023px){
+    .nowbar.on{bottom:calc(56px + env(safe-area-inset-bottom,0px));padding-bottom:8px;}
+  }
+
+  .rooms{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media(max-width:860px){.rooms{grid-template-columns:1fr;}}
+  .room{
+    background:#fff;border:2px solid var(--cubs-blue);position:relative;overflow:hidden;min-height:240px;
+  }
 </style>
 </head>
 <body>
@@ -698,8 +894,8 @@
   </div>
   <div class="urgency">
     <span class="live-dot">LIVE DROP</span>
-    <span id="watchers">1,184 watching</span>
-    <span>DAILY SENTENCE ENDS</span>
+    <span id="watchers">42 watching</span>
+    <span class="urgency-end">DAILY SENTENCE ENDS</span>
     <span class="clock" id="day-clock" data-countdown="day">--:--:--</span>
   </div>
   <div class="nav-row">
@@ -732,13 +928,25 @@
       <button class="btn btn-ghost" id="theme-toggle" type="button" aria-label="Toggle theme">Light</button>
       <label class="visually-hidden" for="lang-select">Language</label>
       <select id="lang-select" class="lang-select" aria-label="Language"></select>
+      <button class="desk-more" id="desk-more" type="button">More</button>
+      <div class="auth-slot" id="auth-slot"></div>
       <a href="#/cart" class="cart-link" data-route="/cart"><span id="cart-label">Hall Pass</span> <span class="cart-count" id="cart-count">0</span></a>
-      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">☰</button>
     </div>
   </div>
-  <nav class="socials-row" id="socials-row" aria-label="Social networks"></nav>
 </header>
+<nav class="tabbar" id="tabbar" aria-label="Primary"></nav>
+<button class="more-backdrop" id="more-backdrop" type="button" aria-label="Close menu"></button>
+<aside class="more-sheet" id="more-sheet" aria-label="More menu">
+  <div class="more-handle"></div>
+  <div class="more-head">
+    <h2>Menu</h2>
+    <button type="button" id="more-close" aria-label="Close">×</button>
+  </div>
+  <div class="more-links" id="more-links"></div>
+  <div class="more-tools" id="more-tools"></div>
+</aside>
 <div class="hud" id="hud"></div>
+<div class="nowbar" id="nowbar"></div>
 
 <main id="app"></main>
 
@@ -837,9 +1045,9 @@
     return z(h)+":"+z(m)+":"+z(s);
   }
   function watchersNow(){
-    var base = 880 + (daySeed() % 220);
-    var wobble = Math.floor(Math.sin(Date.now()/9000)*40 + (Date.now()/7000)%37);
-    return Math.max(240, base + wobble);
+    var base = 32 + (daySeed() % 36);
+    var wobble = Math.floor(Math.sin(Date.now()/12000)*10);
+    return Math.max(15, Math.min(100, base + wobble));
   }
   var FEED = [
     {who:"M. in Austin", hit:"Faultline Grand Chardonnay", extra:91},
@@ -1449,10 +1657,33 @@
   ];
 
   var ROOMS = [
-    {id:"whatnot", host:"Coach Vale", title:"Whatnot locker raid", chat:"NY just jumped a $220 cab", viewers:1840, product:"cabernet-cram-session"},
-    {id:"douyin", host:"Night Market Mei", title:"Douyin night crush", chat:"HK crew at 11/12 for the bonus", viewers:3920, product:"icon-detention-rare-reds"},
-    {id:"tiktok", host:"Hall Monitor Jax", title:"TikTok shop flash", chat:"Don't blink the sauvignon", viewers:2711, product:"study-hall-sauvignon-blanc"}
+    {id:"whatnot", host:"Coach Vale", title:"Whatnot locker raid", chat:"NY just jumped a $220 cab", viewers:41, product:"cabernet-cram-session"},
+    {id:"douyin", host:"Night Market Mei", title:"Douyin night crush", chat:"HK crew at 11/12 for the bonus", viewers:67, product:"icon-detention-rare-reds"},
+    {id:"tiktok", host:"Hall Monitor Jax", title:"TikTok shop flash", chat:"Don't blink the sauvignon", viewers:28, product:"study-hall-sauvignon-blanc"}
   ];
+
+  var TRACKS = [
+    {id:"cork", title:"Cork Pop Cabernet", artist:"Hall Monitor Band", album:"Detention Radio Vol. 1", dur:"2:58", bpm:120, kick:500, hat:250, notes:[55,65,73,82]},
+    {id:"wrigley", title:"Wrigley After Dark", artist:"Vine & Recess", album:"Night Game", dur:"3:12", bpm:108, kick:555, hat:278, notes:[49,58,65,73]},
+    {id:"napa", title:"Napa Neon", artist:"Mei HK", album:"Export Lanes", dur:"2:41", bpm:126, kick:476, hat:238, notes:[62,70,78,93]},
+    {id:"sentence", title:"Today's Sentence", artist:"Coach Vale", album:"Locker Raids", dur:"3:05", bpm:118, kick:508, hat:254, notes:[52,62,70,78]},
+    {id:"ivy", title:"Ivy Wall Disco", artist:"Jax NY", album:"Hall Pass Cuts", dur:"2:36", bpm:122, kick:492, hat:246, notes:[58,69,73,87]},
+    {id:"crush", title:"Grape Crush Anthem", artist:"Night Market", album:"Douyin Nights", dur:"3:20", bpm:100, kick:600, hat:300, notes:[41,49,55,62]},
+    {id:"bubble", title:"Champagne Frequency", artist:"Detention Radio", album:"Pop The Locker", dur:"2:22", bpm:128, kick:469, hat:234, notes:[65,73,82,98]},
+    {id:"lastcall", title:"Last Call Locker", artist:"Hall Monitor Band", album:"Detention Radio Vol. 1", dur:"3:44", bpm:96, kick:625, hat:312, notes:[46,55,62,69]}
+  ];
+  var nowPlayingId = "cork";
+  var jukeQueue = [
+    {id:"wrigley", by:"Mei.HK", pts:40},
+    {id:"napa", by:"Anton.MSK", pts:40}
+  ];
+  var karaokeQueue = [
+    {who:"Vale.Napa", song:"Cork Pop Cabernet"},
+    {who:"Rio.LA", song:"Ivy Wall Disco"}
+  ];
+  var onStage = {who:"Jax.NY", song:"Wrigley After Dark", viewers:38};
+  var lyricIdx = 0;
+  var LYRICS = ["pop the cork — hold the note","sent to the good stuff","napa to the night market","everybody in the locker"];
 
   var LANES = [
     {from:"Napa Valley", to:"Hong Kong", hours:16, mode:"Bonded air", note:"Tsim Sha Tsui tasting lockers. Same-week reveal."},
@@ -1506,6 +1737,7 @@
   var gateRejected = false;
   var lang = "en";
   var theme = "light";
+  var currentUser = null;
 
   function L(){ return STR[lang] || STR.en; }
   function t(key){ var s=L(); return (s && s[key] != null) ? s[key] : (STR.en[key] != null ? STR.en[key] : key); }
@@ -1563,8 +1795,8 @@
         '<span>'+t("pointsWord")+'</span><b id="pts-val">'+points+'</b>'+
         '<div class="hud-actions">'+
           '<button type="button" id="party-btn" class="'+(musicOn?"on":"")+'">'+(musicOn?t("partyOff"):t("partyOn"))+'</button>'+
+          '<a href="#/party">Jukebox</a>'+
           '<button type="button" id="farm-btn">'+t("farmBtn")+'</button>'+
-          '<a href="#/quests">Quests</a>'+
         '</div>'+
       '</div>';
     var pb = document.getElementById("party-btn");
@@ -1587,25 +1819,38 @@
     addPoints(5, "share");
     showToast(t("shared"));
   }
+  function findTrack(id){
+    for (var i=0;i<TRACKS.length;i++){ if (TRACKS[i].id===id) return TRACKS[i]; }
+    return TRACKS[0];
+  }
   function toggleMusic(){
-    if (!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-    if (musicOn){ stopMusic(); musicOn=false; renderHud(); return; }
-    startParty(); musicOn=true; renderHud();
+    if (musicOn){ stopMusic(); musicOn=false; renderHud(); renderNowBar(); return; }
+    playTrack(nowPlayingId);
   }
   function stopMusic(){
     musicHandles.forEach(function(h){ try{ clearInterval(h); }catch(e){} });
     musicHandles = [];
-    if (audioCtx && audioCtx.state!=="closed"){
-      audioCtx.close();
-      audioCtx = null;
-    }
+    if (audioMaster){ try{ audioMaster.disconnect(); }catch(e){} audioMaster=null; }
   }
-  function startParty(){
+  function playTrack(id){
+    var tr = findTrack(id);
+    nowPlayingId = tr.id;
+    if (!audioCtx || audioCtx.state==="closed") audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    if (audioCtx.state==="suspended") audioCtx.resume();
+    stopMusic();
+    startParty(tr);
+    musicOn = true;
+    renderHud();
+    renderNowBar();
+  }
+  var audioMaster = null;
+  function startParty(tr){
+    tr = tr || findTrack(nowPlayingId);
     var ctx = audioCtx;
     var master = ctx.createGain();
     master.gain.value = 0.09;
     master.connect(ctx.destination);
-    var t0 = ctx.currentTime;
+    audioMaster = master;
     function kick(){
       var o = ctx.createOscillator();
       var g = ctx.createGain();
@@ -1627,16 +1872,48 @@
     function bass(){
       var o = ctx.createOscillator();
       var g = ctx.createGain();
-      o.type="square"; o.frequency.value = [55,65,73,82][Math.floor(Math.random()*4)];
+      o.type="square"; o.frequency.value = tr.notes[Math.floor(Math.random()*tr.notes.length)];
       g.gain.setValueAtTime(0.18, ctx.currentTime);
       g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.22);
       o.connect(g); g.connect(master); o.start(); o.stop(ctx.currentTime+0.24);
     }
     kick();
-    musicHandles.push(setInterval(kick, 500));
-    musicHandles.push(setInterval(hat, 250));
-    musicHandles.push(setInterval(bass, 1000));
-    void t0;
+    musicHandles.push(setInterval(kick, tr.kick));
+    musicHandles.push(setInterval(hat, tr.hat));
+    musicHandles.push(setInterval(bass, tr.kick*2));
+  }
+  function renderNowBar(){
+    var el = document.getElementById("nowbar");
+    if (!el) return;
+    if (!musicOn){ el.className="nowbar"; el.innerHTML=""; return; }
+    var tr = findTrack(nowPlayingId);
+    el.className="nowbar on";
+    el.innerHTML = '<div class="nowbar-inner">'+
+      '<div class="now-art" aria-hidden="true"></div>'+
+      '<div class="now-meta"><b>'+esc(tr.title)+'</b><span>'+esc(tr.artist)+' · Detention Radio</span></div>'+
+      '<button type="button" id="now-pause">Pause</button>'+
+      '<a class="btn btn-primary" href="#/party" style="flex:none;padding:8px 12px;">Party</a>'+
+    '</div>';
+    var p = document.getElementById("now-pause");
+    if (p) p.onclick = toggleMusic;
+  }
+  function requestTrack(id){
+    if (!currentUser){ showToast("Log in to request"); navigate("/login"); return; }
+    if (points < 40){ showToast("Need 40 pts to bump the jukebox"); return; }
+    points -= 40;
+    persist();
+    jukeQueue.unshift({id:id, by:currentUser.name, pts:40});
+    playTrack(id);
+    showToast("Requested · "+findTrack(id).title);
+    renderHud();
+    if (currentRoute()==="/party") render();
+  }
+  function joinStage(){
+    if (!currentUser){ showToast("Log in to grab the mic"); navigate("/login"); return; }
+    karaokeQueue.push({who:currentUser.name, song:findTrack(nowPlayingId).title});
+    onStage = {who:currentUser.name, song:findTrack(nowPlayingId).title, viewers:onStage.viewers};
+    showToast("You're on stage. Demo stream — no real broadcast.");
+    render();
   }
   function removeFromCart(slug){
     cart = cart.filter(function(i){ return i.slug!==slug; });
@@ -1714,42 +1991,209 @@
     document.getElementById("theme-toggle").textContent = theme === "dark" ? t("themeLight") : t("themeDark");
     document.getElementById("theme-toggle").setAttribute("aria-label", theme === "dark" ? t("themeLight") : t("themeDark"));
     document.getElementById("cart-label").textContent = t("cart");
-    document.getElementById("menu-toggle").setAttribute("aria-label", t("menu"));
     document.getElementById("lang-select").value = lang;
+    renderAuthBtn();
     renderNav();
+    renderTabbar();
+    renderMoreMenu();
     renderFooter();
-    renderSocials();
     renderHud();
     renderGate();
+  }
+
+  function esc(s){
+    return String(s||"").replace(/[&<>"']/g, function(c){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c];
+    });
+  }
+  function loadUsers(){
+    try { return JSON.parse(localStorage.getItem("wd-users")||"[]"); } catch(e){ return []; }
+  }
+  function saveUsers(list){
+    try { localStorage.setItem("wd-users", JSON.stringify(list)); } catch(e){}
+  }
+  function renderAuthBtn(){
+    var el = document.getElementById("auth-slot");
+    if (!el) return;
+    if (currentUser){
+      var nick = (currentUser.name||currentUser.email||"You").split(" ")[0];
+      el.innerHTML = '<a href="#/account" class="account-link">'+esc(nick)+'</a>';
+    } else {
+      el.innerHTML =
+        '<a href="#/login" class="login-link">Log in</a>'+
+        '<a href="#/signup" class="signup-link">Sign up</a>';
+    }
+  }
+  function setSession(user){
+    currentUser = user ? {email:user.email, name:user.name} : null;
+    try {
+      if (currentUser) localStorage.setItem("wd-session", JSON.stringify(currentUser));
+      else localStorage.removeItem("wd-session");
+    } catch(e){}
+    renderAuthBtn();
+  }
+  function signupUser(name, email, pass){
+    email = (email||"").trim().toLowerCase();
+    name = (name||"").trim();
+    if (!name || !email || !pass || pass.length<4) return "Name, email, and a 4+ character password.";
+    var users = loadUsers();
+    if (users.some(function(u){ return u.email===email; })) return "That email already has a hall pass. Log in.";
+    users.push({name:name, email:email, pass:btoa(unescape(encodeURIComponent(pass)))});
+    saveUsers(users);
+    setSession({name:name, email:email});
+    return "";
+  }
+  function loginUser(email, pass){
+    email = (email||"").trim().toLowerCase();
+    var users = loadUsers();
+    var encoded = btoa(unescape(encodeURIComponent(pass||"")));
+    var hit = users.filter(function(u){ return u.email===email && u.pass===encoded; })[0];
+    if (!hit) return "No match. Check the email/password or sign up.";
+    setSession(hit);
+    return "";
+  }
+  function logoutUser(){
+    setSession(null);
+    navigate("/login");
+  }
+
+  function pageAuth(mode){
+    var isUp = mode==="signup";
+    return '<div class="auth-card">'+
+      '<h1>'+(isUp?"Create a hall pass":"Log in")+'</h1>'+
+      '<p style="margin-bottom:18px;color:var(--page-muted);">'+(isUp?"Founding crew only takes a minute. Stays in this browser — demo login.":"Welcome back. This demo keeps your pass on this device.")+'</p>'+
+      '<form id="auth-form">'+
+        (isUp?'<div class="form-row"><label for="auth-name">Name</label><input id="auth-name" required autocomplete="name"></div>':'')+
+        '<div class="form-row"><label for="auth-email">Email</label><input id="auth-email" type="email" required autocomplete="email"></div>'+
+        '<div class="form-row"><label for="auth-pass">Password</label><input id="auth-pass" type="password" required minlength="4" autocomplete="'+(isUp?"new-password":"current-password")+'"></div>'+
+        '<button class="btn btn-primary btn-block" type="submit">'+(isUp?"Sign up":"Log in")+'</button>'+
+        '<div class="auth-msg" id="auth-msg"></div>'+
+      '</form>'+
+      '<p class="auth-switch">'+(isUp?'Already in the hall? <a href="#/login">Log in</a>':'Need a pass? <a href="#/signup">Sign up</a>')+'</p>'+
+    '</div>';
+  }
+  function pageAccount(){
+    if (!currentUser) return pageAuth("login");
+    return '<div class="auth-card">'+
+      '<h1>Your pass</h1>'+
+      '<p style="margin:12px 0;"><strong>'+esc(currentUser.name)+'</strong><br>'+esc(currentUser.email)+'</p>'+
+      '<p style="margin-bottom:18px;color:var(--page-muted);">'+points+' detention points on this device.</p>'+
+      '<button class="btn btn-dark btn-block" type="button" id="logout-btn">Log out</button>'+
+    '</div>';
+  }
+
+  function tabSvg(kind){
+    if (kind==="home") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 4l8 7.5V20h-6v-6H10v6H4z"/></svg>';
+    if (kind==="live") return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>';
+    if (kind==="shop") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>';
+    if (kind==="party") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 16V5l9-2v11"/><circle cx="8" cy="17" r="2.4"/><circle cx="17" cy="14" r="2.4"/></svg>';
+    if (kind==="pass") return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 12h18"/></svg>';
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/></svg>';
   }
 
   function renderNav(){
     document.getElementById("nav-links").innerHTML =
       '<a href="#/" data-route="/">'+t("navHome")+'</a>'+
       '<a href="#/live" data-route="/live">'+t("navLive")+'</a>'+
-      '<a href="#/collections" data-route="/collections">'+t("navCollections")+'</a>'+
-      '<a href="#/trade" data-route="/trade">'+t("navTrade")+'</a>'+
-      '<a href="#/giveaways" data-route="/giveaways">'+t("navGive")+'</a>'+
-      '<a href="#/quests" data-route="/quests">'+t("navQuests")+'</a>'+
-      '<a href="#/leaderboard" data-route="/leaderboard">'+t("navBoard")+'</a>'+
-      '<a href="#/socials" data-route="/socials">'+t("navSocials")+'</a>'+
-      '<a href="#/how-it-works" data-route="/how-it-works">'+t("navHow")+'</a>'+
-      '<a href="#/about" data-route="/about">'+t("navAbout")+'</a>'+
-      '<a href="#/faq" data-route="/faq">'+t("navFaq")+'</a>'+
-      '<a href="#/contact" data-route="/contact">'+t("navContact")+'</a>';
+      '<a href="#/party" data-route="/party">Party</a>'+
+      '<a href="#/collections" data-route="/collections">Shop</a>'+
+      '<a href="#/giveaways" data-route="/giveaways">'+t("navGive")+'</a>';
+  }
+
+  function renderTabbar(){
+    var el = document.getElementById("tabbar");
+    if (!el) return;
+    var route = currentRoute();
+    var tabs = [
+      {href:"#/", match:"/", kind:"home", label:t("navHome")},
+      {href:"#/party", match:"/party", kind:"party", label:"Party"},
+      {href:"#/collections", match:"/collections", kind:"shop", label:"Shop"},
+      {href:"#/cart", match:"/cart", kind:"pass", label:"Pass"},
+      {kind:"more", label:"More"}
+    ];
+    el.innerHTML = tabs.map(function(tab){
+      var on = tab.match && (route===tab.match || (tab.match==="/collections" && route.indexOf("/product/")===0) || (tab.match==="/" && route==="/"));
+      if (tab.kind==="more"){
+        return '<button type="button" class="tab-more" id="tab-more">'+tabSvg("more")+'<span>'+tab.label+'</span></button>';
+      }
+      return '<a href="'+tab.href+'" class="'+(tab.extra||"")+(on?" active":"")+'" data-tab="'+tab.match+'">'+tabSvg(tab.kind)+'<span>'+tab.label+'</span></a>';
+    }).join("");
+    var moreBtn = document.getElementById("tab-more");
+    if (moreBtn) moreBtn.onclick = openMore;
+  }
+
+  function moreItems(){
+    var auth = currentUser
+      ? [{href:"#/account", label:"Account"}]
+      : [{href:"#/login", label:"Log in"}, {href:"#/signup", label:"Sign up"}];
+    return auth.concat([
+      {href:"#/live", label:t("navLive")},
+      {href:"#/party", label:"Party / Jukebox"},
+      {href:"#/trade", label:t("navTrade")},
+      {href:"#/quests", label:t("navQuests")},
+      {href:"#/leaderboard", label:t("navBoard")},
+      {href:"#/socials", label:t("navSocials")},
+      {href:"#/how-it-works", label:t("navHow")},
+      {href:"#/about", label:t("navAbout")},
+      {href:"#/faq", label:t("navFaq")},
+      {href:"#/contact", label:t("navContact")}
+    ]);
+  }
+
+  function renderMoreMenu(){
+    var links = document.getElementById("more-links");
+    var tools = document.getElementById("more-tools");
+    if (!links) return;
+    links.innerHTML = moreItems().map(function(item){
+      return '<a href="'+item.href+'">'+item.label+'<span>›</span></a>';
+    }).join("");
+    if (tools){
+      tools.innerHTML =
+        '<button class="btn btn-dark" type="button" id="more-theme">'+ (theme==="dark"?t("themeLight"):t("themeDark")) +'</button>'+
+        '<select id="more-lang" class="lang-select" aria-label="Language"></select>';
+      LANGS.forEach(function(item){
+        var opt = document.createElement("option");
+        opt.value = item.code;
+        opt.textContent = item.label;
+        if (item.code===lang) opt.selected = true;
+        document.getElementById("more-lang").appendChild(opt);
+      });
+      document.getElementById("more-theme").onclick = function(){
+        theme = theme === "dark" ? "light" : "dark";
+        persist(); applyPrefs(); render();
+      };
+      document.getElementById("more-lang").onchange = function(){
+        lang = this.value;
+        persist(); applyPrefs(); render();
+      };
+    }
+    links.querySelectorAll("a").forEach(function(a){
+      a.addEventListener("click", closeMore);
+    });
+  }
+
+  function openMore(){
+    document.getElementById("more-sheet").classList.add("open");
+    document.getElementById("more-backdrop").classList.add("open");
+    document.body.classList.add("more-open");
+  }
+  function closeMore(){
+    document.getElementById("more-sheet").classList.remove("open");
+    document.getElementById("more-backdrop").classList.remove("open");
+    document.body.classList.remove("more-open");
   }
 
   function renderFooter(){
     document.getElementById("site-footer").innerHTML =
       '<div class="footer-grid">'+
         '<div>'+
-          '<div class="footer-brand">'+brandMarkSVG()+'Wine Detention</div>'+
+          '<a href="#/" class="footer-brand" id="footer-brand">'+brandMarkSVG()+'Wine Detention</a>'+
           '<p class="footer-blurb">'+t("footBlurb")+'</p>'+
-          '<div class="social-row">'+SOCIALS.slice(0,6).map(function(s){ return '<a href="#/live">'+s.name+'</a>'; }).join("")+'</div>'+
         '</div>'+
         '<div><h4>'+t("footSite")+'</h4><ul>'+
           '<li><a href="#/">'+t("navHome")+'</a></li>'+
           '<li><a href="#/live">'+t("navLive")+'</a></li>'+
+          '<li><a href="#/party">Party</a></li>'+
           '<li><a href="#/trade">'+t("navTrade")+'</a></li>'+
           '<li><a href="#/about">'+t("footAbout")+'</a></li>'+
           '<li><a href="#/contact">'+t("footContact")+'</a></li>'+
@@ -1765,7 +2209,15 @@
           '<li><a href="#/policy/terms">'+t("footTerms")+'</a></li>'+
         '</ul></div>'+
       '</div>'+
+      '<div class="footer-socials"><h4>We\'re live on 18 apps</h4><div class="footer-socials-wrap">'+
+        SOCIALS.map(function(s){ return '<a href="#/socials" class="'+(s.live?"live":"")+'">'+s.name+'</a>'; }).join("")+
+      '</div></div>'+
       '<div class="footer-bottom"><span>'+t("footCopy")+'</span><span>'+t("footWines")+'</span></div>';
+    var fb = document.getElementById("footer-brand");
+    if (fb) fb.addEventListener("click", function(e){
+      e.preventDefault();
+      location.reload();
+    });
   }
 
   function renderGate(){
@@ -2026,7 +2478,59 @@
       '<section>'+roomsHTML()+'</section>'+
       '<section><div class="section-head"><span class="kicker">HALL FEED</span><h2>Post it while it\'s hot.</h2></div>'+
         '<form class="composer" id="post-form"><input id="post-text" maxlength="140" placeholder="Drop a line for the hall..." required><button class="btn btn-primary" type="submit">Post · +20</button></form>'+
-        '<div class="board" style="max-width:800px;">'+feed+'</div></section>';
+        '<div class="board" style="max-width:800px;">'+feed+'</div></section>'+
+      '<section><div style="text-align:center;"><a class="btn btn-primary" href="#/party">Open the jukebox party</a></div></section>';
+  }
+  function pageParty(){
+    var tr = findTrack(nowPlayingId);
+    var rows = TRACKS.map(function(s,i){
+      return '<div class="track-row'+(s.id===nowPlayingId?" playing":"")+'">'+
+        '<span class="n">'+(s.id===nowPlayingId?"▶":(i+1))+'</span>'+
+        '<div><h3>'+esc(s.title)+'</h3><div class="who">'+esc(s.artist)+' · '+esc(s.album)+'</div></div>'+
+        '<span class="dur">'+s.dur+'</span>'+
+        '<button class="btn btn-primary" type="button" data-play="'+s.id+'">Play</button>'+
+        '<button class="btn btn-dark" type="button" data-req="'+s.id+'">Request · 40 pts</button>'+
+      '</div>';
+    }).join("");
+    var q = jukeQueue.map(function(item){
+      return '<div class="feed-row"><span><b>'+esc(item.by)+'</b> bumped '+esc(findTrack(item.id).title)+'</span><span class="hit">+'+item.pts+'</span></div>';
+    }).join("") || '<p>No paid requests yet. Be first.</p>';
+    var kq = karaokeQueue.map(function(k){
+      return '<div class="feed-row"><span><b>'+esc(k.who)+'</b> — '+esc(k.song)+'</span></div>';
+    }).join("");
+    return pageHero("DETENTION RADIO","The whole hall is one party.","Original house loops — not licensed hits. Pay points to bump the jukebox. Grab the mic for karaoke livestream (demo).")+
+      '<section>'+
+        '<div class="play-head">'+
+          '<div class="play-art" aria-hidden="true"></div>'+
+          '<div>'+
+            '<div class="kicker" style="color:#fff;">NOW PLAYING · EVERYONE HEARS THIS</div>'+
+            '<h2>'+esc(tr.title)+'</h2>'+
+            '<p>'+esc(tr.artist)+' — '+esc(tr.album)+'</p>'+
+            '<div class="play-actions">'+
+              '<button class="btn btn-primary" type="button" id="play-now">'+(musicOn?"Pause the party":"Play for the hall")+'</button>'+
+              '<button class="btn btn-dark" type="button" data-req="'+tr.id+'">Bump this · 40 pts</button>'+
+            '</div>'+
+            '<p style="margin-top:10px;font-size:13px;opacity:.85;">Browser-made beats. No Apple Music catalog, no copyrighted tracks.</p>'+
+          '</div>'+
+        '</div>'+
+        '<div class="track-list">'+rows+'</div>'+
+      '</section>'+
+      '<section class="why-alt">'+
+        '<div class="section-head"><span class="kicker">KARAOKE LIVE</span><h2>Go on stage.</h2><p>Same energy as a Whatnot booth — you, a mic, the hall watching.</p></div>'+
+        '<div class="stage">'+
+          '<div class="live-dot" style="margin:0 auto 12px;">LIVE KARAOKE</div>'+
+          '<div class="stage-pulse"></div>'+
+          '<h3>'+esc(onStage.who)+'</h3>'+
+          '<p>singing '+esc(onStage.song)+'</p>'+
+          '<div class="lyric" id="lyric-line">'+LYRICS[lyricIdx%LYRICS.length]+'</div>'+
+          '<p style="margin-top:10px;font-family:var(--font-type);font-size:12px;">'+onStage.viewers+' watching the stage</p>'+
+          '<button class="btn btn-primary" type="button" id="join-stage" style="margin-top:16px;">I want the mic</button>'+
+        '</div>'+
+        '<div class="queue-box">'+
+          '<div class="prize"><h3>Jukebox queue</h3>'+q+'</div>'+
+          '<div class="prize"><h3>Karaoke queue</h3>'+kq+'</div>'+
+        '</div>'+
+      '</section>';
   }
   function pageTrade(){
     var lanes = LANES.map(function(l){
@@ -2250,6 +2754,7 @@
     else if (route === "/collections") html = pageCollections();
     else if (route.indexOf("/product/") === 0) html = pageProduct(route.replace("/product/",""));
     else if (route === "/live") html = pageLive();
+    else if (route === "/party") html = pageParty();
     else if (route === "/trade") html = pageTrade();
     else if (route === "/giveaways") html = pageGiveaways();
     else if (route === "/quests") html = pageQuests();
@@ -2261,6 +2766,9 @@
     else if (route === "/contact") html = pageContact();
     else if (route === "/policy/privacy") html = pagePolicy("privacy");
     else if (route === "/policy/terms") html = pagePolicy("terms");
+    else if (route === "/login") html = pageAuth("login");
+    else if (route === "/signup") html = pageAuth("signup");
+    else if (route === "/account") html = pageAccount();
     else if (route === "/cart") html = pageCart();
     else if (route === "/checkout") html = pageCheckout();
     else if (route === "/confirmation") html = pageConfirmation();
@@ -2269,8 +2777,10 @@
     renderCartCount();
     highlightNav(route);
     bindPageEvents(route);
-    document.getElementById("nav-links").classList.remove("open");
+    closeMore();
+    renderTabbar();
     renderHud();
+    renderNowBar();
   }
 
   function highlightNav(route){
@@ -2323,6 +2833,41 @@
     if (route === "/checkout"){
       var form = document.getElementById("checkout-form");
       if (form) form.addEventListener("submit", function(e){ e.preventDefault(); processOrder(); });
+      if (currentUser){
+        var em = document.getElementById("ch-email");
+        var fn = document.getElementById("ch-first");
+        if (em && !em.value) em.value = currentUser.email;
+        if (fn && !fn.value) fn.value = (currentUser.name||"").split(" ")[0];
+      }
+    }
+    if (route === "/login" || route === "/signup"){
+      var aform = document.getElementById("auth-form");
+      if (aform) aform.addEventListener("submit", function(e){
+        e.preventDefault();
+        var msg = route==="/signup"
+          ? signupUser(document.getElementById("auth-name").value, document.getElementById("auth-email").value, document.getElementById("auth-pass").value)
+          : loginUser(document.getElementById("auth-email").value, document.getElementById("auth-pass").value);
+        var box = document.getElementById("auth-msg");
+        if (msg){ if (box) box.textContent = msg; return; }
+        showToast(route==="/signup" ? "Hall pass created." : "You're in.");
+        navigate("/account");
+      });
+    }
+    if (route === "/account"){
+      var lo = document.getElementById("logout-btn");
+      if (lo) lo.addEventListener("click", logoutUser);
+    }
+    if (route === "/party"){
+      var pn = document.getElementById("play-now");
+      if (pn) pn.addEventListener("click", toggleMusic);
+      document.querySelectorAll("[data-play]").forEach(function(btn){
+        btn.addEventListener("click", function(){ playTrack(btn.getAttribute("data-play")); });
+      });
+      document.querySelectorAll("[data-req]").forEach(function(btn){
+        btn.addEventListener("click", function(){ requestTrack(btn.getAttribute("data-req")); });
+      });
+      var st = document.getElementById("join-stage");
+      if (st) st.addEventListener("click", joinStage);
     }
     if (route === "/contact"){
       var cform = document.getElementById("contact-form");
@@ -2413,6 +2958,7 @@
       localStorage.setItem("wd-quests", JSON.stringify(questsDone));
       localStorage.setItem("wd-farm", String(farmCount));
       localStorage.setItem("wd-gate", gateShown ? "1" : "0");
+      if (currentUser) localStorage.setItem("wd-session", JSON.stringify(currentUser));
     } catch (e) {}
   }
 
@@ -2429,24 +2975,31 @@
       if (qd && typeof qd==="object") questsDone = qd;
       farmCount = parseInt(localStorage.getItem("wd-farm")||"0",10)||0;
       if (localStorage.getItem("wd-gate")==="1") gateShown = true;
+      var sess = JSON.parse(localStorage.getItem("wd-session")||"null");
+      if (sess && sess.email) currentUser = sess;
     } catch (e) {}
   }
 
-  document.getElementById("menu-toggle").addEventListener("click", function(){
-    document.getElementById("nav-links").classList.toggle("open");
-  });
-  document.getElementById("theme-toggle").addEventListener("click", function(){
-    theme = theme === "dark" ? "light" : "dark";
-    persist();
-    applyPrefs();
-    render();
-  });
-  document.getElementById("lang-select").addEventListener("change", function(){
-    lang = this.value;
-    persist();
-    applyPrefs();
-    render();
-  });
+  function wireChrome(){
+    var deskMore = document.getElementById("desk-more");
+    if (deskMore) deskMore.addEventListener("click", openMore);
+    var moreClose = document.getElementById("more-close");
+    if (moreClose) moreClose.addEventListener("click", closeMore);
+    var moreBack = document.getElementById("more-backdrop");
+    if (moreBack) moreBack.addEventListener("click", closeMore);
+    document.getElementById("theme-toggle").addEventListener("click", function(){
+      theme = theme === "dark" ? "light" : "dark";
+      persist();
+      applyPrefs();
+      render();
+    });
+    document.getElementById("lang-select").addEventListener("change", function(){
+      lang = this.value;
+      persist();
+      applyPrefs();
+      render();
+    });
+  }
 
   LANGS.forEach(function(item){
     var opt = document.createElement("option");
@@ -2454,15 +3007,20 @@
     opt.textContent = item.label;
     document.getElementById("lang-select").appendChild(opt);
   });
+  wireChrome();
 
   function updateLiveChrome(){
     var clock = document.getElementById("day-clock");
     if (clock) clock.textContent = formatRemain(endOfDay() - Date.now());
     var w = document.getElementById("watchers");
     if (w) w.textContent = watchersNow().toLocaleString() + " watching";
-    document.querySelectorAll("[data-countdown='day']").forEach(function(el){
-      el.textContent = formatRemain(endOfDay() - Date.now());
-    });
+    var lyric = document.getElementById("lyric-line");
+    var beat = Math.floor(Date.now()/3000);
+    if (lyric && beat !== lyricIdx){
+      lyricIdx = beat;
+      lyric.textContent = LYRICS[beat % LYRICS.length];
+    }
+    if (onStage && beat%2===0) onStage.viewers = Math.max(15, Math.min(100, onStage.viewers + (Math.random()>.5?1:-1)));
   }
 
   var scrolledOnce = false;
