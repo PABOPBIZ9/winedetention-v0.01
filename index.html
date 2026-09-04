@@ -1518,8 +1518,9 @@
   .offer-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 16px;}
   .offer-head h2{font-family:var(--font-body);font-size:24px;font-weight:700;text-transform:none;letter-spacing:-.02em;margin:0;}
   .offer-head a{font-size:14px;font-weight:500;color:#000;}
-  .offer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 16px;}
-  @media(max-width:900px){.offer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px;}}
+  .offer-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+  @media(min-width:640px){.offer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px;}}
+  @media(min-width:1024px){.offer-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 16px;}}
   .offer-card{display:block;text-decoration:none;color:inherit;min-width:0;position:relative;}
   .offer-shot{
     position:relative;height:148px;border-radius:12px;overflow:hidden;background:#F3F3F3;
@@ -1654,33 +1655,58 @@
   .wd-fab{background:var(--sapphire) !important;color:#fff !important;border:0 !important;}
   .chat-form button{background:var(--champagne) !important;color:var(--champagne-ink) !important;}
   .chat-chips button:hover{background:var(--sapphire);color:#fff;}
-  header.site{margin-left:0 !important;width:100%;z-index:140;border-bottom:0;}
-  .mast{position:relative;background:#fff;overflow:hidden;}
-  .mast-art{display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-  .mast-copy{display:none;}
-  body.has-mast{--head-h:280px;}
-  body.has-mast .mast{min-height:280px;background:#0E3386;}
-  body.has-mast .mast-art{display:block;}
-  body.has-mast .nav-row{position:relative;z-index:2;background:transparent;}
-  body.has-mast .ue-search{background:#fff;}
-  body.has-mast .rail-burger{background:var(--platinum);color:var(--platinum-ink);}
-  body.has-mast .mast-copy{
-    display:flex;flex-direction:column;align-items:flex-start;gap:8px;
-    position:relative;z-index:2;padding:8px 24px 28px 24px;color:#fff;text-decoration:none;max-width:640px;
+  header.site{
+    margin-left:0 !important;width:100%;height:64px;min-height:64px;max-height:64px;
+    z-index:140;border-bottom:1px solid #E8E8E8;background:#fff;overflow:hidden;
   }
-  body.has-mast .mast-copy em{font-style:normal;font-size:14px;font-weight:600;}
-  body.has-mast .mast-copy b{font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1.05;text-shadow:0 2px 0 rgba(0,0,0,.25);}
-  body.has-mast .mast-copy span{font-size:16px;font-weight:500;}
-  aside.left-rail{top:var(--head-h,64px) !important;}
-  .nav-row{justify-content:flex-start;}
-  .rail-burger{flex-shrink:0;}
+  .nav-row{
+    height:64px;padding:0 16px;justify-content:flex-start;gap:12px;
+  }
+  .rail-burger{flex-shrink:0;margin:0;background:var(--platinum);color:var(--platinum-ink);}
+  .mast-band{
+    display:none;position:relative;width:100%;height:240px;overflow:hidden;
+    background:#0E3386;z-index:125;margin:0;
+  }
+  body.has-mast .mast-band{display:block;}
+  .mast-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .mast-copy{
+    display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:8px;
+    position:relative;z-index:2;height:100%;padding:24px 24px 24px 104px;
+    color:#fff;text-decoration:none;max-width:720px;
+  }
+  .mast-copy em{font-style:normal;font-size:14px;font-weight:600;}
+  .mast-copy b{font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1.05;text-shadow:0 2px 0 rgba(0,0,0,.25);}
+  .mast-copy span{font-size:16px;font-weight:500;}
+  aside.left-rail{top:64px !important;z-index:110;}
+  .nowbar,.nowbar.on,.nowbar.mini{
+    left:50% !important;right:auto !important;
+    transform:translateX(-50%);
+    bottom:calc(20px + env(safe-area-inset-bottom,0px)) !important;
+    width:min(480px, calc(100vw - 32px)) !important;
+    max-width:480px !important;
+  }
+  .nowbar.mini{width:48px !important;min-width:48px;padding:0;}
+  .now-play{background:var(--sapphire) !important;color:#fff !important;}
+  .room,.slip,.lane,.board-row,.hero-card,.map-wrap,.stage,.play-head,.quest,.prize,.track-row,.feed-row{
+    border-radius:16px !important;border-width:1px !important;
+  }
   @media(max-width:899px){
+    :root{ --rail-w:0px !important; }
+    aside.left-rail{display:none !important;}
+    header.site,main#app,footer.site{margin-left:0 !important;}
+    header.site{height:56px;min-height:56px;max-height:56px;}
+    .nav-row{height:56px;padding:0 10px;}
     .ue-search{height:40px;padding:0 12px;}
     .ue-search input{height:40px;font-size:14px;}
     main#app h1,main#app .page-hero h1{font-size:26px !important;}
-    body.has-mast .mast{min-height:220px;}
-    body.has-mast .mast-copy b{font-size:26px;}
-    body.has-mast .mast-copy{padding:8px 16px 20px;}
+    .mast-band{height:200px;}
+    .mast-copy{padding:16px;}
+    .mast-copy b{font-size:26px;}
+    .offer-shot{height:188px;}
+    .cat-chip{width:72px;}
+    .cat-chip i{width:64px;height:64px;}
+    .feed-page{padding:12px 14px 96px;}
+    .promo-tiles{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -1697,9 +1723,7 @@
     <span id="watchers">42 watching</span>
     <span class="clock" id="day-clock" data-countdown="day">--:--:--</span>
   </div>
-  <div class="mast" id="mast">
-    <img class="mast-art" id="mast-art" src="img/promos/promo-meme.png" alt="">
-    <div class="nav-row">
+  <div class="nav-row">
     <button class="rail-burger" id="rail-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="rail-drawer">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
@@ -1712,13 +1736,6 @@
       <div class="auth-slot" id="auth-slot"></div>
       <a href="#/cart" class="cart-link" data-route="/cart"><span id="cart-label">Hall Pass</span> <span class="cart-count" id="cart-count">0</span></a>
     </div>
-    </div>
-    <a class="mast-copy" id="mast-copy" href="#/collections">
-      <em>Launch weekend</em>
-      <b>8 lockers. $35–$350.</b>
-      <span>Three bottles each. Floor is the buy-in.</span>
-      <span class="btn btn-primary">Shop the drop</span>
-    </a>
   </div>
   <div hidden>
     <button class="btn btn-ghost" id="theme-toggle" type="button" aria-label="Toggle theme">Light</button>
@@ -1728,6 +1745,15 @@
     <nav class="links" id="nav-links"></nav>
   </div>
 </header>
+<div class="mast-band" id="mast-band" hidden>
+  <img class="mast-art" src="img/promos/promo-meme.png" alt="">
+  <a class="mast-copy" href="#/collections">
+    <em>Launch weekend</em>
+    <b>8 lockers. $35–$350.</b>
+    <span>Three bottles each. Floor is the buy-in.</span>
+    <span class="btn btn-primary">Shop the drop</span>
+  </a>
+</div>
 <nav class="tabbar" id="tabbar" aria-label="Primary"></nav>
 <button class="more-backdrop" id="more-backdrop" type="button" aria-label="Close menu"></button>
 <aside class="more-sheet" id="more-sheet" aria-label="More menu">
@@ -3839,14 +3865,8 @@
     var r = currentRoute().split("?")[0];
     var show = r==="/" || r==="/collections";
     document.body.classList.toggle("has-mast", show);
-    var copy = document.getElementById("mast-copy");
-    var art = document.getElementById("mast-art");
-    if (copy) copy.hidden = !show;
-    if (art) art.style.display = show ? "block" : "none";
-    requestAnimationFrame(function(){
-      var head = document.querySelector("header.site");
-      document.documentElement.style.setProperty("--head-h", (head ? head.offsetHeight : (show?280:64))+"px");
-    });
+    var band = document.getElementById("mast-band");
+    if (band) band.hidden = !show;
   }
 
   function renderRightRail(){
