@@ -84,7 +84,7 @@
     --why-bg:#0A2768;
     --why-text:#FFFFFF;
     --why-muted:#D6E4FF;
-    --gate-overlay:rgba(10,39,104,0.92);
+    --gate-overlay:rgba(22,24,35,0.4);
     --header-border:rgba(255,255,255,0.22);
     --hero-sub:#D6E4FF;
     --surface:#0E3386;
@@ -130,15 +130,12 @@
     color:var(--cubs-blue);
     box-shadow:0 24px 60px rgba(14,51,134,.18);
   }
-  .gate-card h2{font-family:var(--font-bang);font-size:28px;color:#0E3386;line-height:1.05;text-transform:uppercase;}
-  .gate-card p{margin-top:8px;font-size:13px;color:#3D5A99;}
-  .gate-card::before{
-    content:attr(data-pass);
-    font-family:var(--font-type);
-    font-size:11px;letter-spacing:1.5px;
-    color:var(--cubs-red);
-    display:block;margin-bottom:10px;
+  .gate-card h2{
+    font-family:var(--font-body);font-size:22px;font-weight:800;color:#161823;
+    line-height:1.2;text-transform:none;letter-spacing:-.02em;
   }
+  .gate-card p{margin-top:8px;font-size:14px;color:#545454;line-height:1.4;}
+  .gate-card::before{display:none;}
   .gate-actions{display:flex;flex-direction:column;gap:8px;margin-top:16px;}
   .gate-actions .btn{min-height:48px;}
   .btn{
@@ -151,7 +148,7 @@
     background:var(--page);
     color:var(--page-text);
     transition:background .15s ease, box-shadow .15s ease, filter .15s ease;
-    flex:1;
+    flex:none;
   }
   .btn:hover{filter:brightness(1.03);}
   .btn-primary{
@@ -167,7 +164,7 @@
     padding:8px 10px;flex:none;min-width:42px;
   }
   [data-theme="light"] .btn-ghost{border-color:var(--header-border);}
-  .btn-block{width:100%;}
+  .btn-block,.gate-actions .btn{flex:1;width:100%;}
   .btn:disabled{opacity:.45;cursor:not-allowed;filter:none;}
 
   .ticker{display:none !important;}
@@ -212,14 +209,16 @@
     gap:10px;
   }
   .ue-search{
-    flex:1;min-width:0;max-width:640px;margin:0 auto 0 0;
-    display:flex;align-items:center;gap:10px;
-    background:#EEEEEE;border-radius:999px;padding:0 16px;height:48px;
+    flex:1 1 auto;min-width:0;max-width:none;margin:0;
+    display:flex;align-items:center;gap:8px;
+    background:#F3F3F3;border-radius:500px;padding:0 14px;height:44px;
+    transition:background .18s ease, box-shadow .18s ease;
   }
-  .ue-search svg{width:20px;height:20px;flex-shrink:0;fill:#6B6B6B;}
+  .ue-search:focus-within{background:#EBEBEB;box-shadow:inset 0 0 0 1.5px #D0D0D0;}
+  .ue-search svg{width:18px;height:18px;flex-shrink:0;fill:#6B6B6B;}
   .ue-search input{
     flex:1;min-width:0;border:0;background:transparent;outline:none;
-    font-family:var(--font-body);font-size:16px;font-weight:500;color:#000;height:48px;
+    font-family:var(--font-body);font-size:16px;font-weight:500;color:#000;height:44px;
   }
   .ue-search input::placeholder{color:#6B6B6B;}
   .brand{
@@ -251,19 +250,20 @@
   }
   nav.links a:hover, nav.links a.active{opacity:1;border-color:#fff;}
   .cart-link{
-    display:flex;align-items:center;gap:8px;
-    font-family:var(--font-body);
-    background:var(--ruby);color:#fff;border:0;
-    padding:8px 14px;min-height:36px;
-    font-size:14px;font-weight:500;border-radius:999px;
+    position:relative;display:inline-flex;align-items:center;justify-content:center;
+    width:32px;height:32px;min-width:32px;min-height:32px;padding:0;
+    background:transparent;color:#000;border:0;border-radius:8px;
   }
-  [data-theme="light"] .cart-link{border:0;background:var(--ruby);color:#fff;}
+  [data-theme="light"] .cart-link{border:0;background:transparent;color:#000;}
+  .cart-link svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round;}
   .cart-count{
-    background:var(--champagne);color:var(--champagne-ink);
-    border-radius:999px;min-width:20px;height:20px;
+    position:absolute;top:-4px;right:-6px;
+    background:#06C167;color:#fff;
+    border-radius:999px;min-width:16px;height:16px;
     display:inline-flex;align-items:center;justify-content:center;
-    font-size:12px;font-weight:800;padding:0 6px;
+    font-size:10px;font-weight:800;padding:0 4px;line-height:1;
   }
+  .cart-count:empty,.cart-count[data-empty="1"]{display:none;}
   nav.links{display:flex;gap:18px;align-items:center;flex-wrap:nowrap;}
   nav.links a{
     font-size:14px;font-weight:600;
@@ -689,8 +689,8 @@
     .brand,.brand-kicker{display:none;}
     .brand-mark{width:36px;height:36px;filter:none;}
     nav.links,.desk-more,.lang-select,.chrome-tools .btn-ghost,.menu-toggle,.nav-row .brand{display:none !important;}
-    .cart-link{padding:8px 14px;min-height:40px;}
-    .login-link,.account-link{padding:8px 14px;font-size:13px;min-height:40px;}
+    .cart-link{padding:0;min-height:32px;width:32px;height:32px;background:transparent;}
+    .login-link,.account-link{padding:0 14px;font-size:14px;min-height:36px;height:36px;}
     header.site,main#app,footer.site{margin-left:var(--rail-w);}
     main#app{padding-bottom:12px;}
     footer.site{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px));}
@@ -789,15 +789,15 @@
   .prize h3{font-family:var(--font-bang);font-size:28px;text-transform:uppercase;}
 
   .account-link,.login-link{
-    font-family:var(--font-body);font-size:14px;font-weight:500;
-    padding:8px 16px;white-space:nowrap;display:inline-flex;align-items:center;
-    min-height:36px;letter-spacing:0;text-transform:none;border-radius:999px;
+    font-family:var(--font-body);font-size:14px;font-weight:700;
+    padding:0 16px;white-space:nowrap;display:inline-flex;align-items:center;
+    height:36px;min-height:36px;letter-spacing:0;text-transform:none;border-radius:999px;
   }
   .login-link{
-    color:var(--platinum-ink);background:var(--platinum);border:0;
+    color:var(--champagne-ink);background:var(--champagne);border:0;
   }
   .account-link{
-    color:var(--platinum-ink);background:var(--platinum);border:0;text-transform:none;letter-spacing:0;
+    color:var(--platinum-ink);background:var(--platinum);border:0;text-transform:none;letter-spacing:0;font-weight:500;
   }
   .auth-slot{display:flex;align-items:center;flex-shrink:0;}
   .auth-overlay{
@@ -1089,11 +1089,21 @@
   .lyric{margin-top:10px;font-family:var(--font-chalk);font-size:28px;}
   .queue-box{max-width:1120px;margin:18px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
   @media(max-width:800px){
-    .play-head{grid-template-columns:1fr;}
-    .play-art{width:120px;height:120px;}
-    .track-row{grid-template-columns:24px 1fr auto; }
-    .track-row .dur, .track-row [data-play]{display:none;}
+    .play-head{grid-template-columns:1fr;padding:14px;gap:12px;border-width:1px;}
+    .play-art{width:88px;height:88px;border-width:2px;}
+    .play-head h2{font-size:22px !important;line-height:1.15;}
+    .play-actions{gap:8px;}
+    .play-actions .btn{flex:1 1 calc(50% - 8px);min-height:40px;padding:8px 10px;font-size:13px;}
+    .track-row{grid-template-columns:28px minmax(0,1fr) auto auto;gap:8px;}
+    .track-row .dur{display:none;}
+    .track-row h3{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .track-row .btn{min-height:34px;padding:6px 10px;font-size:12px;}
     .queue-box{grid-template-columns:1fr;}
+    .stage{min-height:0;padding:16px;border-width:1px;}
+    .stage h3{font-size:22px;}
+    .stage-pulse{height:72px;margin-bottom:10px;}
+    .lyric{font-size:20px;}
+    section{padding:28px 14px;}
   }
   @media(max-width:1023px){
     .nowbar{
@@ -1266,11 +1276,11 @@
     .urgency{display:none !important;}
     .nav-row{
       position:relative !important;top:auto !important;right:auto !important;left:auto !important;
-      height:auto !important;width:100% !important;margin:0 !important;padding:8px 10px !important;
+      height:56px !important;width:100% !important;margin:0 !important;padding:0 10px !important;
       background:#fff !important;border:0 !important;
     }
-    .ue-search{height:40px;padding:0 12px;}
-    .ue-search input{height:40px;font-size:14px;}
+    .ue-search{height:36px;padding:0 12px;}
+    .ue-search input{height:36px;font-size:16px;}
     .hero-card{box-shadow:0 8px 24px rgba(22,24,35,.1) !important;}
     .hero h1,.page-hero h1,.gifts-hero h1,.section-head h2,.pd-info h1,.empty-state h2,.gift-form h2{
       font-size:clamp(26px,8vw,40px) !important;
@@ -1506,15 +1516,16 @@
     .promo-tiles{grid-template-columns:1fr;gap:8px;}
     .promo-tile{height:88px;}
   }
-  .cat-row{display:flex;gap:18px;overflow:auto;padding:4px 0 20px;scrollbar-width:none;}
+  .cat-row{display:flex;gap:16px;overflow:auto;padding:8px 0 20px;scrollbar-width:none;}
   .cat-row::-webkit-scrollbar{display:none;}
-  .cat-chip{flex:0 0 auto;width:80px;text-align:center;text-decoration:none;color:#000;font-size:12px;font-weight:500;}
+  .cat-chip{flex:0 0 auto;width:64px;text-align:center;text-decoration:none;color:#000;font-size:12px;font-weight:500;line-height:1.2;}
   .cat-chip i{
-    display:block;width:72px;height:72px;margin:0 auto 8px;border-radius:50%;
-    background:#F3F3F3;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);
+    display:block;width:60px;height:60px;margin:0 auto 6px;border-radius:0;
+    background:transparent;overflow:visible;
   }
-  .cat-chip i img{width:100%;height:100%;object-fit:cover;display:block;}
-  .cat-chip.on i{box-shadow:0 0 0 2px var(--ue-green);}
+  .cat-chip i img{width:100%;height:100%;object-fit:contain;display:block;}
+  .cat-chip.on{font-weight:700;}
+  .cat-chip.on i{box-shadow:none;}
   .offer-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 16px;}
   .offer-head h2{font-family:var(--font-body);font-size:24px;font-weight:700;text-transform:none;letter-spacing:-.02em;margin:0;}
   .offer-head a{font-size:14px;font-weight:500;color:#000;}
@@ -1568,8 +1579,8 @@
     display:none !important;
   }
   .rail-burger{
-    width:48px;height:48px;border:0;background:transparent;border-radius:500px;
-    display:grid;place-items:center;color:#000;margin:4px 0 8px;flex-shrink:0;
+    width:44px;height:44px;border:0;background:transparent;border-radius:500px;
+    display:grid;place-items:center;color:#000;margin:0;flex-shrink:0;
   }
   .rail-burger:hover{background:#EEEEEE;}
   .rail-burger svg{width:22px;height:22px;}
@@ -1629,18 +1640,19 @@
     font-size:32px !important;font-weight:800 !important;line-height:1.15 !important;
   }
   main#app h2,main#app .section-head h2,main#app .content-block h2{font-size:24px !important;font-weight:700 !important;}
-  .btn,.shop-pay,.login-link,.account-link,.cart-link{border-radius:500px !important;}
+  .btn,.shop-pay,.login-link,.account-link{border-radius:500px !important;}
+  .cart-link{border-radius:8px !important;}
   .wd-fab{background:var(--sapphire) !important;color:#fff !important;border:0 !important;}
   .chat-form button{background:var(--champagne) !important;color:var(--champagne-ink) !important;}
   .chat-chips button:hover{background:var(--sapphire);color:#fff;}
   header.site{
     margin-left:0 !important;width:100%;height:64px;min-height:64px;max-height:64px;
-    z-index:140;border-bottom:1px solid #E8E8E8;background:#fff;overflow:hidden;
+    z-index:140;border-bottom:1px solid #E8E8E8;background:#fff;overflow:visible;
   }
   .nav-row{
-    height:64px;padding:0 16px;justify-content:flex-start;gap:12px;
+    height:64px;padding:0 16px;justify-content:flex-start;gap:10px;min-width:0;
   }
-  .rail-burger{flex-shrink:0;margin:0;background:var(--platinum);color:var(--platinum-ink);}
+  .rail-burger{flex-shrink:0;margin:0;background:transparent;color:#000;}
   .mast-band{
     display:none;position:relative;width:100%;height:240px;overflow:hidden;
     background:#0E3386;z-index:125;margin:0;
@@ -1655,6 +1667,12 @@
   .mast-copy em{font-style:normal;font-size:14px;font-weight:600;}
   .mast-copy b{font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1.05;text-shadow:0 2px 0 rgba(0,0,0,.25);}
   .mast-copy span{font-size:16px;font-weight:500;}
+  .mast-copy .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    flex:none !important;align-self:flex-start;width:auto;
+    padding:6px 12px !important;min-height:0;height:32px;
+    font-size:13px !important;font-weight:700;line-height:1;
+  }
   header.site,main#app,footer.site{margin-left:0 !important;}
   .nowbar,.nowbar.on,.nowbar.mini{
     left:50% !important;right:auto !important;
@@ -1670,16 +1688,20 @@
   }
   @media(max-width:899px){
     header.site{height:56px;min-height:56px;max-height:56px;}
-    .nav-row{height:56px;padding:0 10px;}
-    .ue-search{height:40px;padding:0 12px;}
-    .ue-search input{height:40px;font-size:14px;}
+    .nav-row{height:56px !important;padding:0 10px !important;}
+    .ue-search{height:36px;padding:0 12px;max-width:none;}
+    .ue-search input{height:36px;font-size:16px;}
+    .login-link,.account-link{height:36px;min-height:36px;padding:0 14px;font-size:14px;font-weight:700;}
+    .cart-link{width:32px;height:32px;min-height:32px;padding:0;background:transparent;}
+    .cart-link svg{width:22px;height:22px;}
+    .mast-copy .btn{padding:6px 12px;min-height:28px;font-size:12px;}
     main#app h1,main#app .page-hero h1{font-size:26px !important;}
     .mast-band{height:200px;}
     .mast-copy{padding:16px;}
     .mast-copy b{font-size:26px;}
     .offer-shot{height:188px;}
-    .cat-chip{width:72px;}
-    .cat-chip i{width:64px;height:64px;}
+    .cat-chip{width:58px;font-size:11px;}
+    .cat-chip i{width:52px;height:52px;}
     .feed-page{padding:12px 14px 96px;}
     .promo-tiles{grid-template-columns:1fr;}
   }
@@ -1709,7 +1731,10 @@
     </form>
     <div class="chrome-tools">
       <div class="auth-slot" id="auth-slot"></div>
-      <a href="#/cart" class="cart-link" data-route="/cart"><span id="cart-label">Hall Pass</span> <span class="cart-count" id="cart-count">0</span></a>
+      <a href="#/cart" class="cart-link" data-route="/cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8h11l-1.1 11.2H7.6L6.5 8z"/><path d="M9 8V7.2A3 3 0 0 1 12 4.2 3 3 0 0 1 15 7.2V8"/></svg>
+        <span class="cart-count" id="cart-count"></span>
+      </a>
     </div>
   </div>
   <div hidden>
@@ -1956,9 +1981,9 @@
     en: {
       title: "Wine Detention — Get Sent To The Good Stuff",
       navHome:"Home", navCollections:"Collections", navHow:"How It Works", navAbout:"About", navFaq:"FAQ", navContact:"Contact",
-      cart:"Hall Pass", menu:"Menu", themeLight:"Light", themeDark:"Dark",
-      gatePass:"HALL PASS REQUIRED",
-      gateH:"Prove you're<br>not a freshman.",
+      cart:"Cart", menu:"Menu", themeLight:"Light", themeDark:"Dark",
+      gatePass:"21+",
+      gateH:"Are you 21 or older?",
       gateP:"You must be 21 or older to enter Wine Detention. This is a demo site for wine collections shipped to eligible U.S. states only.",
       gateNo:"I'm under 21", gateYes:"I'm 21 or older",
       gateRejectH:"Come back<br>when you're 21.",
@@ -3317,7 +3342,11 @@
     render();
   }
   function renderCartCount(){
-    document.getElementById("cart-count").textContent = cartCount();
+    var n = cartCount();
+    var el = document.getElementById("cart-count");
+    if (!el) return;
+    el.textContent = n ? String(n) : "";
+    el.setAttribute("data-empty", n ? "0" : "1");
   }
   var toastTimer=null;
   function showToast(msg){
@@ -3392,7 +3421,7 @@
       themeBtn.setAttribute("aria-label", theme === "dark" ? t("themeLight") : t("themeDark"));
     }
     var cartLabel = document.getElementById("cart-label");
-    if (cartLabel) cartLabel.textContent = t("cart");
+    if (cartLabel) cartLabel.textContent = "Cart";
     var langSel = document.getElementById("lang-select");
     if (langSel) langSel.value = lang;
     renderAuthBtn();
@@ -3846,21 +3875,7 @@
 
   function renderRightRail(){
     var el = document.getElementById("right-rail");
-    if (!el) return;
-    el.innerHTML = "";
-    return;
-    if (false){
-    var tr = findTrack(nowPlayingId);
-    el.innerHTML =
-      '<div class="slip-head"><span>HALL SLIP</span><b id="slip-pts">'+points+'</b><small>PTS</small></div>'+
-      '<p class="slip-watch" id="slip-watch"></p>'+
-      '<div class="slip-now"><span>ON DECK</span><b>'+esc(tr.title)+'</b><small>'+esc(tr.artist)+'</small></div>'+
-      '<button class="btn btn-primary" type="button" id="slip-chat">Concierge</button>'+
-      '<a class="btn btn-dark" href="#/collections">Shop the drop</a>'+
-      '<a class="btn btn-dark" href="#/gifts">Send a gift</a>'+
-      '<a class="btn btn-dark" href="#/cart">Hall Pass</a>';
-    var sc = document.getElementById("slip-chat");
-    if (sc) sc.onclick = function(){ chatOpen = true; chatUnread = false; ensureChat(); paintChat(); };
+    if (el) el.innerHTML = "";
   }
 
   function renderActionRail(){
@@ -4081,7 +4096,7 @@
       '<p>'+t("gateP")+'</p>'+
       '<div class="gate-actions">'+
         '<button class="btn btn-primary btn-block" id="gate-yes">'+t("gateYes")+'</button>'+
-        '<button class="btn btn-dark btn-block" id="gate-no">'+t("gateNo")+'</button>'+
+        '<button class="btn btn-ghost btn-block" id="gate-no">'+t("gateNo")+'</button>'+
       '</div>';
     document.getElementById("gate-yes").addEventListener("click", function(){
       gateShown = true;
@@ -4119,8 +4134,8 @@
   function catRowHTML(on){
     var cats = [
       {id:"all", file:"all", label:"All"},
+      {id:"sparkling", file:"bubbles", label:"Pop"},
       {id:"rose", file:"rose", label:"Rosé"},
-      {id:"sparkling", file:"bubbles", label:"Bubbles"},
       {id:"cab", file:"cab", label:"Cabernet"},
       {id:"pinot", file:"pinot", label:"Pinot"},
       {id:"chard", file:"chard", label:"Chardonnay"},
@@ -4143,9 +4158,9 @@
   }
   function promoBannerHTML(){
     return '<div class="promo-tiles">'+
+        '<a class="promo-tile" href="#/collections?cat=sparkling"><img src="img/promos/promo-bubbles.png" alt=""><div class="promo-copy"><small>Champagne</small><b>$53 pop</b></div></a>'+
+        '<a class="promo-tile" href="#/product/prestige-cuvee"><img src="img/promos/promo-hero.png" alt=""><div class="promo-copy"><small>Prestige</small><b>$350 cuvée</b></div></a>'+
         '<a class="promo-tile" href="#/collections?cat=rose"><img src="img/promos/promo-rose.png" alt=""><div class="promo-copy"><small>Patio night</small><b>$35 rosé</b></div></a>'+
-        '<a class="promo-tile" href="#/collections?cat=sparkling"><img src="img/promos/promo-bubbles.png" alt=""><div class="promo-copy"><small>Weeknight</small><b>$53 bubbles</b></div></a>'+
-        '<a class="promo-tile" href="#/collections?cat=cab"><img src="img/promos/promo-cab.png" alt=""><div class="promo-copy"><small>Napa lane</small><b>$88 cab</b></div></a>'+
       '</div>';
   }
   function pageHome(){
@@ -4155,7 +4170,10 @@
       catRowHTML(q.cat||"all")+
       hallFacesHTML()+
       '<div class="offer-head"><h2>Launch offers</h2><a href="#/collections">See all</a></div>'+
-      '<div class="offer-grid">'+PRODUCTS.map(locProduct).map(productSlipHTML).join("")+'</div>'+
+      '<div class="offer-grid">'+PRODUCTS.slice().sort(function(a,b){
+        var rank = {sparkling:0, rose:1};
+        return (rank[a.cat]==null?9:rank[a.cat]) - (rank[b.cat]==null?9:rank[b.cat]);
+      }).map(locProduct).map(productSlipHTML).join("")+'</div>'+
       '<div class="offer-head" style="margin-top:28px;"><h2>Gift cards</h2><a href="#/gifts">Shop</a></div>'+
       '<div class="gift-strip" style="margin:0;">'+
         '<div><h2>Avg +'+giftAvgPct()+'% more</h2><p>Send an 8-second unveil. Most rolls land near +35%. Floor +'+giftFloorPct()+'%.</p></div>'+
@@ -4304,7 +4322,7 @@
         '<div><h3>'+esc(s.title)+'</h3><div class="who">'+esc(s.artist)+' · '+esc(s.album)+'</div></div>'+
         '<span class="dur">'+s.dur+'</span>'+
         '<button class="btn btn-primary" type="button" data-play="'+s.id+'">Play</button>'+
-        '<button class="btn btn-dark" type="button" data-req="'+s.id+'">Request · 40 pts</button>'+
+        '<button class="btn btn-dark" type="button" data-req="'+s.id+'">+40</button>'+
       '</div>';
     }).join("");
     var q = jukeQueue.map(function(item){
