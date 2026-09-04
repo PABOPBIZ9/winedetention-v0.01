@@ -7,7 +7,7 @@
 <title>Wine Detention</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600;700&family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --cubs-blue:#0E3386;
@@ -25,11 +25,17 @@
     --siren:#CC3433;
     --font-chalk:'Caveat',cursive;
     --font-type:'IBM Plex Mono',monospace;
-    --font-body:'IBM Plex Sans',sans-serif;
+    --font-body:'Plus Jakarta Sans',system-ui,sans-serif;
     --font-bang:'Anton',sans-serif;
-    --rail-w:64px;
+    --rail-w:72px;
     --ue-green:#06C167;
     --ue-ink:#000000;
+    --champagne:#E8D4A8;
+    --champagne-ink:#3D2E12;
+    --platinum:#E4E2DC;
+    --platinum-ink:#2A2A28;
+    --ruby:#9B1B30;
+    --sapphire:#0F4C81;
     --luxe-gold:#C9A962;
     --luxe-ivory:#F6F1E6;
     --luxe-ink:#0E3386;
@@ -149,11 +155,13 @@
   }
   .btn:hover{filter:brightness(1.03);}
   .btn-primary{
-    background:var(--ue-green);border-color:var(--ue-green);color:#000;
+    background:var(--champagne);border-color:var(--champagne);color:var(--champagne-ink);
   }
-  .btn-primary:hover{background:#05A85A;}
-  .btn-dark{background:#000;border-color:#000;color:#fff;}
-  .btn-dark:hover{filter:brightness(1.12);}
+  .btn-primary:hover{filter:brightness(1.04);}
+  .btn-dark{background:var(--sapphire);border-color:var(--sapphire);color:#fff;}
+  .btn-dark:hover{filter:brightness(1.08);}
+  .btn-ruby{background:var(--ruby);border-color:var(--ruby);color:#fff;}
+  .btn-platinum{background:var(--platinum);border-color:var(--platinum);color:var(--platinum-ink);}
   .btn-ghost{
     background:transparent;border-color:var(--line);color:var(--chrome-text);
     padding:8px 10px;flex:none;min-width:42px;
@@ -205,13 +213,13 @@
   }
   .ue-search{
     flex:1;min-width:0;max-width:640px;margin:0 auto 0 0;
-    display:flex;align-items:center;gap:8px;
-    background:#F3F3F3;border-radius:999px;padding:0 16px;height:44px;
+    display:flex;align-items:center;gap:10px;
+    background:#EEEEEE;border-radius:999px;padding:0 16px;height:48px;
   }
-  .ue-search svg{width:18px;height:18px;flex-shrink:0;fill:#6B6B6B;}
+  .ue-search svg{width:20px;height:20px;flex-shrink:0;fill:#6B6B6B;}
   .ue-search input{
     flex:1;min-width:0;border:0;background:transparent;outline:none;
-    font-family:var(--font-body);font-size:15px;font-weight:500;color:#000;height:44px;
+    font-family:var(--font-body);font-size:16px;font-weight:500;color:#000;height:48px;
   }
   .ue-search input::placeholder{color:#6B6B6B;}
   .brand{
@@ -245,13 +253,13 @@
   .cart-link{
     display:flex;align-items:center;gap:8px;
     font-family:var(--font-body);
-    background:#000;color:#fff;border:0;
-    padding:10px 16px;min-height:44px;
-    font-size:14px;font-weight:700;border-radius:999px;
+    background:var(--ruby);color:#fff;border:0;
+    padding:8px 14px;min-height:36px;
+    font-size:14px;font-weight:500;border-radius:999px;
   }
-  [data-theme="light"] .cart-link{border:0;background:#000;color:#fff;}
+  [data-theme="light"] .cart-link{border:0;background:var(--ruby);color:#fff;}
   .cart-count{
-    background:var(--ue-green);color:#000;
+    background:var(--champagne);color:var(--champagne-ink);
     border-radius:999px;min-width:20px;height:20px;
     display:inline-flex;align-items:center;justify-content:center;
     font-size:12px;font-weight:800;padding:0 6px;
@@ -665,7 +673,7 @@
   }
 
   @media(max-width:1023px){
-    :root{ --rail-w:56px; }
+    :root{ --rail-w:72px; }
     .ticker{display:none !important;}
     header.site{position:sticky;top:0;}
     .urgency{
@@ -695,7 +703,8 @@
       -webkit-overflow-scrolling:touch;
     }
     .left-rail a.rail-link{
-      min-height:52px;padding:6px 2px;font-size:8px;gap:3px;margin:1px 0;
+      min-height:56px;padding:8px 4px;font-size:10px;gap:4px;margin:2px 0;
+      text-transform:none;letter-spacing:0;font-family:var(--font-body);font-weight:700;
     }
     .left-rail a.rail-link svg{width:24px;height:24px;}
     .rail-logo{padding:8px 0 6px;}
@@ -740,7 +749,7 @@
     body.chat-open .nowbar{opacity:.35;pointer-events:none;}
   }
   @media(min-width:1024px){
-    :root{ --rail-w:220px; }
+    :root{ --rail-w:256px; }
   }
   .room-vid{
     height:168px;background:
@@ -780,15 +789,15 @@
   .prize h3{font-family:var(--font-bang);font-size:28px;text-transform:uppercase;}
 
   .account-link,.login-link{
-    font-family:var(--font-body);font-size:14px;font-weight:700;
-    padding:10px 18px;white-space:nowrap;display:inline-flex;align-items:center;
-    min-height:44px;letter-spacing:0;text-transform:none;border-radius:999px;
+    font-family:var(--font-body);font-size:14px;font-weight:500;
+    padding:8px 16px;white-space:nowrap;display:inline-flex;align-items:center;
+    min-height:36px;letter-spacing:0;text-transform:none;border-radius:999px;
   }
   .login-link{
-    color:#000;background:#EEEEEE;border:0;
+    color:var(--platinum-ink);background:var(--platinum);border:0;
   }
   .account-link{
-    color:#000;background:#EEEEEE;border:0;text-transform:none;letter-spacing:0;
+    color:var(--platinum-ink);background:var(--platinum);border:0;text-transform:none;letter-spacing:0;
   }
   .auth-slot{display:flex;align-items:center;flex-shrink:0;}
   .auth-overlay{
@@ -973,24 +982,24 @@
   .left-rail{
     display:flex;flex-direction:column;
     position:fixed;top:0;left:0;bottom:0;width:var(--rail-w);z-index:120;
-    background:#fff;border-right:2px solid var(--cubs-blue);
-    padding:8px 6px 96px;overflow-x:hidden;overflow-y:auto;
+    background:#fff;border-right:1px solid #E8E8E8;
+    padding:12px 8px 96px;overflow-x:hidden;overflow-y:auto;
   }
   .rail-logo{
-    display:grid;place-items:center;padding:6px 0 10px;color:var(--cubs-blue);text-decoration:none;
+    display:grid;place-items:center;padding:8px 0 12px;color:#000;text-decoration:none;
   }
-  .rail-logo svg{width:40px;height:40px;}
+  .rail-logo svg{width:36px;height:36px;}
   .rail-logo span{display:none;}
   .left-rail .rail-kicker,.left-rail .rail-sub,.rail-tools{display:none;}
   .left-rail a.rail-link{
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:2px;padding:8px 4px;border-radius:10px;margin:2px 0;
-    font-family:var(--font-type);font-size:8px;font-weight:800;
-    letter-spacing:.04em;text-transform:uppercase;color:var(--cubs-blue);
+    gap:4px;padding:8px 4px;border-radius:12px;margin:2px 0;min-height:56px;
+    font-family:var(--font-body);font-size:10px;font-weight:700;
+    letter-spacing:0;text-transform:none;color:#000;
   }
-  .left-rail a.rail-link svg{width:22px;height:22px;fill:currentColor;flex-shrink:0;}
-  .left-rail a.rail-link.on,.left-rail a.rail-link:hover{background:#E8EEF9;}
-  .left-rail a.rail-link.on{color:var(--cubs-red);}
+  .left-rail a.rail-link svg{width:24px;height:24px;fill:currentColor;flex-shrink:0;}
+  .left-rail a.rail-link.on,.left-rail a.rail-link:hover{background:#EEEEEE;}
+  .left-rail a.rail-link.on{color:#000;font-weight:800;}
   .rail-pts{
     margin-top:auto;text-align:center;padding:8px 0 4px;
     font-family:var(--font-type);font-size:10px;font-weight:800;color:var(--cubs-red);
@@ -1104,18 +1113,18 @@
     .action-rail{display:none !important;}
     .nav-row .brand{display:none !important;}
     .nav-row{padding-left:20px;padding-right:20px;}
-    .left-rail{width:var(--rail-w);padding:12px 10px 24px;}
-    .rail-logo{display:flex;align-items:center;justify-content:flex-start;gap:8px;padding:4px 8px 16px;}
-    .rail-logo span{display:block;font-family:var(--font-chalk);font-size:22px;line-height:1;}
-    .left-rail .rail-kicker{
-      display:block;font-family:var(--font-type);font-size:10px;letter-spacing:.14em;
-      color:var(--cubs-red);font-weight:800;padding:4px 12px 10px;
-    }
+    .left-rail{width:var(--rail-w);padding:16px 12px 24px;}
+    .rail-logo{display:flex;align-items:center;justify-content:flex-start;gap:10px;padding:8px 12px 20px;}
+    .rail-logo svg{width:32px;height:32px;}
+    .rail-logo span{display:block;font-family:var(--font-body);font-size:18px;font-weight:800;line-height:1.1;color:#000;}
+    .left-rail .rail-kicker{display:none;}
     .left-rail a.rail-link{
-      flex-direction:row;justify-content:flex-start;gap:10px;
-      padding:10px 12px;font-size:14px;text-transform:none;letter-spacing:0;font-weight:700;
+      flex-direction:row;justify-content:flex-start;gap:14px;
+      padding:12px 16px;min-height:48px;font-size:16px;text-transform:none;letter-spacing:0;font-weight:500;
+      border-radius:24px;margin:2px 4px;
     }
-    .left-rail a.rail-link.on{box-shadow:inset 3px 0 0 var(--cubs-red);}
+    .left-rail a.rail-link svg{width:24px;height:24px;}
+    .left-rail a.rail-link.on{box-shadow:none;background:#EEEEEE;font-weight:700;}
     .left-rail .rail-sub{display:flex;flex-direction:column;margin-top:8px;}
     .left-rail .rail-sub a{padding:8px 12px;font-size:13px;font-weight:600;opacity:.85;color:inherit;border-radius:8px;}
     .left-rail .rail-sub a:hover{background:#E8EEF9;}
@@ -1249,7 +1258,7 @@
   input,select,textarea{font-size:16px;}
   h1,h2,h3{overflow-wrap:anywhere;}
   @media (max-width:1023px){
-    :root{ --rail-w:52px; }
+    :root{ --rail-w:72px; }
     header.site{
       display:block !important;flex-direction:unset !important;align-items:stretch !important;
       min-height:56px;
@@ -1299,7 +1308,7 @@
   .shop-steps i{
     flex:1;height:4px;border-radius:99px;background:#E8E8EA;
   }
-  .shop-steps i.on,.shop-steps i.done{background:#161823;}
+  .shop-steps i.on,.shop-steps i.done{background:var(--sapphire);}
   .shop-steps i.done{background:#CC3433;}
   .shop-card{
     background:#fff;border:1px solid #F1F1F2;border-radius:16px;
@@ -1341,7 +1350,7 @@
     flex:1;border:1.5px solid #E8E8EA;background:#fff;color:#161823;
     border-radius:12px;padding:12px 8px;font-size:13px;font-weight:700;
   }
-  .pay-pills button.on{border-color:#161823;background:#161823;color:#fff;}
+  .pay-pills button.on{border-color:var(--sapphire);background:var(--sapphire);color:#fff;}
   .pay-pills button:disabled{opacity:.4;}
   .shop-page .form-row{margin-bottom:12px;}
   .shop-page .form-row label{font-family:var(--font-body);font-size:12px;font-weight:700;color:#73747B;}
@@ -1361,12 +1370,12 @@
   .shop-dock-meta b{display:block;font-size:20px;line-height:1.1;}
   .shop-pay{
     flex:1.2;min-height:48px;border:none;border-radius:999px;
-    background:var(--ue-green);color:#000;font-size:15px;font-weight:800;
+    background:var(--champagne);color:var(--champagne-ink);font-size:15px;font-weight:800;
     text-align:center;text-decoration:none;display:grid;place-items:center;
   }
-  .shop-pay.ghost{background:#161823;}
+  .shop-pay.ghost{background:var(--sapphire);color:#fff;}
   .hit-banner{
-    background:#161823;color:#fff;border-radius:16px;padding:18px 16px;margin:0 0 14px;text-align:center;
+    background:var(--sapphire);color:#fff;border-radius:16px;padding:18px 16px;margin:0 0 14px;text-align:center;
   }
   .hit-banner span{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.7;}
   .hit-banner b{display:block;font-size:28px;font-weight:800;margin:6px 0 2px;}
@@ -1468,24 +1477,52 @@
   .face-chip span{display:block;font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .board-row a{color:inherit;text-decoration:none;}
   .board-row a:hover{color:var(--cubs-red);}
-  .feed-page{max-width:1120px;margin:0 auto;padding:12px 20px 48px;}
-  .cat-row{display:flex;gap:18px;overflow:auto;padding:6px 0 18px;scrollbar-width:none;}
-  .cat-row::-webkit-scrollbar{display:none;}
-  .cat-chip{flex:0 0 auto;width:72px;text-align:center;text-decoration:none;color:#000;font-size:12px;font-weight:700;}
-  .cat-chip i{
-    display:grid;place-items:center;width:64px;height:64px;margin:0 auto 6px;border-radius:50%;
-    background:#F3F3F3;font-size:26px;
+  .feed-page{max-width:1184px;margin:0 auto;padding:16px 24px 56px;}
+  .promo-hero{
+    position:relative;display:block;height:200px;border-radius:16px;overflow:hidden;
+    text-decoration:none;color:#fff;margin:0 0 12px;
   }
+  .promo-hero img{width:100%;height:100%;object-fit:cover;display:block;}
+  .promo-hero .promo-copy,.promo-tile .promo-copy{
+    position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:6px;
+    padding:28px 32px;
+    background:linear-gradient(90deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.15) 70%,transparent 100%);
+  }
+  .promo-hero em{font-style:normal;font-size:14px;font-weight:600;opacity:.95;}
+  .promo-hero b{font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1.05;}
+  .promo-hero span{font-size:16px;font-weight:500;opacity:.95;}
+  .promo-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 24px;}
+  .promo-tile{
+    position:relative;height:120px;border-radius:12px;overflow:hidden;text-decoration:none;color:#fff;
+  }
+  .promo-tile img{width:100%;height:100%;object-fit:cover;display:block;}
+  .promo-tile .promo-copy{padding:16px;justify-content:flex-end;background:linear-gradient(180deg,transparent 20%,rgba(0,0,0,.55) 100%);}
+  .promo-tile small{font-size:12px;font-weight:600;opacity:.95;}
+  .promo-tile b{font-size:18px;font-weight:700;}
+  @media(max-width:760px){
+    .promo-hero{height:148px;}
+    .promo-hero .promo-copy{padding:18px;}
+    .promo-hero b{font-size:24px;}
+    .promo-tiles{grid-template-columns:1fr;gap:8px;}
+    .promo-tile{height:88px;}
+  }
+  .cat-row{display:flex;gap:18px;overflow:auto;padding:4px 0 20px;scrollbar-width:none;}
+  .cat-row::-webkit-scrollbar{display:none;}
+  .cat-chip{flex:0 0 auto;width:72px;text-align:center;text-decoration:none;color:#000;font-size:12px;font-weight:500;}
+  .cat-chip i{
+    display:grid;place-items:center;width:64px;height:64px;margin:0 auto 8px;border-radius:50%;
+    background:#F3F3F3;color:#000;
+  }
+  .cat-chip i svg{width:28px;height:28px;display:block;}
   .cat-chip.on i{background:#E6F8EE;box-shadow:inset 0 0 0 2px var(--ue-green);}
-  .offer-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 14px;}
-  .offer-head h2{font-family:var(--font-body);font-size:28px;font-weight:800;text-transform:none;letter-spacing:-.03em;margin:0;}
-  .offer-head a{font-size:14px;font-weight:700;color:#000;}
-  .offer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
-  @media(max-width:1100px){.offer-grid{grid-template-columns:repeat(3,1fr);}}
-  @media(max-width:760px){.offer-grid{grid-template-columns:repeat(2,1fr);gap:12px;}}
-  .offer-card{display:block;text-decoration:none;color:inherit;min-width:0;}
+  .offer-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 16px;}
+  .offer-head h2{font-family:var(--font-body);font-size:24px;font-weight:700;text-transform:none;letter-spacing:-.02em;margin:0;}
+  .offer-head a{font-size:14px;font-weight:500;color:#000;}
+  .offer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 16px;}
+  @media(max-width:900px){.offer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px;}}
+  .offer-card{display:block;text-decoration:none;color:inherit;min-width:0;position:relative;}
   .offer-shot{
-    position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#F3F3F3;
+    position:relative;height:148px;border-radius:12px;overflow:hidden;background:#F3F3F3;
   }
   .offer-shot img{width:100%;height:100%;object-fit:cover;display:block;}
   .offer-tag{
@@ -1497,14 +1534,98 @@
     background:#fff;display:grid;place-items:center;font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,.12);
   }
   .offer-meta{padding:10px 2px 4px;}
-  .offer-meta h3{font-family:var(--font-body);font-size:16px;font-weight:700;text-transform:none;margin:0 0 2px;}
-  .offer-rate{font-size:13px;font-weight:600;color:#000;margin:0;}
-  .offer-rate span{color:#6B6B6B;font-weight:500;}
-  .offer-sub{font-size:13px;color:#6B6B6B;margin:2px 0 0;font-weight:500;}
-  .offer-deal{font-size:13px;color:#DE1135;font-weight:700;margin:4px 0 0;}
-  .offer-price{font-size:15px;font-weight:800;margin:6px 0 0;}
+  .offer-meta h3{font-family:var(--font-body);font-size:16px;font-weight:700;text-transform:none;margin:0 0 2px;letter-spacing:-.01em;}
+  .offer-rate{font-size:14px;font-weight:500;color:#000;margin:0;display:flex;align-items:center;gap:4px;}
+  .offer-rate svg{flex-shrink:0;}
+  .offer-rate span{color:#6B6B6B;font-weight:400;}
+  .offer-sub{font-size:14px;color:#6B6B6B;margin:2px 0 0;font-weight:400;}
+  .offer-deal{font-size:14px;color:#DE1135;font-weight:500;margin:4px 0 0;}
+  .offer-price{font-size:16px;font-weight:700;margin:6px 0 0;}
   .pd-visual.offer-hero{aspect-ratio:4/3;max-height:none;background:#F3F3F3;border-radius:16px;overflow:hidden;padding:0;}
   .pd-visual.offer-hero img{width:100%;height:100%;object-fit:cover;}
+  .store-page{padding-bottom:140px;}
+  .store-shot{position:relative;border-radius:16px;overflow:hidden;background:#F3F3F3;aspect-ratio:4/3;margin:0 0 14px;}
+  .store-shot img{width:100%;height:100%;object-fit:cover;display:block;}
+  .store-page h1{font-family:var(--font-body);font-size:28px;font-weight:800;text-transform:none;letter-spacing:-.03em;margin:0 0 6px;}
+  .store-page .offer-rate{margin:0 0 4px;}
+  .store-page .desc{font-size:15px;line-height:1.45;color:#161823;margin:10px 0 16px;}
+  .store-pool{display:flex;flex-direction:column;}
+  .offer-card{position:relative;}
+  .offer-add{
+    position:absolute;right:10px;bottom:10px;width:36px;height:36px;border:0;border-radius:50%;
+    background:#fff;color:#000;font-size:22px;font-weight:700;line-height:1;
+    box-shadow:0 2px 10px rgba(0,0,0,.16);z-index:2;
+  }
+  .shop-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  body.store-flow footer.site{display:none !important;}
+  body.store-flow .nowbar{display:none !important;}
+  body.store-flow .chat-root{bottom:calc(88px + env(safe-area-inset-bottom,0px)) !important;}
+  body.store-flow main#app{padding-bottom:0;}
+
+  /* Uber-sized left rail — last rules win */
+  aside.left-rail{
+    display:flex;flex-direction:column;
+    position:fixed;top:0;left:0;bottom:0;width:var(--rail-w);z-index:120;
+    background:#fff;border-right:1px solid #E8E8E8;
+    padding:16px 8px 16px;overflow-x:hidden;overflow-y:auto;
+  }
+  aside.left-rail .rail-kicker,
+  aside.left-rail .rail-sub,
+  aside.left-rail .rail-tools,
+  aside.left-rail .rail-pts{display:none !important;}
+  aside.left-rail .rail-logo{
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    height:48px;padding:0 8px;margin:0 0 8px;color:#000;text-decoration:none;flex-shrink:0;
+  }
+  aside.left-rail .rail-mark,aside.left-rail svg.rail-mark{width:24px;height:24px;flex-shrink:0;}
+  aside.left-rail .rail-logo span{display:none;font-family:var(--font-body);font-size:18px;font-weight:700;letter-spacing:-.03em;line-height:1;}
+  aside.left-rail .rail-nav{display:flex;flex-direction:column;gap:4px;}
+  aside.left-rail a.rail-link{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:4px;height:56px;min-height:56px;padding:6px 4px;border-radius:12px;margin:0;
+    font-family:var(--font-body);font-size:10px;font-weight:500;
+    letter-spacing:0;text-transform:none;color:#000;
+  }
+  aside.left-rail a.rail-link svg{
+    width:24px;height:24px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;
+    stroke-linejoin:round;stroke-linecap:round;
+  }
+  aside.left-rail a.rail-link.on,aside.left-rail a.rail-link:hover{background:#EEEEEE;}
+  aside.left-rail a.rail-link.on{font-weight:500;}
+  aside.left-rail .rail-rule{display:none;height:1px;background:#E8E8E8;margin:12px 16px;}
+  aside.left-rail .rail-foot{margin-top:auto;display:none;flex-direction:column;gap:4px;padding:0;}
+  aside.left-rail .rail-foot a,aside.left-rail .rail-foot button{
+    display:flex;align-items:center;width:100%;height:40px;text-align:left;border:0;background:none;color:#545454;
+    font-family:var(--font-body);font-size:14px;font-weight:500;padding:0 16px;border-radius:500px;
+  }
+  aside.left-rail .rail-foot a:hover,aside.left-rail .rail-foot button:hover{background:#EEEEEE;color:#000;}
+  .feed-page .gift-strip{
+    background:var(--platinum);color:var(--platinum-ink);border-radius:16px;padding:20px 24px;
+    display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;
+  }
+  .feed-page .gift-strip h2{font-family:var(--font-body);font-size:20px;font-weight:700;text-transform:none;letter-spacing:-.02em;margin:0 0 4px;}
+  .feed-page .gift-strip p{margin:0;font-size:14px;color:#545454;}
+  @media(min-width:900px){
+    :root{ --rail-w:256px; }
+    aside.left-rail{width:256px;padding:24px 8px 16px;}
+    aside.left-rail .rail-logo{justify-content:flex-start;padding:0 16px;margin-bottom:16px;}
+    aside.left-rail .rail-logo span{display:block;}
+    aside.left-rail a.rail-link{
+      flex-direction:row;justify-content:flex-start;align-items:center;gap:16px;
+      height:48px;min-height:48px;max-height:48px;padding:0 16px;
+      font-size:16px;font-weight:500;border-radius:500px;margin:0;
+    }
+    aside.left-rail .rail-rule{display:block;}
+    aside.left-rail .rail-foot{display:flex;}
+  }
+  @media(max-width:899px){
+    :root{ --rail-w:72px; }
+    aside.left-rail{width:72px;padding:8px 4px calc(16px + env(safe-area-inset-bottom,0px));}
+    aside.left-rail .rail-logo{height:40px;padding:0;margin-bottom:4px;}
+    aside.left-rail .rail-mark,aside.left-rail svg.rail-mark{width:24px;height:24px;}
+    .ue-search{height:40px;padding:0 12px;}
+    .ue-search input{height:40px;font-size:14px;}
+  }
 </style>
 </head>
 <body>
@@ -2909,7 +3030,7 @@
   function renderNowBar(){
     var el = document.getElementById("nowbar");
     if (!el) return;
-    if (document.body.classList.contains("shop-flow") || document.body.classList.contains("pro-flow")){
+    if (document.body.classList.contains("shop-flow") || document.body.classList.contains("pro-flow") || document.body.classList.contains("store-flow")){
       el.style.display = "none";
     } else {
       el.style.display = "";
@@ -3146,6 +3267,12 @@
   }
   function cssVar(name){
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  function railMarkSVG(){
+    return '<svg class="rail-mark" viewBox="0 0 32 32" aria-hidden="true">'+
+      '<circle cx="16" cy="16" r="16" fill="#0E3386"/>'+
+      '<path d="M11 9.2h3.6c2.6 0 4.2 1.5 4.2 3.8 0 2.4-1.7 3.9-4.3 3.9H13.4V23H11V9.2zm2.4 5.8h1.3c1.2 0 1.9-.6 1.9-1.6s-.7-1.6-1.9-1.6h-1.3V15z" fill="#fff"/>'+
+      '</svg>';
   }
   function brandMarkSVG(){
     return '<svg class="brand-mark" viewBox="0 0 72 72" aria-hidden="true">'+
@@ -3551,15 +3678,16 @@
   }
 
   function tabSvg(kind){
-    if (kind==="home") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 4l8 7.5V20h-6v-6H10v6H4z"/></svg>';
-    if (kind==="live") return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>';
-    if (kind==="shop") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>';
-    if (kind==="party") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 16V5l9-2v11"/><circle cx="8" cy="17" r="2.4"/><circle cx="17" cy="14" r="2.4"/></svg>';
-    if (kind==="pass") return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 12h18"/></svg>';
-    if (kind==="gift") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v10H3zM3 10V7h18v3M12 7V20M8 7c0-2 1.2-3.5 4-3.5S16 5 16 7"/></svg>';
-    if (kind==="board") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10h3v10H5zm6 0V4h3v16h-3zm6 0v-7h3v7h-3z"/></svg>';
-    if (kind==="you") return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1.4-4 4-6 7-6s5.6 2 7 6"/></svg>';
-    return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/></svg>';
+    var s = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"';
+    if (kind==="home") return '<svg '+s+'><path d="M4 11.5 12 4l8 7.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>';
+    if (kind==="live") return '<svg '+s+'><circle cx="12" cy="12" r="3.2"/><path d="M5.2 8.2a8 8 0 0 1 0 7.6M18.8 8.2a8 8 0 0 0 0 7.6"/></svg>';
+    if (kind==="shop") return '<svg '+s+'><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>';
+    if (kind==="party") return '<svg '+s+'><path d="M9 16.5V5.2l10-2v11.2"/><circle cx="8" cy="17.2" r="2.4"/><circle cx="17" cy="14.2" r="2.4"/></svg>';
+    if (kind==="pass") return '<svg '+s+'><rect x="3.5" y="6" width="17" height="12" rx="2"/><path d="M3.5 12h17"/></svg>';
+    if (kind==="gift") return '<svg '+s+'><path d="M4 10h16v10H4zM4 10V7h16v3M12 7v13M8.2 7c0-1.8 1.1-3.2 3.8-3.2S15.8 5.2 15.8 7"/></svg>';
+    if (kind==="board") return '<svg '+s+'><path d="M5 20V10h3.2V20H5zm5.4 0V4h3.2v16h-3.2zm5.4 0v-7H19v7h-3.2z"/></svg>';
+    if (kind==="you") return '<svg '+s+'><circle cx="12" cy="8" r="3.1"/><path d="M5.2 19.4c1.3-3.6 3.8-5.4 6.8-5.4s5.5 1.8 6.8 5.4"/></svg>';
+    return '<svg '+s+'><circle cx="6" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="18" cy="12" r="1.4"/></svg>';
   }
 
   function railActive(route, match){
@@ -3590,30 +3718,22 @@
       {href:"#/collections", match:"/collections", kind:"shop", label:"Shop"},
       {href:"#/gifts", match:"/gifts", kind:"gift", label:"Gifts"},
       {href:"#/live", match:"/live", kind:"live", label:t("navLive")},
-      {href:"#/cart", match:"/cart", kind:"pass", label:"Pass"},
+      {href:"#/cart", match:"/cart", kind:"pass", label:"Hall Pass"},
       {href:"#/leaderboard", match:"/leaderboard", kind:"board", label:"Board"},
       {href: currentUser ? "#/u/"+currentUser.handle : "#/login", match:"/you", kind:"you", label:"You"}
     ];
-    var extra = [
-      {href:"#/quests", label:t("navQuests")},
-      {href:"#/how-it-works", label:t("navHow")},
-      {href:"#/about", label:t("navAbout")},
-      {href:"#/faq", label:t("navFaq")},
-      {href: currentUser ? "#/u/"+currentUser.handle : "#/login", label: currentUser ? "You" : "Log in"}
-    ];
     el.innerHTML =
-      '<a class="rail-logo" href="#/">'+brandMarkSVG()+'<span>Wine Detention</span></a>'+
-      '<div class="rail-kicker">DETENTION</div>'+
-      items.map(function(item){
+      '<a class="rail-logo" href="#/">'+railMarkSVG()+'<span>Wine Detention</span></a>'+
+      '<nav class="rail-nav">'+items.map(function(item){
         return '<a class="rail-link'+(railActive(route, item.match)?" on":"")+'" href="'+item.href+'">'+tabSvg(item.kind)+'<span>'+item.label+'</span></a>';
-      }).join("")+
-      '<div class="rail-sub">'+extra.map(function(item){
-        return '<a href="'+item.href+'">'+item.label+'</a>';
-      }).join("")+'</div>'+
-      '<div class="rail-tools">'+
-        '<button class="btn btn-dark" type="button" id="rail-theme">'+(theme==="dark"?t("themeLight"):t("themeDark"))+'</button>'+
-      '</div>'+
-      '<div class="rail-pts" id="left-pts">'+points+' PTS</div>';
+      }).join("")+'</nav>'+
+      '<div class="rail-rule" aria-hidden="true"></div>'+
+      '<div class="rail-foot">'+
+        '<a href="#/faq">Help</a>'+
+        '<a href="#/how-it-works">How it works</a>'+
+        '<a href="#/about">About</a>'+
+        '<button type="button" id="rail-theme">'+(theme==="dark"?"Light":"Dark")+'</button>'+
+      '</div>';
     var th = document.getElementById("rail-theme");
     if (th) th.onclick = function(){
       theme = theme === "dark" ? "light" : "dark";
@@ -3879,20 +3999,31 @@
     });
     return q;
   }
+  function catIcon(id){
+    var s = 'viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"';
+    if (id==="rose") return '<svg '+s+'><path d="M10 14c0-4 2.6-7 6-7s6 3 6 7c0 6-3.2 11-6 11s-6-5-6-11z"/><path d="M16 7V4M12.5 9.2C11 8 10 6.4 10.4 4.8M19.5 9.2C21 8 22 6.4 21.6 4.8"/></svg>';
+    if (id==="sparkling") return '<svg '+s+'><path d="M12 5h8l-1.4 9.2A4.8 4.8 0 0 1 14 19h0a4.8 4.8 0 0 1-4.6-4.8L8 5h4z"/><path d="M13 19v5h6v-5M12 28h8M20.8 7.2l1.8-1.8M23 11h2.4"/></svg>';
+    if (id==="cab") return '<svg '+s+'><path d="M10 13c0-3.6 2.7-6.4 6-6.4s6 2.8 6 6.4c0 5.6-2.8 10.6-6 10.6s-6-5-6-10.6z"/><path d="M16 23.6V28M12 28h8"/><circle cx="16" cy="15" r="2.2" fill="currentColor" stroke="none"/></svg>';
+    if (id==="pinot") return '<svg '+s+'><path d="M9.5 13.5c0-4.2 2.9-7.3 6.5-7.3s6.5 3.1 6.5 7.3c0 5.2-3.2 8.7-6.5 8.7s-6.5-3.5-6.5-8.7z"/><path d="M16 21.9V28M12.2 28h7.6"/></svg>';
+    if (id==="chard") return '<svg '+s+'><path d="M11 6h10l-1.2 8.4A4.8 4.8 0 0 1 15 19h0a4.8 4.8 0 0 1-4.8-4.6L9 6h2z"/><path d="M15 19v6M12 28h8"/></svg>';
+    if (id==="napa") return '<svg '+s+'><path d="M4 22l6.2-8.2 4.4 5.2 5.2-7.4L28 22"/><path d="M4 25h24"/><path d="M8 14c1.4-2 3-3.2 4.6-3"/></svg>';
+    if (id==="icon") return '<svg '+s+'><path d="M16 5l2.4 6.4H25l-5.2 4 2 6.4L16 18.6 10.2 22l2-6.4-5.2-4h6.6z"/></svg>';
+    return '<svg '+s+'><path d="M10 12.5c0-3.8 2.7-6.5 6-6.5s6 2.7 6 6.5c0 5.4-3 10-6 10s-6-4.6-6-10z"/><path d="M16 22.5V28M12.4 28h7.2"/></svg>';
+  }
   function catRowHTML(on){
     var cats = [
-      {id:"all", label:"All", emoji:"🍷"},
-      {id:"rose", label:"Rosé", emoji:"🌸"},
-      {id:"sparkling", label:"Bubbles", emoji:"🥂"},
-      {id:"cab", label:"Cabernet", emoji:"🍇"},
-      {id:"pinot", label:"Pinot", emoji:"🌲"},
-      {id:"chard", label:"Chardonnay", emoji:"🍋"},
-      {id:"napa", label:"Napa", emoji:"⛰️"},
-      {id:"icon", label:"Icon", emoji:"★"}
+      {id:"all", label:"All"},
+      {id:"rose", label:"Rosé"},
+      {id:"sparkling", label:"Bubbles"},
+      {id:"cab", label:"Cabernet"},
+      {id:"pinot", label:"Pinot"},
+      {id:"chard", label:"Chardonnay"},
+      {id:"napa", label:"Napa"},
+      {id:"icon", label:"Icon"}
     ];
     return '<div class="cat-row">'+cats.map(function(c){
       var href = c.id==="all" ? "#/collections" : "#/collections?cat="+c.id;
-      return '<a class="cat-chip'+(on===c.id?" on":"")+'" href="'+href+'"><i>'+c.emoji+'</i>'+c.label+'</a>';
+      return '<a class="cat-chip'+(on===c.id?" on":"")+'" href="'+href+'"><i>'+catIcon(c.id)+'</i>'+c.label+'</a>';
     }).join("")+'</div>';
   }
   function filteredProducts(){
@@ -3904,9 +4035,21 @@
       return (p.name+" "+p.varietal+" "+p.desc).toLowerCase().indexOf(q)>=0;
     });
   }
+  function promoBannerHTML(){
+    return '<a class="promo-hero" href="#/collections">'+
+        '<img src="img/promos/promo-hero.png" alt="">'+
+        '<div class="promo-copy"><em>Launch weekend</em><b>8 lockers. $35–$350.</b><span>Three bottles each. Floor is the buy-in.</span></div>'+
+      '</a>'+
+      '<div class="promo-tiles">'+
+        '<a class="promo-tile" href="#/collections?cat=rose"><img src="img/promos/promo-rose.png" alt=""><div class="promo-copy"><small>Patio night</small><b>$35 rosé</b></div></a>'+
+        '<a class="promo-tile" href="#/collections?cat=sparkling"><img src="img/promos/promo-bubbles.png" alt=""><div class="promo-copy"><small>Weeknight</small><b>$53 bubbles</b></div></a>'+
+        '<a class="promo-tile" href="#/collections?cat=cab"><img src="img/promos/promo-cab.png" alt=""><div class="promo-copy"><small>Napa lane</small><b>$88 cab</b></div></a>'+
+      '</div>';
+  }
   function pageHome(){
     var q = routeQuery();
     return '<div class="feed-page">'+
+      promoBannerHTML()+
       catRowHTML(q.cat||"all")+
       hallFacesHTML()+
       '<div class="offer-head"><h2>Launch offers</h2><a href="#/collections">See all</a></div>'+
@@ -3947,12 +4090,12 @@
       '<div class="offer-shot">'+
         '<img src="'+esc(p.img)+'" alt="">'+
         '<span class="offer-tag">'+esc(tag)+'</span>'+
-        '<span class="offer-heart" aria-hidden="true">♡</span>'+
+        '<span class="offer-heart" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#000" stroke-width="1.8"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.6-7 10-7 10z"/></svg></span>'+
+        '<button type="button" class="offer-add" data-add="'+p.slug+'" aria-label="Add '+esc(p.name)+'">+</button>'+
       '</div>'+
       '<div class="offer-meta">'+
         '<h3>'+esc(p.name)+'</h3>'+
-        '<p class="offer-rate">★ '+(p.rating||4.7)+' <span>('+(p.reviews||80)+')</span></p>'+
-        '<p class="offer-sub">'+money(p.price)+' locker · '+(p.eta||"20–30 min")+'</p>'+
+        '<p class="offer-rate"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path fill="#000" d="M12 3.2l2.4 6.4h6.6l-5.2 4 2 6.4L12 16.4 6.2 20l2-6.4-5.2-4h6.6z"/></svg> '+(p.rating||4.7)+' <span>('+(p.reviews||80)+') · '+(p.eta||"20–30 min")+'</span></p>'+
         '<p class="offer-deal">'+left+' left · upgrades to '+money(p.srpHigh)+'</p>'+
         '<p class="offer-price">'+money(p.price)+'</p>'+
       '</div>'+
@@ -3963,6 +4106,7 @@
     var q = routeQuery();
     var list = filteredProducts().map(locProduct);
     return '<div class="feed-page">'+
+      promoBannerHTML()+
       catRowHTML(q.cat||"all")+
       '<div class="offer-head"><h2>'+(q.q ? "Results" : "Every locker")+'</h2><span style="font-size:14px;font-weight:700;color:#6B6B6B;">'+list.length+' offers</span></div>'+
       (list.length ? '<div class="offer-grid">'+list.map(productSlipHTML).join("")+'</div>' : '<p class="pro-empty">Nothing in that lane yet.</p>')+
@@ -3973,49 +4117,37 @@
     var raw = findProduct(slug);
     if (!raw) return '<div class="content-block"><h2>'+t("notFound")+'</h2><p>'+t("notFoundP")+' <a href="#/collections">'+t("backCols")+'</a>.</p></div>';
     var p = locProduct(raw);
+    var left = stockLeft(p);
     var poolRows = p.pool.map(function(b){
       var odds = poolOdds(p.pool, b);
       var up = b.value > p.price;
-      return '<div class="pool-row"><span><b>'+esc(bottleLabel(b))+'</b>'+
-        '<span class="meta">'+esc(bottleSub(b))+(b.cases?' · '+esc(b.cases)+' cases':'')+' · '+odds+'% of pulls'+(up?' · upgrade':' · floor')+'</span>'+
-        (b.notes?'<span class="notes">'+esc(b.notes)+'</span>':'')+
-        '</span><span class="val">'+money(b.value)+' SRP</span></div>';
+      return '<div class="shop-bottle">'+
+        '<div class="shop-thumb wine">'+(p.img?'<img src="'+esc(p.img)+'" alt="">':bottleIconSVG())+'</div>'+
+        '<div><b>'+esc(bottleLabel(b))+'</b><p>'+esc(bottleSub(b))+' · '+odds+'% of pulls</p></div>'+
+        '<span>'+money(b.value)+'<small style="display:block;color:#6B6B6B;font-weight:600;">'+(up?"upgrade":"floor")+'</small></span>'+
+      '</div>';
     }).join("");
-    return '' +
-    '<div class="product-detail">' +
-      '<div class="pd-visual offer-hero">' + (p.img ? '<img src="'+esc(p.img)+'" alt="">' : bigBottleSVG()) + '</div>' +
-      '<div class="pd-info">' +
-        '<a class="breadcrumb" href="#/collections">'+t("allCols")+'</a>' +
-        '<h1>'+p.name+'</h1>' +
-        '<span class="varietal">'+p.varietal+'</span>' +
-        '<p class="desc">'+p.desc+'</p>' +
-        '<div class="deal-stat-row" style="margin-top:14px;">' +
-          '<span class="pill hot">'+stockLeft(p)+' '+t("leftLabel")+'</span>' +
-          '<span class="pill lime">'+upgradeChance(p)+'% '+t("upgradeOdds")+'</span>' +
-          '<span class="pill" data-countdown="day">'+formatRemain(endOfDay()-Date.now())+'</span>' +
-        '</div>' +
-        '<div class="pd-price-block">' +
-          '<span class="price">'+money(p.price)+'</span> <span style="font-size:13px;color:var(--page-muted);">'+t("perCollection")+' ('+p.tag.toLowerCase()+')</span>' +
-          '<span class="srp-range">'+t("realSrp")+' '+money(p.srpLow)+'&ndash;'+money(p.srpHigh)+' '+t("neverLess")+'</span>' +
-        '</div>' +
-        '<div class="qty-row">' +
-          '<div class="qty-control">' +
-            '<button id="qty-minus" aria-label="-">&minus;</button>' +
-            '<span id="qty-val">1</span>' +
-            '<button id="qty-plus" aria-label="+">+</button>' +
-          '</div>' +
-          '<span style="font-size:13px;color:var(--page-muted);">'+t("collectionsWord")+'</span>' +
-        '</div>' +
-        '<div class="add-row">' +
-          '<button class="btn btn-primary" id="pd-add" style="flex:1;">'+t("addCart")+'</button>' +
-          '<a class="btn btn-dark" href="#/cart" style="flex:1;text-align:center;">'+t("viewPass")+'</a>' +
-        '</div>' +
-        '<div class="pool">' +
-          '<h3>'+t("possible")+'</h3>' +
-          '<p class="pool-lede">Three bottles are pulled at checkout from this weighted locker. Floor is the '+money(p.price)+' buy-in. '+upgradeChance(p)+'% of pulls are upgrades.</p>' +
-          '<div class="pool-list">'+poolRows+'</div>' +
-        '</div>' +
-      '</div>' +
+    return '<div class="shop-page store-page">'+
+      '<div class="shop-top"><a class="shop-back" href="#/" aria-label="Back">‹</a><h1>'+esc(p.name)+'</h1></div>'+
+      '<div class="store-shot">'+
+        (p.img?'<img src="'+esc(p.img)+'" alt="">':bigBottleSVG())+
+        '<span class="offer-tag">'+left+' left · up to '+money(p.srpHigh)+'</span>'+
+      '</div>'+
+      '<p class="offer-rate">★ '+(p.rating||4.7)+' <span>('+(p.reviews||80)+') · '+esc(p.varietal)+'</span></p>'+
+      '<p class="offer-sub">'+money(p.price)+' for 3 bottles · '+(p.eta||"20–30 min")+' reveal</p>'+
+      '<p class="desc">'+esc(p.desc)+'</p>'+
+      '<div class="shop-card"><h2>In this locker</h2><div class="store-pool">'+poolRows+'</div>'+
+        '<p class="shop-note">Every pull is at least '+money(p.price)+'. '+upgradeChance(p)+'% land above the floor.</p>'+
+      '</div>'+
+      '<div class="shop-dock">'+
+        '<div class="shop-qty">'+
+          '<button type="button" id="qty-minus" aria-label="Less">−</button>'+
+          '<span id="qty-val">1</span>'+
+          '<button type="button" id="qty-plus" aria-label="More">+</button>'+
+        '</div>'+
+        '<div class="shop-dock-meta"><span>3 bottles</span><b>'+money(p.price)+'</b></div>'+
+        '<button class="shop-pay" type="button" id="pd-add">Add</button>'+
+      '</div>'+
     '</div>';
   }
 
@@ -4452,6 +4584,8 @@
       var d = findGiftDesign(item.designId);
       return '<div class="shop-thumb gift" style="--h:'+d.h+'">'+(d.emoji||"🎁")+'</div>';
     }
+    var p = findProduct(item.slug);
+    if (p && p.img) return '<div class="shop-thumb wine"><img src="'+esc(p.img)+'" alt=""></div>';
     return '<div class="shop-thumb wine">'+bottleIconSVG()+'</div>';
   }
   function shopBagRows(opts){
@@ -4659,8 +4793,10 @@
     document.getElementById("app").innerHTML = html;
     var view = isAuth ? under : route;
     var shopOn = /\/(cart|checkout|confirmation)$/.test(view);
+    var storeOn = view.indexOf("/product/")===0;
     var proOn = view==="/account" || view.indexOf("/u/")===0;
     document.body.classList.toggle("shop-flow", shopOn);
+    document.body.classList.toggle("store-flow", storeOn);
     document.body.classList.toggle("pro-flow", proOn);
     if (shopOn){
       var toast = document.getElementById("toast");
@@ -4758,7 +4894,11 @@
 
   function bindPageEvents(route){
     document.querySelectorAll("[data-add]").forEach(function(btn){
-      btn.addEventListener("click", function(){ addToCart(btn.getAttribute("data-add"), 1); });
+      btn.addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        addToCart(btn.getAttribute("data-add"), 1);
+      });
     });
     if (route.indexOf("/product/") === 0){
       var slug = route.replace("/product/","");
