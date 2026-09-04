@@ -1563,38 +1563,16 @@
   body.store-flow .chat-root{bottom:calc(88px + env(safe-area-inset-bottom,0px)) !important;}
   body.store-flow main#app{padding-bottom:0;}
 
-  :root{ --rail-w:80px !important; }
-  aside.left-rail{
-    display:flex;flex-direction:column;align-items:center;
-    position:fixed;top:0;left:0;bottom:0;width:80px !important;z-index:120;
-    background:#fff;border-right:1px solid #E8E8E8;
-    padding:8px 6px 16px;overflow-x:hidden;overflow-y:auto;
+  :root{ --rail-w:0px !important; }
+  aside.left-rail,aside.right-rail,.action-rail,.tabbar,.more-sheet,.more-backdrop{
+    display:none !important;
   }
-  aside.left-rail .rail-kicker,
-  aside.left-rail .rail-sub,
-  aside.left-rail .rail-tools,
-  aside.left-rail .rail-pts,
-  aside.left-rail .rail-logo,
-  aside.left-rail .rail-rule,
-  aside.left-rail .rail-foot{display:none !important;}
   .rail-burger{
     width:48px;height:48px;border:0;background:transparent;border-radius:500px;
     display:grid;place-items:center;color:#000;margin:4px 0 8px;flex-shrink:0;
   }
   .rail-burger:hover{background:#EEEEEE;}
   .rail-burger svg{width:22px;height:22px;}
-  aside.left-rail .rail-nav{display:flex;flex-direction:column;gap:2px;width:100%;}
-  aside.left-rail a.rail-link{
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:4px;height:64px;min-height:64px;padding:6px 2px;border-radius:12px;margin:0;
-    font-family:var(--font-body);font-size:11px;font-weight:500;
-    letter-spacing:0;text-transform:none;color:#000;
-  }
-  aside.left-rail a.rail-link svg{
-    width:24px;height:24px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;
-    stroke-linejoin:round;stroke-linecap:round;
-  }
-  aside.left-rail a.rail-link.on,aside.left-rail a.rail-link:hover{background:#EEEEEE;}
   .rail-scrim{
     display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:198;border:0;padding:0;
   }
@@ -1671,13 +1649,13 @@
   .mast-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
   .mast-copy{
     display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:8px;
-    position:relative;z-index:2;height:100%;padding:24px 24px 24px 104px;
+    position:relative;z-index:2;height:100%;padding:24px;
     color:#fff;text-decoration:none;max-width:720px;
   }
   .mast-copy em{font-style:normal;font-size:14px;font-weight:600;}
   .mast-copy b{font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1.05;text-shadow:0 2px 0 rgba(0,0,0,.25);}
   .mast-copy span{font-size:16px;font-weight:500;}
-  aside.left-rail{top:64px !important;z-index:110;}
+  header.site,main#app,footer.site{margin-left:0 !important;}
   .nowbar,.nowbar.on,.nowbar.mini{
     left:50% !important;right:auto !important;
     transform:translateX(-50%);
@@ -1691,9 +1669,6 @@
     border-radius:16px !important;border-width:1px !important;
   }
   @media(max-width:899px){
-    :root{ --rail-w:0px !important; }
-    aside.left-rail{display:none !important;}
-    header.site,main#app,footer.site{margin-left:0 !important;}
     header.site{height:56px;min-height:56px;max-height:56px;}
     .nav-row{height:56px;padding:0 10px;}
     .ue-search{height:40px;padding:0 12px;}
@@ -1765,7 +1740,7 @@
   <div class="more-links" id="more-links"></div>
   <div class="more-tools" id="more-tools"></div>
 </aside>
-<aside class="left-rail" id="left-rail" aria-label="Primary"></aside>
+<aside class="left-rail" id="left-rail" hidden></aside>
 <button class="rail-scrim" id="rail-scrim" type="button" aria-label="Close menu"></button>
 <aside class="rail-drawer" id="rail-drawer" aria-label="Menu"></aside>
 <aside class="right-rail" id="right-rail" aria-label="Hall slip"></aside>
@@ -3821,7 +3796,7 @@
     var links = items.map(function(item){
       return '<a class="rail-link'+(railActive(route, item.match)?" on":"")+'" href="'+item.href+'">'+tabSvg(item.kind)+'<span>'+item.label+'</span></a>';
     }).join("");
-    el.innerHTML = '<nav class="rail-nav">'+links+'</nav>';
+    el.innerHTML = "";
     var drawer = document.getElementById("rail-drawer");
     if (drawer){
       drawer.innerHTML =
@@ -3872,6 +3847,9 @@
   function renderRightRail(){
     var el = document.getElementById("right-rail");
     if (!el) return;
+    el.innerHTML = "";
+    return;
+    if (false){
     var tr = findTrack(nowPlayingId);
     el.innerHTML =
       '<div class="slip-head"><span>HALL SLIP</span><b id="slip-pts">'+points+'</b><small>PTS</small></div>'+
