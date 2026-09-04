@@ -1393,6 +1393,79 @@
     .shop-dock{left:var(--rail-w);max-width:none;}
     .shop-page{padding-top:20px;padding-bottom:140px;}
   }
+
+  .pro-page{max-width:560px;margin:0 auto;padding:8px 16px 48px;}
+  .pro-hero{text-align:center;padding:4px 0 0;}
+  .pro-av{
+    width:80px;height:80px;border-radius:50%;margin:0 auto 8px;
+    display:grid;place-items:center;color:#fff;font-weight:800;font-size:26px;
+    background:linear-gradient(145deg, hsl(var(--h),72%,46%), #0E3386 78%);
+    border:3px solid #fff;box-shadow:0 0 0 2px #E8E8EA;
+  }
+  .pro-hero h1{font-family:var(--font-body);font-size:22px;font-weight:800;text-transform:none;margin:0;}
+  .pro-handle{color:#73747B;font-size:14px;font-weight:600;margin:2px 0 6px;}
+  .pro-bio{font-size:14px;line-height:1.4;max-width:34ch;margin:0 auto 4px;color:#161823;}
+  .pro-city{font-size:12px;color:#8A8B92;font-weight:600;margin:0 0 12px;}
+  .pro-stats{display:flex;justify-content:center;gap:16px;margin:0 0 12px;}
+  .pro-stats b{display:block;font-size:17px;line-height:1.1;}
+  .pro-stats span{font-size:10px;color:#73747B;font-weight:700;letter-spacing:.02em;}
+  @media(max-width:1023px){
+    .pro-stats{gap:10px;}
+    .pro-stats b{font-size:15px;}
+  }
+  .pro-actions{display:flex;gap:8px;justify-content:center;margin:0 0 16px;}
+  .pro-actions .shop-pay,.pro-actions .pro-ghost{
+    flex:1;max-width:160px;min-height:40px;border-radius:10px;font-size:14px;
+  }
+  .pro-ghost{
+    border:1.5px solid #161823;background:#fff;color:#161823;font-weight:800;
+    display:grid;place-items:center;text-decoration:none;
+  }
+  .pro-rings{display:flex;gap:12px;overflow:auto;padding:4px 2px 16px;scrollbar-width:none;}
+  .pro-rings::-webkit-scrollbar{display:none;}
+  .pro-ring{flex:0 0 auto;width:64px;text-align:center;text-decoration:none;color:inherit;}
+  .pro-ring i{
+    display:grid;place-items:center;width:56px;height:56px;margin:0 auto 4px;border-radius:50%;
+    border:2px solid #CC3433;background:#F6F7F8;font-size:22px;
+  }
+  .pro-ring span{display:block;font-size:10px;font-weight:700;color:#73747B;}
+  .pro-tabs{display:flex;border-bottom:1px solid #F1F1F2;margin:0 0 12px;}
+  .pro-tabs button{
+    flex:1;border:none;background:none;padding:10px 4px;font-weight:800;font-size:13px;color:#8A8B92;
+  }
+  .pro-tabs button.on{color:#161823;box-shadow:inset 0 -2px 0 #161823;}
+  .pro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
+  .pro-tile{
+    aspect-ratio:1;background:#F6F7F8;border-radius:8px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;padding:8px;text-align:center;font-size:11px;font-weight:700;
+  }
+  .pro-tile .bottle-icon{width:18px;height:32px;margin:0 0 6px;}
+  .pro-empty{text-align:center;padding:28px 12px;color:#73747B;font-size:14px;}
+  .pro-edit{display:none;text-align:left;}
+  .pro-edit.on{display:block;}
+  .vibe-row{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px;}
+  .vibe-row button{
+    width:36px;height:36px;border-radius:50%;border:2px solid transparent;padding:0;
+    background:linear-gradient(145deg, hsl(var(--h),72%,46%), #0E3386);
+  }
+  .vibe-row button.on{border-color:#161823;box-shadow:0 0 0 2px #fff,0 0 0 4px #161823;}
+  .account-link.av{
+    width:32px;height:32px;border-radius:50%;padding:0;min-height:32px;border:0;
+    display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;
+    background:linear-gradient(145deg, hsl(var(--h),72%,46%), #0E3386);
+    text-transform:none;letter-spacing:0;
+  }
+  body.pro-flow footer.site{display:none !important;}
+  body.pro-flow .nowbar{display:none !important;}
+  body.pro-flow .chat-root{display:none !important;}
+  body.pro-flow main#app{padding-bottom:0;}
+  .face-row{display:flex;gap:14px;overflow:auto;padding:2px 0 18px;scrollbar-width:none;}
+  .face-row::-webkit-scrollbar{display:none;}
+  .face-chip{flex:0 0 auto;width:64px;text-align:center;text-decoration:none;color:inherit;}
+  .face-chip .pro-av{width:56px;height:56px;font-size:16px;margin:0 auto 4px;border-width:2px;}
+  .face-chip span{display:block;font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .board-row a{color:inherit;text-decoration:none;}
+  .board-row a:hover{color:var(--cubs-red);}
 </style>
 </head>
 <body>
@@ -2317,12 +2390,20 @@
   ];
 
   var BOARD = [
-    {name:"Mei.HK", pts:4280, pulls:19},
-    {name:"Jax.NY", pts:3910, pulls:17},
-    {name:"Vale.Napa", pts:3602, pulls:14},
-    {name:"Anton.MSK", pts:3330, pulls:12},
-    {name:"Rio.LA", pts:2988, pulls:11},
-    {name:"YOU", pts:0, pulls:0}
+    {name:"Mei.HK", handle:"mei", pts:4280, pulls:19},
+    {name:"Jax.NY", handle:"jax", pts:3910, pulls:17},
+    {name:"Vale.Napa", handle:"vale", pts:3602, pulls:14},
+    {name:"Anton.MSK", handle:"anton", pts:3330, pulls:12},
+    {name:"Rio.LA", handle:"rio", pts:2988, pulls:11},
+    {name:"YOU", handle:"you", pts:0, pulls:0}
+  ];
+  var VIBES = [210, 0, 348, 32, 145, 260, 190, 18];
+  var HALL_FACES = [
+    {handle:"mei", name:"Mei.HK", city:"Hong Kong", bio:"Night market locker. Douyin after 11.", vibe:0, pts:4280, pulls:19, gifts:6, followers:1840, following:12, lockers:["cabernet-cram-session","icon-detention-rare-reds","night-watch-pinot-noir"], rings:["cellar","night"]},
+    {handle:"jax", name:"Jax.NY", city:"New York", bio:"After-hours cab. Never late to the stream.", vibe:1, pts:3910, pulls:17, gifts:4, followers:1210, following:9, lockers:["night-watch-pinot-noir","chardonnay-class-reunion"], rings:["sentence"]},
+    {handle:"vale", name:"Vale.Napa", city:"Napa", bio:"Grew up on the valley floor. Now I pull for the hall.", vibe:4, pts:3602, pulls:14, gifts:8, followers:980, following:21, lockers:["study-hall-sauvignon-blanc","chardonnay-class-reunion","icon-detention-rare-reds"], rings:["cellar","sentence"]},
+    {handle:"anton", name:"Anton.MSK", city:"Moscow", bio:"VK stream is packed. Icon lane only.", vibe:5, pts:3330, pulls:12, gifts:3, followers:760, following:6, lockers:["icon-detention-rare-reds"], rings:["night"]},
+    {handle:"rio", name:"Rio.LA", city:"Los Angeles", bio:"Late checkout. Early pinot.", vibe:3, pts:2988, pulls:11, gifts:5, followers:640, following:18, lockers:["night-watch-pinot-noir","cabernet-cram-session"], rings:["cellar"]}
   ];
 
   var posts = [
@@ -2749,6 +2830,11 @@
   function renderNowBar(){
     var el = document.getElementById("nowbar");
     if (!el) return;
+    if (document.body.classList.contains("shop-flow") || document.body.classList.contains("pro-flow")){
+      el.style.display = "none";
+    } else {
+      el.style.display = "";
+    }
     if (!nowbarOn){
       el.className = "nowbar mini";
       el.innerHTML = '<button type="button" class="now-restore" id="now-restore" aria-label="Open player">♪</button>';
@@ -3047,18 +3133,166 @@
   function saveUsers(list){
     try { localStorage.setItem("wd-users", JSON.stringify(list)); } catch(e){}
   }
+  function vibeHue(v){ return VIBES[(Number(v)||0) % VIBES.length]; }
+  function initials(name){
+    var p = String(name||"?").trim().split(/\s+/);
+    if (!p[0]) return "?";
+    if (p.length===1) return p[0].replace(/[^a-zA-Z0-9]/g,"").slice(0,2).toUpperCase() || "?";
+    return ((p[0][0]||"")+(p[p.length-1][0]||"")).toUpperCase();
+  }
+  function slugHandle(name){
+    var h = String(name||"").toLowerCase().replace(/[^a-z0-9]+/g,"").slice(0,16);
+    return h || ("hall"+Math.floor(Math.random()*900+100));
+  }
+  function hashStr(s){
+    var h=0; s=String(s||"");
+    for (var i=0;i<s.length;i++) h = ((h<<5)-h)+s.charCodeAt(i)|0;
+    return h;
+  }
+  function loadFollows(){
+    try { return JSON.parse(localStorage.getItem("wd-follows")||"[]")||[]; } catch(e){ return []; }
+  }
+  function saveFollows(list){
+    try { localStorage.setItem("wd-follows", JSON.stringify(list)); } catch(e){}
+  }
+  function isFollowing(handle){ return loadFollows().indexOf(handle)>=0; }
+  function toggleFollow(handle){
+    var list = loadFollows();
+    var i = list.indexOf(handle);
+    if (i>=0) list.splice(i,1); else list.push(handle);
+    saveFollows(list);
+  }
+  function loadLocalProfiles(){
+    try { return JSON.parse(localStorage.getItem("wd-profiles")||"[]")||[]; } catch(e){ return []; }
+  }
+  function saveLocalProfiles(list){
+    try { localStorage.setItem("wd-profiles", JSON.stringify(list)); } catch(e){}
+  }
+  function upsertLocalProfile(pro){
+    if (!pro || !pro.handle) return;
+    var list = loadLocalProfiles().filter(function(p){ return p.handle!==pro.handle && p.email!==pro.email; });
+    list.push(pro);
+    saveLocalProfiles(list);
+  }
+  function handleTaken(handle, exceptEmail){
+    handle = String(handle||"").toLowerCase();
+    if (HALL_FACES.some(function(p){ return p.handle===handle; })) return true;
+    if (loadLocalProfiles().some(function(p){ return p.handle===handle && p.email!==exceptEmail; })) return true;
+    if (loadUsers().some(function(u){ return u.handle===handle && u.email!==exceptEmail; })) return true;
+    return false;
+  }
+  function mintHandle(name, email){
+    var base = slugHandle(name);
+    var h = base, n = 0;
+    while (handleTaken(h, email)){ n++; h = base.slice(0,14)+n; }
+    return h;
+  }
+  function ensureUserProfile(user){
+    if (!user) return user;
+    if (!user.handle) user.handle = mintHandle(user.name, user.email);
+    if (user.vibe==null) user.vibe = Math.abs(hashStr(user.email||user.name))%8;
+    if (!user.bio) user.bio = "New in the hall.";
+    if (user.city==null) user.city = "";
+    upsertLocalProfile({
+      handle:user.handle, name:user.name, email:user.email,
+      city:user.city, bio:user.bio, vibe:user.vibe,
+      pts:points, pulls:0, gifts:0, followers:user.followers||0, following:loadFollows().length
+    });
+    return user;
+  }
+  function sessionFromUser(user){
+    user = ensureUserProfile(user);
+    return {
+      email:user.email, name:user.name, handle:user.handle,
+      bio:user.bio||"", city:user.city||"", vibe:user.vibe||0,
+      followers:user.followers||0
+    };
+  }
+  function myPublicProfile(){
+    if (!currentUser) return null;
+    var sent = gifts.filter(function(g){
+      return (currentUser.email && g.fromEmail===currentUser.email) || (g.from && currentUser.name && g.from===currentUser.name);
+    }).length;
+    var pulls = 0;
+    if (lastOrder && lastOrder.groups) lastOrder.groups.forEach(function(g){ pulls += (g.bottles||[]).length; });
+    return {
+      handle: currentUser.handle, name: currentUser.name, email: currentUser.email,
+      city: currentUser.city||"", bio: currentUser.bio||"New in the hall.", vibe: currentUser.vibe||0,
+      pts: points, pulls: pulls, gifts: sent, followers: currentUser.followers||0,
+      following: loadFollows().length, mine: true
+    };
+  }
+  function findProfile(handle){
+    handle = decodeURIComponent(handle||"").toLowerCase().replace(/^@/,"");
+    if (!handle) return null;
+    if ((handle==="me" || handle==="you") && currentUser) handle = currentUser.handle;
+    if (currentUser && (currentUser.handle===handle || currentUser.email===handle)) return myPublicProfile();
+    var local = loadLocalProfiles().filter(function(p){ return p.handle===handle; })[0];
+    if (local) return local;
+    return HALL_FACES.filter(function(p){ return p.handle===handle; })[0] || null;
+  }
+  function publicStats(pro){
+    if (!pro || pro.mine) return pro;
+    return Object.assign({}, pro, {followers: (pro.followers||0) + (isFollowing(pro.handle)?1:0)});
+  }
+  function avatarHTML(pro, cls){
+    return '<div class="'+(cls||"pro-av")+'" style="--h:'+vibeHue(pro.vibe)+'">'+esc(initials(pro.name||pro.handle))+'</div>';
+  }
+  function fmtStat(n){
+    n = Number(n)||0;
+    if (n>=1000) return (n/1000).toFixed(1).replace(/\.0$/,"")+"k";
+    return String(n);
+  }
+  function saveMyProfile(fields){
+    if (!currentUser) return "Log in first.";
+    var handle = slugHandle(fields.handle||currentUser.handle);
+    if (!handle) return "Need a handle.";
+    if (handleTaken(handle, currentUser.email)) return "That handle is taken.";
+    currentUser.handle = handle;
+    currentUser.name = (fields.name||currentUser.name).trim().slice(0,32);
+    currentUser.bio = (fields.bio||"").trim().slice(0,140);
+    currentUser.city = (fields.city||"").trim().slice(0,40);
+    if (fields.vibe!=null) currentUser.vibe = Number(fields.vibe)||0;
+    var users = loadUsers();
+    users.forEach(function(u){
+      if (u.email===currentUser.email){
+        u.handle=currentUser.handle; u.name=currentUser.name;
+        u.bio=currentUser.bio; u.city=currentUser.city; u.vibe=currentUser.vibe;
+      }
+    });
+    saveUsers(users);
+    upsertLocalProfile(Object.assign({}, currentUser, {pts:points, following:loadFollows().length}));
+    persist();
+    renderAuthBtn();
+    return "";
+  }
+  function shareProfile(handle){
+    var url = location.origin + location.pathname + "#/u/" + handle;
+    if (navigator.share){
+      navigator.share({title:"@"+handle+" on Wine Detention", url:url}).catch(function(){});
+    } else if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ showToast("Profile link copied"); }).catch(function(){ showToast(url); });
+    } else showToast(url);
+  }
+  function hallFacesHTML(){
+    var people = HALL_FACES.slice();
+    if (currentUser) people = [{handle:currentUser.handle, name:currentUser.name, vibe:currentUser.vibe}].concat(people);
+    return '<div class="face-row">'+people.map(function(p){
+      return '<a class="face-chip" href="#/u/'+esc(p.handle)+'">'+avatarHTML(p)+'<span>@'+esc(p.handle)+'</span></a>';
+    }).join("")+'</div>';
+  }
   function renderAuthBtn(){
     var el = document.getElementById("auth-slot");
     if (!el) return;
     if (currentUser){
-      var nick = (currentUser.name||currentUser.email||"You").split(" ")[0];
-      el.innerHTML = '<a href="#/account" class="account-link">'+esc(nick)+'</a>';
+      if (!currentUser.handle) ensureUserProfile(currentUser);
+      el.innerHTML = '<a href="#/u/'+esc(currentUser.handle)+'" class="account-link av" style="--h:'+vibeHue(currentUser.vibe)+'" title="@'+esc(currentUser.handle)+'">'+esc(initials(currentUser.name))+'</a>';
     } else {
       el.innerHTML = '<a href="#/login" class="login-link">Log in</a>';
     }
   }
   function setSession(user){
-    currentUser = user ? {email:user.email, name:user.name} : null;
+    currentUser = user ? sessionFromUser(user) : null;
     try {
       if (currentUser) localStorage.setItem("wd-session", JSON.stringify(currentUser));
       else localStorage.removeItem("wd-session");
@@ -3071,9 +3305,14 @@
     if (!name || !email || !pass || pass.length<4) return "Name, email, and a 4+ character password.";
     var users = loadUsers();
     if (users.some(function(u){ return u.email===email; })) return "That email already has a hall pass. Log in.";
-    users.push({name:name, email:email, pass:btoa(unescape(encodeURIComponent(pass)))});
+    var rec = {
+      name:name, email:email, pass:btoa(unescape(encodeURIComponent(pass))),
+      handle:mintHandle(name, email), bio:"New in the hall.", city:"",
+      vibe:Math.abs(hashStr(email))%8, followers:0
+    };
+    users.push(rec);
     saveUsers(users);
-    setSession({name:name, email:email});
+    setSession(rec);
     return "";
   }
   function loginUser(email, pass){
@@ -3082,6 +3321,11 @@
     var encoded = btoa(unescape(encodeURIComponent(pass||"")));
     var hit = users.filter(function(u){ return u.email===email && u.pass===encoded; })[0];
     if (!hit) return "No match. Check the email/password or sign up.";
+    ensureUserProfile(hit);
+    users.forEach(function(u){
+      if (u.email===hit.email){ u.handle=hit.handle; u.bio=hit.bio; u.city=hit.city; u.vibe=hit.vibe; }
+    });
+    saveUsers(users);
     setSession(hit);
     return "";
   }
@@ -3096,7 +3340,7 @@
     return '<div class="auth-card">'+
       '<button type="button" class="auth-close" id="auth-close" aria-label="Close">×</button>'+
       '<h1>'+(isUp?"Join the hall":"Log in")+'</h1>'+
-      '<p style="margin-bottom:18px;color:var(--page-muted);">'+(isUp?"Founding crew only takes a minute. Stays in this browser — demo login.":"Welcome back. This demo keeps your pass on this device.")+'</p>'+
+      '<p style="margin-bottom:18px;color:var(--page-muted);">'+(isUp?"You get a public @handle — like TikTok, not a wine-club card. Stays in this browser.":"Welcome back. This demo keeps your pass on this device.")+'</p>'+
       '<form id="auth-form">'+
         (isUp?'<div class="form-row"><label for="auth-name">Name</label><input id="auth-name" required autocomplete="name"></div>':'')+
         '<div class="form-row"><label for="auth-email">Email</label><input id="auth-email" type="email" required autocomplete="email"></div>'+
@@ -3109,20 +3353,116 @@
         : '<p class="auth-switch">New to Wine Detention? <a href="#/signup">Sign up</a></p>')+
     '</div>';
   }
+  function profileEditHTML(pro){
+    var vibes = VIBES.map(function(h,i){
+      return '<button type="button" data-vibe="'+i+'" class="'+(Number(pro.vibe)===i?"on":"")+'" style="--h:'+h+'" aria-label="Color '+(i+1)+'"></button>';
+    }).join("");
+    return '<form class="pro-edit" id="pro-edit">'+
+      '<div class="form-row"><label for="pro-name">Name</label><input id="pro-name" value="'+esc(pro.name)+'" maxlength="32" required></div>'+
+      '<div class="form-row"><label for="pro-handle">Handle</label><input id="pro-handle" value="'+esc(pro.handle)+'" maxlength="16" required></div>'+
+      '<div class="form-row"><label for="pro-city">City</label><input id="pro-city" value="'+esc(pro.city||"")+'" maxlength="40"></div>'+
+      '<div class="form-row"><label for="pro-bio">Bio</label><input id="pro-bio" value="'+esc(pro.bio||"")+'" maxlength="140"></div>'+
+      '<p style="font-size:12px;font-weight:700;color:#73747B;margin:0 0 8px;">Avatar color</p>'+
+      '<div class="vibe-row" id="pro-vibes">'+vibes+'</div>'+
+      '<button class="shop-pay" type="submit" style="width:100%;margin-bottom:8px;">Save profile</button>'+
+      '<p class="auth-msg" id="pro-msg"></p>'+
+    '</form>';
+  }
+  function profileLockerTiles(pro, mine){
+    var bottles = [];
+    if (mine && lastOrder && lastOrder.groups){
+      lastOrder.groups.forEach(function(g){ (g.bottles||[]).forEach(function(b){ bottles.push(b); }); });
+    } else if (pro && pro.lockers){
+      pro.lockers.forEach(function(slug){
+        var p = findProduct(slug);
+        if (p && p.pool && p.pool[0]) bottles.push(p.pool[0]);
+      });
+    }
+    if (!bottles.length){
+      return '<div class="pro-empty">'+(mine?'No pulls yet. Lock a collection.':'No lockers on this wall.')+'</div>';
+    }
+    return '<div class="pro-grid">'+bottles.slice(0,9).map(function(b){
+      return '<div class="pro-tile">'+bottleIconSVG()+'<span>'+esc((b.grapes||b.producer||"Drop").split(" ")[0])+'</span></div>';
+    }).join("")+'</div>';
+  }
+  function profileGiftTiles(pro, mine){
+    var mineGifts = mine ? gifts.slice().reverse().slice(0,9) : [];
+    if (mine && mineGifts.length){
+      return '<div class="pro-grid">'+mineGifts.map(function(g){
+        var d = findGiftDesign(g.designId);
+        return '<a class="pro-tile" href="#/gifts/mine" style="text-decoration:none;color:inherit;">'+(d.emoji||"🎁")+'<span>'+money(g.amount)+'</span></a>';
+      }).join("")+'</div>';
+    }
+    if (!mine && pro && pro.gifts) return '<div class="pro-empty">'+pro.gifts+' gifts sent from this hall pass.</div>';
+    return '<div class="pro-empty">'+(mine?'No gift cards yet.':'Quiet on gifts.')+'</div>';
+  }
+  function profileBadgeTiles(pro, mine){
+    var list = [];
+    if (mine) list = userBadges;
+    else if (pro && pro.rings){
+      pro.rings.forEach(function(id){
+        for (var i=0;i<LAUNCH_BADGES.length;i++) if (LAUNCH_BADGES[i].id===id) list.push(LAUNCH_BADGES[i]);
+      });
+    }
+    if (!list.length) return '<div class="pro-empty">'+(mine?'Send or open a launch gift to unlock badges.':'No badges yet.')+'</div>';
+    return '<div class="pro-grid">'+list.map(function(b){
+      return '<div class="pro-tile"><span style="font-size:28px">'+b.emoji+'</span><span>'+esc(b.name)+'</span></div>';
+    }).join("")+'</div>';
+  }
+  function profileRingsHTML(pro, mine){
+    var rings = [];
+    if (mine && userBadges.length) rings = userBadges;
+    else if (pro && pro.rings){
+      pro.rings.forEach(function(id){
+        for (var i=0;i<LAUNCH_BADGES.length;i++) if (LAUNCH_BADGES[i].id===id) rings.push(LAUNCH_BADGES[i]);
+      });
+    }
+    if (!rings.length) return "";
+    return '<div class="pro-rings">'+rings.map(function(r){
+      return '<div class="pro-ring"><i>'+r.emoji+'</i><span>'+esc(r.name)+'</span></div>';
+    }).join("")+'</div>';
+  }
   function pageAccount(){
     if (!currentUser) return pageAuth("login");
-    var badges = userBadges.length
-      ? '<div class="badge-row" style="margin:16px 0;">'+userBadges.map(function(b){
-          return '<div class="badge-chip" style="background:var(--cubs-blue);color:#fff;"><b>'+b.emoji+'</b>'+esc(b.name)+'</div>';
-        }).join("")+'</div>'
-      : '<p style="color:var(--page-muted);">Send or open a launch-weekend gift card to unlock 3 digital badges.</p>';
-    return '<div class="auth-card">'+
-      '<h1>Your pass</h1>'+
-      '<p style="margin:12px 0;"><strong>'+esc(currentUser.name)+'</strong><br>'+esc(currentUser.email)+'</p>'+
-      '<p style="margin-bottom:12px;color:var(--page-muted);">'+points+' detention points on this device.</p>'+
-      '<h3 style="margin:8px 0;">Launch badges</h3>'+badges+
-      '<a class="btn btn-dark btn-block" href="#/gifts/mine" style="margin-bottom:10px;text-align:center;">My gifts</a>'+
-      '<button class="btn btn-dark btn-block" type="button" id="logout-btn">Log out</button>'+
+    ensureUserProfile(currentUser);
+    return pageProfile(currentUser.handle);
+  }
+  function pageProfile(handle){
+    var raw = findProfile(handle);
+    if (!raw){
+      return '<div class="pro-page"><div class="pro-empty"><h2>Nobody here</h2><p>That handle isn’t in the hall yet.</p><a class="pro-ghost" href="#/leaderboard" style="display:inline-grid;min-width:160px;margin:12px auto 0;">See the board</a></div></div>';
+    }
+    var pro = publicStats(raw);
+    var mine = !!(currentUser && (currentUser.handle===pro.handle || (pro.email && currentUser.email===pro.email)));
+    var followed = !mine && isFollowing(pro.handle);
+    return '<div class="pro-page" data-handle="'+esc(pro.handle)+'">'+
+      '<div class="pro-hero">'+
+        avatarHTML(pro)+
+        '<h1>'+esc(pro.name)+'</h1>'+
+        '<p class="pro-handle">@'+esc(pro.handle)+'</p>'+
+        (pro.bio?'<p class="pro-bio">'+esc(pro.bio)+'</p>':'')+
+        (pro.city?'<p class="pro-city">'+esc(pro.city)+'</p>':'')+
+        '<div class="pro-stats">'+
+          '<div><b>'+fmtStat(pro.pts)+'</b><span>PTS</span></div>'+
+          '<div><b>'+fmtStat(pro.pulls)+'</b><span>Pulls</span></div>'+
+          '<div><b>'+fmtStat(pro.followers)+'</b><span>Followers</span></div>'+
+          '<div><b>'+fmtStat(pro.following||0)+'</b><span>Following</span></div>'+
+        '</div>'+
+        '<div class="pro-actions">'+
+          (mine
+            ? '<button type="button" class="shop-pay" id="pro-edit-btn">Edit</button><button type="button" class="pro-ghost" id="pro-share">Share</button>'
+            : '<button type="button" class="shop-pay" id="pro-follow">'+(followed?"Following":"Follow")+'</button><a class="pro-ghost" href="#/gifts">Gift</a>')+
+        '</div>'+
+      '</div>'+
+      (mine ? profileEditHTML(pro) : '')+
+      profileRingsHTML(pro, mine)+
+      '<div class="pro-tabs">'+
+        '<button type="button" class="on" data-ptab="lockers">Lockers</button>'+
+        '<button type="button" data-ptab="gifts">Gifts</button>'+
+        '<button type="button" data-ptab="badges">Badges</button>'+
+      '</div>'+
+      '<div id="pro-pane">'+profileLockerTiles(pro, mine)+'</div>'+
+      (mine?'<p style="text-align:center;margin-top:24px;"><button class="pro-ghost" type="button" id="logout-btn" style="display:inline-grid;min-width:140px;">Log out</button></p>':'')+
     '</div>';
   }
 
@@ -3134,10 +3474,16 @@
     if (kind==="pass") return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 12h18"/></svg>';
     if (kind==="gift") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v10H3zM3 10V7h18v3M12 7V20M8 7c0-2 1.2-3.5 4-3.5S16 5 16 7"/></svg>';
     if (kind==="board") return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10h3v10H5zm6 0V4h3v16h-3zm6 0v-7h3v7h-3z"/></svg>';
+    if (kind==="you") return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1.4-4 4-6 7-6s5.6 2 7 6"/></svg>';
     return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/></svg>';
   }
 
   function railActive(route, match){
+    if (match==="/you"){
+      if (route==="/account") return true;
+      if (route.indexOf("/u/")===0 && currentUser && route==="/u/"+currentUser.handle) return true;
+      return false;
+    }
     return route===match || (match==="/collections" && route.indexOf("/product/")===0) || (match==="/gifts" && route.indexOf("/gifts")===0) || (match==="/" && route==="/");
   }
 
@@ -3161,14 +3507,15 @@
       {href:"#/gifts", match:"/gifts", kind:"gift", label:"Gifts"},
       {href:"#/live", match:"/live", kind:"live", label:t("navLive")},
       {href:"#/cart", match:"/cart", kind:"pass", label:"Pass"},
-      {href:"#/leaderboard", match:"/leaderboard", kind:"board", label:"Board"}
+      {href:"#/leaderboard", match:"/leaderboard", kind:"board", label:"Board"},
+      {href: currentUser ? "#/u/"+currentUser.handle : "#/login", match:"/you", kind:"you", label:"You"}
     ];
     var extra = [
       {href:"#/quests", label:t("navQuests")},
       {href:"#/how-it-works", label:t("navHow")},
       {href:"#/about", label:t("navAbout")},
       {href:"#/faq", label:t("navFaq")},
-      {href: currentUser ? "#/account" : "#/login", label: currentUser ? "Account" : "Log in"}
+      {href: currentUser ? "#/u/"+currentUser.handle : "#/login", label: currentUser ? "You" : "Log in"}
     ];
     el.innerHTML =
       '<a class="rail-logo" href="#/">'+brandMarkSVG()+'<span>Wine Detention</span></a>'+
@@ -3225,14 +3572,15 @@
     var s = String(q||"").toLowerCase();
     if (/gift|bonus|unveil|card/.test(s)) return "Gift cards run $10–$500. The unveil rolls a weighted bonus — most often +35%, never under +"+giftFloorPct()+"%, hall average +"+giftAvgPct()+"%, rare jackpots to 18×. Demo only: no money moves.";
     if (/music|jukebox|party|song|play|radio|superboy/.test(s)) return "The hall opens on Superboy (First Person). Skip into original Detention Radio loops, or open Party for the full jukebox.";
-    if (/login|account|sign|pass/.test(s)) return "Tap Log in in the header. New here? Switch to Sign up on that sheet. It stays on this device.";
+    if (/profile|follow|handle|@|tiktok|snap/.test(s)) return "Everyone gets a public @handle. Tap You — or open someone from the board. Follow stays on this device.";
+    if (/login|account|sign|pass/.test(s)) return "Tap Log in in the header, or You in the rail. Sign up mints a @handle. It stays on this device.";
     if (/how it works|how does/.test(s)) return "Pick a locker. Pay one price. At checkout we assign three bottles from that pool — every one at least the buy-in. Vintage, AVA, and SRP are listed before you pay.";
     if (/drop|wine|buy|shop|sentence|locker|pinot|cabernet|chardonnay|sauvignon|bottle|allocation/.test(s)) return "Five lockers are open — Sauvignon Blanc, Chardonnay, Pinot, Cabernet, and Icon. Every bottle lists vintage, AVA, and SRP. Floor is always the buy-in. We don’t ship alcohol in this preview.";
     if (/age|21|legal/.test(s)) return "You must be 21+. This is a demo, not a licensed shop.";
     if (/pt|point|pts|quest/.test(s)) return "PTS live on this device. Buys, shares, and quests add up. 40 pts bumps a jukebox request.";
     if (/ship|deliver|hk|napa|moscow/.test(s)) return "We sketch Napa lanes to Hong Kong, Shanghai, Moscow, Tokyo, London, and Dubai. Shipping stays a sketch until a licensed partner is live.";
     if (/support|help|hi|hey|hello|thanks|thank/.test(s)) return conciergeHello();
-    return "I can help with today’s drop, gifts, the radio, points, or your pass. Pick a button or type a question.";
+    return "I can help with today’s drop, gifts, profiles, the radio, points, or your pass. Pick a button or type a question.";
   }
 
   function ensureChat(){
@@ -3471,6 +3819,10 @@
           '<p class="odds"><b>'+watchersNow()+'</b> '+t("watching")+' · '+upgradeChance(feat)+'% '+t("upgradeOdds")+'</p>' +
         '</div>' +
       '</div>' +
+    '</section>' +
+    '<section style="padding-top:4px;padding-bottom:8px;">' +
+      '<p style="font-size:11px;font-weight:800;letter-spacing:.1em;color:#73747B;margin:0 0 10px;">IN THE HALL</p>' +
+      hallFacesHTML() +
     '</section>' +
     '<section>' +
       '<div class="gift-strip">' +
@@ -3775,12 +4127,26 @@
       '</div></section>';
   }
   function pageLeaderboard(){
-    var sorted = BOARD.slice().sort(function(a,b){ return b.pts-a.pts; });
+    var sorted = BOARD.map(function(p){ return Object.assign({}, p); });
+    sorted.forEach(function(p){
+      if (p.handle==="you" || p.name==="YOU"){
+        if (currentUser){
+          p.name = currentUser.name;
+          p.handle = currentUser.handle;
+          p.pts = points;
+          var pulls = 0;
+          if (lastOrder && lastOrder.groups) lastOrder.groups.forEach(function(g){ pulls += (g.bottles||[]).length; });
+          p.pulls = pulls;
+        }
+      }
+    });
+    sorted.sort(function(a,b){ return b.pts-a.pts; });
     var rows = sorted.map(function(p,i){
-      return '<div class="board-row"><span class="rk">'+(i+1)+'</span><div><strong>'+p.name+'</strong></div><span>'+p.pulls+' pulls</span><span class="hit">'+p.pts+' pts</span></div>';
+      var href = p.handle ? '#/u/'+p.handle : '#/login';
+      return '<div class="board-row"><span class="rk">'+(i+1)+'</span><div><a href="'+href+'"><strong>'+esc(p.name)+'</strong></a><div style="font-size:11px;color:#73747B;font-weight:600;">@'+esc(p.handle||"you")+'</div></div><span>'+p.pulls+' pulls</span><span class="hit">'+p.pts+' pts</span></div>';
     }).join("");
     return pageHero(t("boardK"), t("boardH"), "Detention points from scrolling, farming, posting, sharing, sitting live, and locking drops.") +
-      '<section><div class="board">'+rows+'</div></section>';
+      '<section>'+hallFacesHTML()+'<div class="board">'+rows+'</div></section>';
   }
   function pageSocials(){
     var cards = SOCIALS.map(function(s){
@@ -4215,6 +4581,7 @@
     if (route === "/policy/privacy") return pagePolicy("privacy");
     if (route === "/policy/terms") return pagePolicy("terms");
     if (route === "/account") return pageAccount();
+    if (route.indexOf("/u/")===0) return pageProfile(route.replace("/u/",""));
     if (route === "/gifts") return pageGiftsShop();
     if (route.indexOf("/gifts/new")===0) return pageGiftNew(route);
     if (route === "/gifts/redeem") return pageGiftRedeem();
@@ -4249,6 +4616,7 @@
       showToast(route==="/signup" ? "Hall pass created." : "You're in.");
       var next = giftReturnTo || lastContentRoute || "/";
       if (next==="/login" || next==="/signup") next = "/";
+      if (route==="/signup" && currentUser && currentUser.handle) next = "/u/"+currentUser.handle;
       giftReturnTo = "";
       navigate(next);
     });
@@ -4263,8 +4631,11 @@
     if (under==="/login" || under==="/signup") under = "/";
     var html = pageHTML(isAuth ? under : route);
     document.getElementById("app").innerHTML = html;
-    var shopOn = /\/(cart|checkout|confirmation)$/.test(isAuth ? under : route);
+    var view = isAuth ? under : route;
+    var shopOn = /\/(cart|checkout|confirmation)$/.test(view);
+    var proOn = view==="/account" || view.indexOf("/u/")===0;
     document.body.classList.toggle("shop-flow", shopOn);
+    document.body.classList.toggle("pro-flow", proOn);
     if (shopOn){
       var toast = document.getElementById("toast");
       if (toast) toast.classList.remove("show");
@@ -4297,6 +4668,65 @@
     document.querySelectorAll("nav.links a[data-route]").forEach(function(a){
       var r = a.getAttribute("data-route");
       a.classList.toggle("active", r===route || (r==="/collections" && route.indexOf("/product/")===0) || (r==="/gifts" && route.indexOf("/gifts")===0));
+    });
+  }
+
+  function bindProfileEvents(){
+    var page = document.querySelector(".pro-page");
+    var handle = page && page.getAttribute("data-handle");
+    var lo = document.getElementById("logout-btn");
+    if (lo) lo.addEventListener("click", logoutUser);
+    var follow = document.getElementById("pro-follow");
+    if (follow){
+      follow.addEventListener("click", function(){
+        if (!currentUser){ navigate("/login"); return; }
+        if (handle) toggleFollow(handle);
+        render();
+      });
+    }
+    var share = document.getElementById("pro-share");
+    if (share && handle) share.addEventListener("click", function(){ shareProfile(handle); });
+    var editBtn = document.getElementById("pro-edit-btn");
+    var form = document.getElementById("pro-edit");
+    if (editBtn && form){
+      editBtn.addEventListener("click", function(){ form.classList.toggle("on"); });
+    }
+    var vibe = currentUser ? Number(currentUser.vibe)||0 : 0;
+    document.querySelectorAll("[data-vibe]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        vibe = Number(btn.getAttribute("data-vibe"));
+        document.querySelectorAll("[data-vibe]").forEach(function(b){ b.classList.toggle("on", b===btn); });
+      });
+    });
+    if (form){
+      form.addEventListener("submit", function(e){
+        e.preventDefault();
+        var msg = saveMyProfile({
+          name: document.getElementById("pro-name").value,
+          handle: document.getElementById("pro-handle").value,
+          city: document.getElementById("pro-city").value,
+          bio: document.getElementById("pro-bio").value,
+          vibe: vibe
+        });
+        var box = document.getElementById("pro-msg");
+        if (msg){ if (box) box.textContent = msg; return; }
+        showToast("Profile saved");
+        navigate("/u/"+currentUser.handle);
+      });
+    }
+    document.querySelectorAll("[data-ptab]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        document.querySelectorAll("[data-ptab]").forEach(function(b){ b.classList.remove("on"); });
+        btn.classList.add("on");
+        var pane = document.getElementById("pro-pane");
+        var tab = btn.getAttribute("data-ptab");
+        var pro = findProfile(handle);
+        if (!pane || !pro) return;
+        var mine = !!(currentUser && currentUser.handle===pro.handle);
+        if (tab==="lockers") pane.innerHTML = profileLockerTiles(pro, mine);
+        if (tab==="gifts") pane.innerHTML = profileGiftTiles(pro, mine);
+        if (tab==="badges") pane.innerHTML = profileBadgeTiles(pro, mine);
+      });
     });
   }
 
@@ -4370,9 +4800,8 @@
         });
       });
     }
-    if (route === "/account"){
-      var lo = document.getElementById("logout-btn");
-      if (lo) lo.addEventListener("click", logoutUser);
+    if (route === "/account" || route.indexOf("/u/")===0){
+      bindProfileEvents();
     }
     if (route === "/party"){
       var pn = document.getElementById("play-now");
@@ -4606,7 +5035,10 @@
       if (localStorage.getItem("wd-gate")==="1") gateShown = true;
       if (localStorage.getItem("wd-nowbar")==="0") nowbarOn = false;
       var sess = JSON.parse(localStorage.getItem("wd-session")||"null");
-      if (sess && sess.email) currentUser = sess;
+      if (sess && sess.email){
+        var hit = loadUsers().filter(function(u){ return u.email===sess.email; })[0];
+        currentUser = sessionFromUser(hit || sess);
+      }
     } catch (e) {}
     loadGifts();
     loadLastOrder();
