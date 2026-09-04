@@ -1508,13 +1508,13 @@
   }
   .cat-row{display:flex;gap:18px;overflow:auto;padding:4px 0 20px;scrollbar-width:none;}
   .cat-row::-webkit-scrollbar{display:none;}
-  .cat-chip{flex:0 0 auto;width:72px;text-align:center;text-decoration:none;color:#000;font-size:12px;font-weight:500;}
+  .cat-chip{flex:0 0 auto;width:80px;text-align:center;text-decoration:none;color:#000;font-size:12px;font-weight:500;}
   .cat-chip i{
-    display:grid;place-items:center;width:64px;height:64px;margin:0 auto 8px;border-radius:50%;
-    background:#F3F3F3;color:#000;
+    display:block;width:72px;height:72px;margin:0 auto 8px;border-radius:50%;
+    background:#F3F3F3;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);
   }
-  .cat-chip i svg{width:28px;height:28px;display:block;}
-  .cat-chip.on i{background:#E6F8EE;box-shadow:inset 0 0 0 2px var(--ue-green);}
+  .cat-chip i img{width:100%;height:100%;object-fit:cover;display:block;}
+  .cat-chip.on i{box-shadow:0 0 0 2px var(--ue-green);}
   .offer-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 16px;}
   .offer-head h2{font-family:var(--font-body);font-size:24px;font-weight:700;text-transform:none;letter-spacing:-.02em;margin:0;}
   .offer-head a{font-size:14px;font-weight:500;color:#000;}
@@ -1562,28 +1562,31 @@
   body.store-flow .chat-root{bottom:calc(88px + env(safe-area-inset-bottom,0px)) !important;}
   body.store-flow main#app{padding-bottom:0;}
 
-  /* Uber-sized left rail — last rules win */
+  :root{ --rail-w:80px !important; }
   aside.left-rail{
-    display:flex;flex-direction:column;
-    position:fixed;top:0;left:0;bottom:0;width:var(--rail-w);z-index:120;
+    display:flex;flex-direction:column;align-items:center;
+    position:fixed;top:0;left:0;bottom:0;width:80px !important;z-index:120;
     background:#fff;border-right:1px solid #E8E8E8;
-    padding:16px 8px 16px;overflow-x:hidden;overflow-y:auto;
+    padding:8px 6px 16px;overflow-x:hidden;overflow-y:auto;
   }
   aside.left-rail .rail-kicker,
   aside.left-rail .rail-sub,
   aside.left-rail .rail-tools,
-  aside.left-rail .rail-pts{display:none !important;}
-  aside.left-rail .rail-logo{
-    display:flex;align-items:center;justify-content:center;gap:12px;
-    height:48px;padding:0 8px;margin:0 0 8px;color:#000;text-decoration:none;flex-shrink:0;
+  aside.left-rail .rail-pts,
+  aside.left-rail .rail-logo,
+  aside.left-rail .rail-rule,
+  aside.left-rail .rail-foot{display:none !important;}
+  .rail-burger{
+    width:48px;height:48px;border:0;background:transparent;border-radius:500px;
+    display:grid;place-items:center;color:#000;margin:4px 0 8px;flex-shrink:0;
   }
-  aside.left-rail .rail-mark,aside.left-rail svg.rail-mark{width:24px;height:24px;flex-shrink:0;}
-  aside.left-rail .rail-logo span{display:none;font-family:var(--font-body);font-size:18px;font-weight:700;letter-spacing:-.03em;line-height:1;}
-  aside.left-rail .rail-nav{display:flex;flex-direction:column;gap:4px;}
+  .rail-burger:hover{background:#EEEEEE;}
+  .rail-burger svg{width:22px;height:22px;}
+  aside.left-rail .rail-nav{display:flex;flex-direction:column;gap:2px;width:100%;}
   aside.left-rail a.rail-link{
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:4px;height:56px;min-height:56px;padding:6px 4px;border-radius:12px;margin:0;
-    font-family:var(--font-body);font-size:10px;font-weight:500;
+    gap:4px;height:64px;min-height:64px;padding:6px 2px;border-radius:12px;margin:0;
+    font-family:var(--font-body);font-size:11px;font-weight:500;
     letter-spacing:0;text-transform:none;color:#000;
   }
   aside.left-rail a.rail-link svg{
@@ -1591,40 +1594,93 @@
     stroke-linejoin:round;stroke-linecap:round;
   }
   aside.left-rail a.rail-link.on,aside.left-rail a.rail-link:hover{background:#EEEEEE;}
-  aside.left-rail a.rail-link.on{font-weight:500;}
-  aside.left-rail .rail-rule{display:none;height:1px;background:#E8E8E8;margin:12px 16px;}
-  aside.left-rail .rail-foot{margin-top:auto;display:none;flex-direction:column;gap:4px;padding:0;}
-  aside.left-rail .rail-foot a,aside.left-rail .rail-foot button{
-    display:flex;align-items:center;width:100%;height:40px;text-align:left;border:0;background:none;color:#545454;
-    font-family:var(--font-body);font-size:14px;font-weight:500;padding:0 16px;border-radius:500px;
+  .rail-scrim{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:198;border:0;padding:0;
   }
-  aside.left-rail .rail-foot a:hover,aside.left-rail .rail-foot button:hover{background:#EEEEEE;color:#000;}
+  .rail-drawer{
+    display:none;position:fixed;top:0;left:0;bottom:0;width:320px;z-index:199;
+    background:#fff;padding:16px 12px 24px;overflow-y:auto;
+    box-shadow:8px 0 32px rgba(0,0,0,.12);
+  }
+  body.rail-open .rail-scrim,body.rail-open .rail-drawer{display:block;}
+  .rail-drawer-head{
+    display:flex;align-items:center;gap:12px;height:48px;padding:0 8px 16px;
+  }
+  .rail-drawer-head button{
+    width:48px;height:48px;border:0;background:transparent;border-radius:500px;display:grid;place-items:center;
+  }
+  .rail-drawer-head button:hover{background:#EEEEEE;}
+  .rail-drawer-head b{font-size:18px;font-weight:700;letter-spacing:-.03em;}
+  .rail-drawer nav{display:flex;flex-direction:column;gap:4px;}
+  .rail-drawer a.rail-link{
+    display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:16px;
+    height:48px;padding:0 16px;border-radius:500px;
+    font-family:var(--font-body);font-size:16px;font-weight:500;color:#000;
+  }
+  .rail-drawer a.rail-link svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;}
+  .rail-drawer a.rail-link.on,.rail-drawer a.rail-link:hover{background:#EEEEEE;}
+  .rail-drawer .rail-rule{height:1px;background:#E8E8E8;margin:12px 16px;}
+  .rail-drawer .rail-foot{display:flex;flex-direction:column;gap:4px;}
+  .rail-drawer .rail-foot a,.rail-drawer .rail-foot button{
+    display:flex;align-items:center;height:40px;border:0;background:none;color:#545454;
+    font-family:var(--font-body);font-size:14px;font-weight:500;padding:0 16px;border-radius:500px;text-align:left;
+  }
+  .rail-drawer .rail-foot a:hover,.rail-drawer .rail-foot button:hover{background:#EEEEEE;color:#000;}
   .feed-page .gift-strip{
     background:var(--platinum);color:var(--platinum-ink);border-radius:16px;padding:20px 24px;
     display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;
   }
   .feed-page .gift-strip h2{font-family:var(--font-body);font-size:20px;font-weight:700;text-transform:none;letter-spacing:-.02em;margin:0 0 4px;}
   .feed-page .gift-strip p{margin:0;font-size:14px;color:#545454;}
-  @media(min-width:900px){
-    :root{ --rail-w:256px; }
-    aside.left-rail{width:256px;padding:24px 8px 16px;}
-    aside.left-rail .rail-logo{justify-content:flex-start;padding:0 16px;margin-bottom:16px;}
-    aside.left-rail .rail-logo span{display:block;}
-    aside.left-rail a.rail-link{
-      flex-direction:row;justify-content:flex-start;align-items:center;gap:16px;
-      height:48px;min-height:48px;max-height:48px;padding:0 16px;
-      font-size:16px;font-weight:500;border-radius:500px;margin:0;
-    }
-    aside.left-rail .rail-rule{display:block;}
-    aside.left-rail .rail-foot{display:flex;}
+  .page-sheet{padding-bottom:8px;}
+  .sheet-kicker{display:block;font-size:12px;font-weight:600;color:#6B6B6B;margin:0 0 8px;}
+  .sheet-lede{font-size:16px;color:#545454;margin:8px 0 0;max-width:60ch;}
+  main#app > .page-hero,main#app > section,main#app > .content-block{
+    max-width:1184px;margin-left:auto;margin-right:auto;padding-left:24px;padding-right:24px;
   }
+  main#app h1,main#app h2,main#app h3,
+  main#app .page-hero h1,main#app .section-head h2,main#app .content-block h2,
+  main#app .gifts-hero h1,main#app .empty-state h2,main#app .gift-form h2,
+  main#app .pd-info h1,main#app .store-page h1{
+    font-family:var(--font-body) !important;
+    text-transform:none !important;
+    letter-spacing:-.02em !important;
+  }
+  main#app h1,main#app .page-hero h1,main#app .gifts-hero h1,main#app .store-page h1{
+    font-size:32px !important;font-weight:800 !important;line-height:1.15 !important;
+  }
+  main#app h2,main#app .section-head h2,main#app .content-block h2{font-size:24px !important;font-weight:700 !important;}
+  .btn,.shop-pay,.login-link,.account-link,.cart-link{border-radius:500px !important;}
+  .wd-fab{background:var(--sapphire) !important;color:#fff !important;border:0 !important;}
+  .chat-form button{background:var(--champagne) !important;color:var(--champagne-ink) !important;}
+  .chat-chips button:hover{background:var(--sapphire);color:#fff;}
+  header.site{margin-left:0 !important;width:100%;z-index:140;border-bottom:0;}
+  .mast{position:relative;background:#fff;overflow:hidden;}
+  .mast-art{display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .mast-copy{display:none;}
+  body.has-mast{--head-h:280px;}
+  body.has-mast .mast{min-height:280px;background:#0E3386;}
+  body.has-mast .mast-art{display:block;}
+  body.has-mast .nav-row{position:relative;z-index:2;background:transparent;}
+  body.has-mast .ue-search{background:#fff;}
+  body.has-mast .rail-burger{background:var(--platinum);color:var(--platinum-ink);}
+  body.has-mast .mast-copy{
+    display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+    position:relative;z-index:2;padding:8px 24px 28px 24px;color:#fff;text-decoration:none;max-width:640px;
+  }
+  body.has-mast .mast-copy em{font-style:normal;font-size:14px;font-weight:600;}
+  body.has-mast .mast-copy b{font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1.05;text-shadow:0 2px 0 rgba(0,0,0,.25);}
+  body.has-mast .mast-copy span{font-size:16px;font-weight:500;}
+  aside.left-rail{top:var(--head-h,64px) !important;}
+  .nav-row{justify-content:flex-start;}
+  .rail-burger{flex-shrink:0;}
   @media(max-width:899px){
-    :root{ --rail-w:72px; }
-    aside.left-rail{width:72px;padding:8px 4px calc(16px + env(safe-area-inset-bottom,0px));}
-    aside.left-rail .rail-logo{height:40px;padding:0;margin-bottom:4px;}
-    aside.left-rail .rail-mark,aside.left-rail svg.rail-mark{width:24px;height:24px;}
     .ue-search{height:40px;padding:0 12px;}
     .ue-search input{height:40px;font-size:14px;}
+    main#app h1,main#app .page-hero h1{font-size:26px !important;}
+    body.has-mast .mast{min-height:220px;}
+    body.has-mast .mast-copy b{font-size:26px;}
+    body.has-mast .mast-copy{padding:8px 16px 20px;}
   }
 </style>
 </head>
@@ -1641,7 +1697,12 @@
     <span id="watchers">42 watching</span>
     <span class="clock" id="day-clock" data-countdown="day">--:--:--</span>
   </div>
-  <div class="nav-row">
+  <div class="mast" id="mast">
+    <img class="mast-art" id="mast-art" src="img/promos/promo-meme.png" alt="">
+    <div class="nav-row">
+    <button class="rail-burger" id="rail-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="rail-drawer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
     <form class="ue-search" id="ue-search" role="search">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 015.9 12.1l3.8 3.8-1.4 1.4-3.8-3.8A7.5 7.5 0 1110.5 3zm0 2a5.5 5.5 0 100 11 5.5 5.5 0 000-11z"/></svg>
       <label class="visually-hidden" for="ue-q">Search lockers</label>
@@ -1651,6 +1712,13 @@
       <div class="auth-slot" id="auth-slot"></div>
       <a href="#/cart" class="cart-link" data-route="/cart"><span id="cart-label">Hall Pass</span> <span class="cart-count" id="cart-count">0</span></a>
     </div>
+    </div>
+    <a class="mast-copy" id="mast-copy" href="#/collections">
+      <em>Launch weekend</em>
+      <b>8 lockers. $35–$350.</b>
+      <span>Three bottles each. Floor is the buy-in.</span>
+      <span class="btn btn-primary">Shop the drop</span>
+    </a>
   </div>
   <div hidden>
     <button class="btn btn-ghost" id="theme-toggle" type="button" aria-label="Toggle theme">Light</button>
@@ -1672,6 +1740,8 @@
   <div class="more-tools" id="more-tools"></div>
 </aside>
 <aside class="left-rail" id="left-rail" aria-label="Primary"></aside>
+<button class="rail-scrim" id="rail-scrim" type="button" aria-label="Close menu"></button>
+<aside class="rail-drawer" id="rail-drawer" aria-label="Menu"></aside>
 <aside class="right-rail" id="right-rail" aria-label="Hall slip"></aside>
 <div class="action-rail" id="action-rail"></div>
 <div id="auth-overlay" class="auth-overlay hidden" hidden></div>
@@ -3722,23 +3792,61 @@
       {href:"#/leaderboard", match:"/leaderboard", kind:"board", label:"Board"},
       {href: currentUser ? "#/u/"+currentUser.handle : "#/login", match:"/you", kind:"you", label:"You"}
     ];
-    el.innerHTML =
-      '<a class="rail-logo" href="#/">'+railMarkSVG()+'<span>Wine Detention</span></a>'+
-      '<nav class="rail-nav">'+items.map(function(item){
-        return '<a class="rail-link'+(railActive(route, item.match)?" on":"")+'" href="'+item.href+'">'+tabSvg(item.kind)+'<span>'+item.label+'</span></a>';
-      }).join("")+'</nav>'+
-      '<div class="rail-rule" aria-hidden="true"></div>'+
-      '<div class="rail-foot">'+
-        '<a href="#/faq">Help</a>'+
-        '<a href="#/how-it-works">How it works</a>'+
-        '<a href="#/about">About</a>'+
-        '<button type="button" id="rail-theme">'+(theme==="dark"?"Light":"Dark")+'</button>'+
-      '</div>';
-    var th = document.getElementById("rail-theme");
-    if (th) th.onclick = function(){
+    var links = items.map(function(item){
+      return '<a class="rail-link'+(railActive(route, item.match)?" on":"")+'" href="'+item.href+'">'+tabSvg(item.kind)+'<span>'+item.label+'</span></a>';
+    }).join("");
+    el.innerHTML = '<nav class="rail-nav">'+links+'</nav>';
+    var drawer = document.getElementById("rail-drawer");
+    if (drawer){
+      drawer.innerHTML =
+        '<div class="rail-drawer-head">'+
+          '<button type="button" id="rail-close" aria-label="Close menu"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>'+
+          '<b>Wine Detention</b>'+
+        '</div>'+
+        '<nav>'+links+'</nav>'+
+        '<div class="rail-rule"></div>'+
+        '<div class="rail-foot">'+
+          '<a href="#/faq">Help</a>'+
+          '<a href="#/how-it-works">How it works</a>'+
+          '<a href="#/about">About</a>'+
+          '<button type="button" id="rail-theme">'+(theme==="dark"?"Light":"Dark")+'</button>'+
+        '</div>';
+    }
+    bindRailMenu();
+  }
+  function setRailOpen(on){
+    document.body.classList.toggle("rail-open", !!on);
+    var burger = document.getElementById("rail-burger");
+    if (burger) burger.setAttribute("aria-expanded", on ? "true" : "false");
+  }
+  function bindRailMenu(){
+    var burger = document.getElementById("rail-burger");
+    var scrim = document.getElementById("rail-scrim");
+    var close = document.getElementById("rail-close");
+    var themeBtn = document.getElementById("rail-theme");
+    if (burger) burger.onclick = function(){ setRailOpen(!document.body.classList.contains("rail-open")); };
+    if (scrim) scrim.onclick = function(){ setRailOpen(false); };
+    if (close) close.onclick = function(){ setRailOpen(false); };
+    if (themeBtn) themeBtn.onclick = function(){
       theme = theme === "dark" ? "light" : "dark";
       persist(); applyPrefs(); render();
     };
+    document.querySelectorAll("#rail-drawer a").forEach(function(a){
+      a.addEventListener("click", function(){ setRailOpen(false); });
+    });
+  }
+  function renderPromoMast(){
+    var r = currentRoute().split("?")[0];
+    var show = r==="/" || r==="/collections";
+    document.body.classList.toggle("has-mast", show);
+    var copy = document.getElementById("mast-copy");
+    var art = document.getElementById("mast-art");
+    if (copy) copy.hidden = !show;
+    if (art) art.style.display = show ? "block" : "none";
+    requestAnimationFrame(function(){
+      var head = document.querySelector("header.site");
+      document.documentElement.style.setProperty("--head-h", (head ? head.offsetHeight : (show?280:64))+"px");
+    });
   }
 
   function renderRightRail(){
@@ -4012,18 +4120,18 @@
   }
   function catRowHTML(on){
     var cats = [
-      {id:"all", label:"All"},
-      {id:"rose", label:"Rosé"},
-      {id:"sparkling", label:"Bubbles"},
-      {id:"cab", label:"Cabernet"},
-      {id:"pinot", label:"Pinot"},
-      {id:"chard", label:"Chardonnay"},
-      {id:"napa", label:"Napa"},
-      {id:"icon", label:"Icon"}
+      {id:"all", file:"all", label:"All"},
+      {id:"rose", file:"rose", label:"Rosé"},
+      {id:"sparkling", file:"bubbles", label:"Bubbles"},
+      {id:"cab", file:"cab", label:"Cabernet"},
+      {id:"pinot", file:"pinot", label:"Pinot"},
+      {id:"chard", file:"chard", label:"Chardonnay"},
+      {id:"napa", file:"napa", label:"Napa"},
+      {id:"icon", file:"icon", label:"Icon"}
     ];
     return '<div class="cat-row">'+cats.map(function(c){
       var href = c.id==="all" ? "#/collections" : "#/collections?cat="+c.id;
-      return '<a class="cat-chip'+(on===c.id?" on":"")+'" href="'+href+'"><i>'+catIcon(c.id)+'</i>'+c.label+'</a>';
+      return '<a class="cat-chip'+(on===c.id?" on":"")+'" href="'+href+'"><i><img src="img/cats/cat-'+c.file+'.png" alt=""></i>'+c.label+'</a>';
     }).join("")+'</div>';
   }
   function filteredProducts(){
@@ -4036,11 +4144,7 @@
     });
   }
   function promoBannerHTML(){
-    return '<a class="promo-hero" href="#/collections">'+
-        '<img src="img/promos/promo-hero.png" alt="">'+
-        '<div class="promo-copy"><em>Launch weekend</em><b>8 lockers. $35–$350.</b><span>Three bottles each. Floor is the buy-in.</span></div>'+
-      '</a>'+
-      '<div class="promo-tiles">'+
+    return '<div class="promo-tiles">'+
         '<a class="promo-tile" href="#/collections?cat=rose"><img src="img/promos/promo-rose.png" alt=""><div class="promo-copy"><small>Patio night</small><b>$35 rosé</b></div></a>'+
         '<a class="promo-tile" href="#/collections?cat=sparkling"><img src="img/promos/promo-bubbles.png" alt=""><div class="promo-copy"><small>Weeknight</small><b>$53 bubbles</b></div></a>'+
         '<a class="promo-tile" href="#/collections?cat=cab"><img src="img/promos/promo-cab.png" alt=""><div class="promo-copy"><small>Napa lane</small><b>$88 cab</b></div></a>'+
@@ -4183,7 +4287,7 @@
     '</div>';
   }
   function pageHero(k,h,p){
-    return '<div class="page-hero"><div class="wrap"><span class="kicker">'+k+'</span><h1>'+h+'</h1><p>'+p+'</p></div></div>';
+    return '<div class="feed-page page-sheet"><p class="sheet-kicker">'+k+'</p><h1>'+h+'</h1><p class="sheet-lede">'+p+'</p></div>';
   }
   function pageLive(){
     var feed = posts.map(function(p){ return '<div class="feed-row"><span><b>'+p.who+'</b> — '+p.text+'</span></div>'; }).join("");
@@ -4822,8 +4926,10 @@
     if (isAuth) bindAuth(route);
     closeMore();
     renderNav();
+    renderPromoMast();
     renderHud();
     renderNowBar();
+    setRailOpen(false);
   }
 
   function highlightNav(route){
