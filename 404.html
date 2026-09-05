@@ -1702,9 +1702,115 @@
     .offer-shot{height:188px;}
     .cat-chip{width:58px;font-size:11px;}
     .cat-chip i{width:52px;height:52px;}
-    .feed-page{padding:12px 14px 96px;}
+    .feed-page{padding:12px 14px 110px;}
     .promo-tiles{grid-template-columns:1fr;}
+    .nowbar,.nowbar.on{
+      left:12px !important;right:68px !important;transform:none !important;
+      width:auto !important;max-width:none !important;
+      bottom:calc(12px + env(safe-area-inset-bottom,0px)) !important;
+    }
+    .chat-root{right:12px !important;bottom:calc(12px + env(safe-area-inset-bottom,0px)) !important;}
+    .play-head{grid-template-columns:72px 1fr !important;padding:14px !important;gap:12px !important;}
+    .play-art{width:72px !important;height:72px !important;}
+    .play-actions .btn{flex:1 1 calc(50% - 8px);min-height:40px;padding:8px 10px;font-size:13px;}
+    .track-row{grid-template-columns:24px minmax(0,1fr) auto auto !important;}
+    .composer{flex-direction:column;}
+    .composer .btn{width:100%;}
+    .rooms{grid-template-columns:1fr !important;}
+    .lane-grid,.group-box,.queue-box,.why-grid,.steps{grid-template-columns:1fr !important;}
+    .footer-grid{grid-template-columns:1fr 1fr !important;gap:20px !important;}
+    .map-wrap svg{height:140px;}
+    main#app > section,main#app > .content-block,main#app > .page-hero{
+      padding-left:14px !important;padding-right:14px !important;
+    }
   }
+
+  /* One mobile-first system for every page */
+  :root{ --rail-w:0px !important; }
+  section{padding:20px 16px 36px !important;}
+  .page-hero{padding:16px 16px 8px !important;}
+  .content-block{padding:16px 16px 40px !important;}
+  .section-head{margin-bottom:16px !important;text-align:left !important;}
+  .section-head .kicker,.sheet-kicker{
+    font-family:var(--font-body) !important;font-size:12px !important;font-weight:600 !important;
+    letter-spacing:0 !important;text-transform:none !important;color:#6B6B6B !important;
+  }
+  .play-head{
+    background:#111 !important;color:#fff !important;border:0 !important;
+    border-radius:16px !important;max-width:none;
+    display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;
+    padding:16px !important;
+  }
+  .play-art{width:96px;height:96px;border:0;border-radius:12px;}
+  .play-head h2{font-family:var(--font-body) !important;font-size:20px !important;text-transform:none !important;}
+  .play-head .kicker{color:#bbb !important;}
+  .stage{
+    background:#111 !important;color:#fff !important;border:0 !important;
+    border-radius:16px !important;min-height:0 !important;padding:20px !important;
+  }
+  .stage h3{font-family:var(--font-body) !important;font-size:22px !important;text-transform:none !important;}
+  .lyric{font-family:var(--font-body) !important;font-size:18px !important;}
+  .map-wrap{background:#111 !important;border:0 !important;border-radius:16px !important;padding:12px !important;}
+  .room-meta h3,.prize h3,.lane h3{
+    font-family:var(--font-body) !important;font-size:16px !important;font-weight:700 !important;
+    text-transform:none !important;letter-spacing:-.02em !important;
+  }
+  .prize{border-radius:16px !important;border:1px solid #E8E8E8 !important;background:#fff !important;}
+  footer.site{
+    background:#F6F6F6 !important;color:#545454 !important;
+    padding:32px 16px calc(110px + env(safe-area-inset-bottom,0px)) !important;
+  }
+  .footer-brand{font-family:var(--font-body) !important;font-size:18px !important;font-weight:800 !important;color:#000 !important;}
+  .footer-blurb{color:#545454 !important;}
+  .footer-grid h4{
+    font-family:var(--font-body) !important;color:#000 !important;letter-spacing:0 !important;font-size:13px !important;
+  }
+  .footer-grid a{color:#545454 !important;font-size:14px !important;}
+  .footer-grid a:hover{color:#000 !important;}
+  .footer-socials{border-color:#E8E8E8 !important;max-width:1184px;}
+  .footer-socials h4{color:#000 !important;font-family:var(--font-body) !important;letter-spacing:0 !important;}
+  .footer-socials-wrap{gap:8px;}
+  .footer-socials-wrap a{
+    width:36px;height:36px;padding:0;border:0 !important;opacity:1;
+    display:grid;place-items:center;border-radius:500px;background:#fff;color:#000;
+  }
+  .footer-socials-wrap a svg{width:16px;height:16px;fill:currentColor;display:block;}
+  .footer-socials-wrap a.live{box-shadow:0 0 0 2px #06C167;}
+  .footer-bottom{border-color:#E8E8E8 !important;color:#6B6B6B;}
+  .rail-drawer{
+    width:min(320px,88vw);border-radius:0 16px 16px 0;
+  }
+  body.party-flow .nowbar{display:none !important;}
+  main#app{padding-bottom:24px;}
+  .gpill{
+    border:1px solid #E8E8E8 !important;background:#fff !important;color:#000 !important;
+    border-radius:500px !important;font-weight:600 !important;
+  }
+  .gpill.on{background:var(--champagne) !important;border-color:var(--champagne) !important;color:var(--champagne-ink) !important;}
+  .grow h3,.gc .gc-mark,.gc .gc-amt{
+    font-family:var(--font-body) !important;text-transform:none !important;letter-spacing:-.02em !important;
+  }
+  .grow h3{font-size:16px !important;font-weight:700 !important;}
+  .gift-offer{background:#111 !important;color:#fff !important;}
+  .gift-form input,.gift-form textarea,.gift-form select,#gift-code{
+    font-size:16px !important;border-width:1px !important;border-radius:12px !important;
+  }
+  .gchoice button,.gamt button{border-width:1px !important;border-radius:500px !important;font-weight:700 !important;}
+  .gchoice button.on,.gamt button.on{
+    background:var(--champagne) !important;border-color:var(--champagne) !important;color:var(--champagne-ink) !important;
+    box-shadow:none !important;
+  }
+  .badge-row{flex-wrap:wrap;}
+  .room{border:1px solid #E8E8E8 !important;border-radius:16px !important;}
+  .room-live{background:#06C167 !important;color:#fff !important;border:0 !important;}
+  .map-wrap p,.unveil-sub{
+    font-family:var(--font-body) !important;letter-spacing:0 !important;text-transform:none !important;
+  }
+  .map-wrap p{color:#bbb !important;}
+  .shop-dock{left:0 !important;}
+  .pay-pills{flex-wrap:wrap;}
+  .gifts-hero{gap:16px;}
+  .gift-nav a.on,.gift-nav a:hover{border-bottom-color:var(--champagne) !important;color:#000 !important;}
 </style>
 </head>
 <body>
@@ -2017,7 +2123,7 @@
       emailPh:"you@example.com", emailAria:"Email address",
       footBlurb:"Full-price wine, guaranteed-value upgrades, zero discount-bin shame. Run by Vine & Recess Co.",
       footSite:"SITE", footShop:"SHOP", footLegal:"LEGAL",
-      footAbout:"About Us", footContact:"Contact Us", footAll:"All Collections", footCart:"Hall Pass (Cart)",
+      footAbout:"About Us", footContact:"Contact Us", footAll:"All Collections", footCart:"Cart",
       footPrivacy:"Privacy Policy", footTerms:"Terms of Service",
       footCopy:"© 2026 Wine Detention. Demo site — not a real store. You must be 21+.",
       footWines:"Wines sold by participating fictional wineries.",
@@ -2720,7 +2826,7 @@
   var lang = "en";
   var theme = "light";
   var currentUser = null;
-  var nowbarOn = true;
+  var nowbarOn = false;
 
   function L(){ return STR[lang] || STR.en; }
   function t(key){ var s=L(); return (s && s[key] != null) ? s[key] : (STR.en[key] != null ? STR.en[key] : key); }
@@ -3781,7 +3887,7 @@
     var s = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"';
     if (kind==="home") return '<svg '+s+'><path d="M4 11.5 12 4l8 7.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>';
     if (kind==="live") return '<svg '+s+'><circle cx="12" cy="12" r="3.2"/><path d="M5.2 8.2a8 8 0 0 1 0 7.6M18.8 8.2a8 8 0 0 0 0 7.6"/></svg>';
-    if (kind==="shop") return '<svg '+s+'><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>';
+    if (kind==="shop" || kind==="cart") return '<svg '+s+'><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>';
     if (kind==="party") return '<svg '+s+'><path d="M9 16.5V5.2l10-2v11.2"/><circle cx="8" cy="17.2" r="2.4"/><circle cx="17" cy="14.2" r="2.4"/></svg>';
     if (kind==="pass") return '<svg '+s+'><rect x="3.5" y="6" width="17" height="12" rx="2"/><path d="M3.5 12h17"/></svg>';
     if (kind==="gift") return '<svg '+s+'><path d="M4 10h16v10H4zM4 10V7h16v3M12 7v13M8.2 7c0-1.8 1.1-3.2 3.8-3.2S15.8 5.2 15.8 7"/></svg>';
@@ -3818,7 +3924,7 @@
       {href:"#/collections", match:"/collections", kind:"shop", label:"Shop"},
       {href:"#/gifts", match:"/gifts", kind:"gift", label:"Gifts"},
       {href:"#/live", match:"/live", kind:"live", label:t("navLive")},
-      {href:"#/cart", match:"/cart", kind:"pass", label:"Hall Pass"},
+      {href:"#/cart", match:"/cart", kind:"cart", label:"Cart"},
       {href:"#/leaderboard", match:"/leaderboard", kind:"board", label:"Board"},
       {href: currentUser ? "#/u/"+currentUser.handle : "#/login", match:"/you", kind:"you", label:"You"}
     ];
@@ -4045,6 +4151,30 @@
     document.body.classList.remove("more-open");
   }
 
+  function socialIconSVG(id){
+    var p = "";
+    if (id==="tiktok") p="M16.5 2.2c1 .8 2.1 1.4 3.4 1.6v3.1c-1.2 0-2.3-.3-3.4-.9v6.7c0 3.4-2.8 6.1-6.3 6.1S4 16.1 4 12.7 6.7 6.6 10.2 6.6c.3 0 .6 0 .9.1v3.3c-.3-.1-.6-.2-.9-.2-1.6 0-2.9 1.3-2.9 2.9s1.3 2.9 2.9 2.9 2.9-1.3 2.9-2.9V2.2h3.4z";
+    else if (id==="instagram") p="M12 7.2A4.8 4.8 0 1 0 16.8 12 4.8 4.8 0 0 0 12 7.2zm0 7.9A3.1 3.1 0 1 1 15.1 12 3.1 3.1 0 0 1 12 15.1zM17.6 6.9a1.1 1.1 0 1 1-1.1-1.1 1.1 1.1 0 0 1 1.1 1.1zM12 4.4c2.2 0 2.5 0 3.4.1a3.6 3.6 0 0 1 2.4.9 3.6 3.6 0 0 1 .9 2.4c.1.9.1 1.2.1 3.4s0 2.5-.1 3.4a3.6 3.6 0 0 1-.9 2.4 3.6 3.6 0 0 1-2.4.9c-.9.1-1.2.1-3.4.1s-2.5 0-3.4-.1a3.6 3.6 0 0 1-2.4-.9 3.6 3.6 0 0 1-.9-2.4C4.4 14.5 4.4 14.2 4.4 12s0-2.5.1-3.4a3.6 3.6 0 0 1 .9-2.4 3.6 3.6 0 0 1 2.4-.9C9.5 4.4 9.8 4.4 12 4.4m0-2.2c-2.3 0-2.6 0-3.5.1A5.8 5.8 0 0 0 4.6 4.6 5.8 5.8 0 0 0 2.3 8.5C2.2 9.4 2.2 9.7 2.2 12s0 2.6.1 3.5a5.8 5.8 0 0 0 2.3 3.9 5.8 5.8 0 0 0 3.9 2.3c.9.1 1.2.1 3.5.1s2.6 0 3.5-.1a5.8 5.8 0 0 0 3.9-2.3 5.8 5.8 0 0 0 2.3-3.9c.1-.9.1-1.2.1-3.5s0-2.6-.1-3.5a5.8 5.8 0 0 0-2.3-3.9A5.8 5.8 0 0 0 15.5 2.3C14.6 2.2 14.3 2.2 12 2.2z";
+    else if (id==="youtube") p="M23 12.2s0-3.4-.4-4.9c-.2-.9-.9-1.6-1.8-1.8C18.6 5 12 5 12 5s-6.6 0-8.8.5c-.9.2-1.6.9-1.8 1.8C1 8.8 1 12.2 1 12.2s0 3.4.4 4.9c.2.9.9 1.6 1.8 1.8 2.2.5 8.8.5 8.8.5s6.6 0 8.8-.5c.9-.2 1.6-.9 1.8-1.8.4-1.5.4-4.9.4-4.9zM9.8 15.6V8.8l6.3 3.4-6.3 3.4z";
+    else if (id==="x") p="M14.7 10.3 22.8 1h-2.2l-6.8 7.9L8.2 1H1.5l8.5 12.4L1.5 23h2.2l7.3-8.5 5.9 8.5h6.7L14.7 10.3zm-2.6 3 1-1.4 6.3 8.9h-2.1l-5.2-7.5zM3.8 2.6h2.1l14.2 18.8h-2.1L3.8 2.6z";
+    else if (id==="twitch") p="M3.2 1.5 1.5 5.7v13.6h4.6V23l3.9-3.7h3.1L21.7 13V1.5H3.2zm16.7 10.4-3.1 3.1h-3.1l-2.7 2.6v-2.6H6.1V3.3h13.8v8.6zM14.8 6.5h1.8v5.5h-1.8V6.5zm-4.9 0h1.8v5.5H9.9V6.5z";
+    else if (id==="discord") p="M20.3 4.4A19.2 19.2 0 0 0 15.6 3l-.2.4c1.8.5 2.8 1.2 3.7 2.1-1.6-.8-3.2-1.3-4.8-1.5-.1 0-2.3-.3-4.4 0-1.6.2-3.2.7-4.8 1.5.9-.9 2-1.6 3.7-2.1L8.6 3A19 19 0 0 0 3.8 4.4C.8 8.8-.2 13.1.2 17.4c2.1 1.6 4.2 2.5 6.2 3.1l1.3-2.1c-.7-.3-1.4-.6-2-1 .2.1.3.2.5.3 3.8 1.8 8 1.8 11.8 0 .2-.1.3-.2.5-.3-.6.4-1.3.8-2 1l1.3 2.1c2-.6 4.1-1.5 6.2-3.1.5-5-1.1-9.2-3.7-13zm-12 10.3c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2 1 2 2.3-.9 2.3-2 2.3zm7.4 0c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2 1 2 2.3-.9 2.3-2 2.3z";
+    else if (id==="telegram") p="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 6.8-1.5 7.2c-.1.5-.4.6-.8.4l-2.3-1.7-1.1 1.1c-.1.1-.2.2-.5.2l.2-2.3 4.2-3.8c.2-.2 0-.3-.2-.1l-5.2 3.3-2.2-.7c-.5-.1-.5-.5.1-.7l8.7-3.4c.4-.1.8.1.6.5z";
+    else if (id==="facebook") p="M13.4 21.9v-7.6h2.6l.4-3.1h-3V9.2c0-.9.3-1.5 1.6-1.5H16.7V4.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.2H8.2v3.1h2.4v7.6c4.8.5 7.2.4 12-.1V12c0-5.5-4.5-10-10-10S2 6.5 2 12c0 5.2 4 9.5 9.1 9.9h2.3z";
+    else if (id==="snapchat") p="M12 3c3.4 0 6.2 2.4 6.2 6.1 0 1.4-.3 2.3.5 3.3.3.4.8.6 1.3.4.3-.1.6 0 .7.3s0 .6-.3.8c-.8.4-1.5 1-1.5 1.8 0 1.2 1.4 1.9 2.5 2.2.3.1.5.4.4.7-.1.5-1.3.7-1.8.8-.2 1.3-1.4 2.4-3.4 3-1.1.3-1.6 1-2.6 1.2-.6.1-1.3-.3-1.5-.3s-.9.4-1.5.3c-1-.2-1.5-.9-2.6-1.2-2-.6-3.2-1.7-3.4-3-.5-.1-1.7-.3-1.8-.8-.1-.3.1-.6.4-.7 1.1-.3 2.5-1 2.5-2.2 0-.8-.7-1.4-1.5-1.8-.3-.2-.4-.5-.3-.8s.4-.4.7-.3c.5.2 1 0 1.3-.4.8-1 .5-1.9.5-3.3C5.8 5.4 8.6 3 12 3z";
+    else if (id==="pinterest") p="M12 2C6.5 2 2 6.5 2 12c0 4.2 2.6 7.8 6.3 9.3-.1-.8-.2-2 0-2.9.2-.8 1.4-5.9 1.4-5.9s-.3-.7-.3-1.7c0-1.6.9-2.8 2.1-2.8 1 0 1.5.7 1.5 1.6 0 1-.6 2.5-1 3.9-.3 1.2.6 2.1 1.7 2.1 2.1 0 3.7-2.2 3.7-5.3 0-2.8-2-4.7-4.9-4.7-3.3 0-5.3 2.5-5.3 5.1 0 1 .4 2.1.9 2.7l.3.1c0 .1 0 .2-.1.3l-.3 1.3c0 .2-.2.3-.4.2-1.5-.7-2.4-2.8-2.4-4.6 0-3.7 2.7-7.1 7.8-7.1 4.1 0 7.3 2.9 7.3 6.8 0 4-2.6 7.3-6.1 7.3-1.2 0-2.3-.6-2.7-1.3l-.7 2.8c-.3 1-1 2.3-1.5 3.1 1.1.3 2.3.5 3.5.5 5.5 0 10-4.5 10-10S17.5 2 12 2z";
+    else if (id==="reddit") p="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm5.7 9.2a1.4 1.4 0 0 1 1.4 1.5 1.4 1.4 0 0 1-1 1.4c0 .1 0 .3 0 .4 0 2.2-2.6 4-5.8 4s-5.8-1.8-5.8-4c0-.1 0-.3 0-.4a1.4 1.4 0 1 1 1.5-2.3c1-.7 2.4-1.2 3.9-1.2l.7-3.5a.3.3 0 0 1 .4-.2l2.4.5a1.2 1.2 0 1 1 .1.6l-2.1-.4-.6 3c1.5 0 2.9.4 4 1.2a1.4 1.4 0 0 1 1.3-.4zM8.9 13.6a1 1 0 1 1 2 0 1 1 0 0 1-2 0zm5.6 2.4c-.7.7-2 .8-2.5.8s-1.8-.1-2.5-.8a.4.4 0 0 1 0-.6.4.4 0 0 1 .6 0c.5.4 1.4.6 1.9.6s1.4-.2 1.9-.6a.4.4 0 0 1 .6 0c.2.2.2.4 0 .6zm.2-1.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z";
+    else if (id==="threads") p="M16.8 11.3c-.1-2.4-1.4-4.2-4-4.3-2.1 0-3.5 1.2-4 2.5l1.9.7c.3-.7.9-1.4 2.1-1.4 1.5 0 2.2 1 2.3 2.2-1-.2-2-.2-3.1 0-2.2.3-3.8 1.6-3.7 3.6.1 2 1.7 3.3 3.8 3.3 1.4 0 2.6-.5 3.3-1.5.5.8 1.1 1.5 2 2l1.1-1.6c-.8-.6-1.4-1.3-1.7-2.2.7-.8 1.1-1.9 1-3.3zm-4.2 4.4c-1.2 0-2-.6-2-1.5 0-1.1 1-1.6 2.6-1.8 1-.1 1.8 0 2.5.2 0 1.8-1.1 3.1-3.1 3.1zM12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z";
+    else if (id==="kick") p="M3 3h6.2v7.1L14.5 3H21l-6.6 8.4L21 21h-6.6l-5.2-7.2V21H3V3z";
+    else if (id==="wechat") p="M9.2 4C5.2 4 2 6.9 2 10.5c0 2.1 1.2 3.9 3.1 5.1L4.6 18l2.6-1.3c.6.2 1.3.3 2 .3.3 0 .6 0 .9-.1A5.7 5.7 0 0 0 12 19.4c.4 0 .8 0 1.2-.1l2.3 1.1-.5-2.1c1.6-1.1 2.6-2.7 2.6-4.5 0-3.1-2.8-5.6-6.3-5.6-.4 0-.8 0-1.2.1C9.6 7.4 8.5 6.6 7.2 6.2 7.8 4.9 8.5 4.3 9.2 4zm8.5 6.2c3.1.4 5.3 2.7 5.3 5.4 0 1.6-.9 3-2.3 4l.4 1.8-1.9-.9c-.5.1-1 .2-1.5.2-2.9 0-5.2-2-5.2-4.5 0-.3 0-.6.1-.8 1.8.1 3.5-.5 4.8-1.6.4.1.8.2 1.3.2.4 0 .7 0 1-.1z";
+    else if (id==="vk") p="M12.6 17.3h1.5s.4 0 .7-.2c.2-.2.2-.6.2-.6s0-1.8.8-2.1c.8-.3 1.9 1.8 3 2.5.8.6 1.5.5 1.5.5l3-.1s1.6-.1.8-1.3c-.1-.1-.5-.9-2.4-2.6-2-1.7-1.7-1.5.7-4.5.1-.2 2.6-3.6 2.6-3.6s.2-.5-.2-.7c-.3-.1-1.1-.1-1.1-.1h-1.6s-.1 0-.3.1-.2.3-.2.3-1.1 2.8-2.3 3.3c-1.2.6-1.6-.3-1.6-.3s0-2.3.1-3.2c0-.8-.3-1.2-.8-1.3-.4 0-1 0-2 0-1.5 0-2 .1-2.5.4-.3.2-.4.5-.3.6 0 0 .1.3.4.4.4.2.8.4.9.8.1.5.1 1.6.1 1.6s0 1.8-.4 2c-.3.2-.8-.2-1.8-1.2C8.3 7.4 7.3 5.4 7.3 5.4s-.1-.2-.2-.3-.3-.2-.3-.2H5.3s-.5 0-.6.2c-.2.2 0 .5 0 .5s4.2 9.8 9 10.7z";
+    else if (id==="whatnot") p="M4 5h16v14H4V5zm2.5 2.4v9.2h3.1V9.8l2.2 4.4h1.4l2.2-4.4v6.8h3.1V7.4h-3.3L12 12 9.8 7.4H6.5z";
+    else if (id==="douyin") p="M14.2 3c.7 1.6 1.9 2.8 3.6 3.3v2.8c-1.3-.1-2.5-.5-3.6-1.2v6.5c0 3.1-2.5 5.6-5.6 5.6S3 17.5 3 14.4s2.5-5.6 5.6-5.6c.4 0 .8 0 1.1.1v2.9a2.8 2.8 0 0 0-1.1-.2 2.7 2.7 0 1 0 2.7 2.7V3h2.9z";
+    else if (id==="red") p="M5 4h14v16H5V4zm2.3 2.5v11h3.2v-4.4h2.4c2.4 0 3.8-1.3 3.8-3.3S15.3 6.5 13 6.5H7.3zm3.2 2.2h2c1.1 0 1.7.5 1.7 1.3s-.6 1.3-1.7 1.3h-2V8.7z";
+    else p="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zm0 4.2a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8zM7.6 16.2c.9-1.6 2.5-2.6 4.4-2.6s3.5 1 4.4 2.6A7 7 0 0 1 12 19a7 7 0 0 1-4.4-2.8z";
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+p+'"/></svg>';
+  }
+
   function renderFooter(){
     document.getElementById("site-footer").innerHTML =
       '<div class="footer-grid">'+
@@ -4074,7 +4204,9 @@
         '</ul></div>'+
       '</div>'+
       '<div class="footer-socials"><h4>We\'re live on 18 apps</h4><div class="footer-socials-wrap">'+
-        SOCIALS.map(function(s){ return '<a href="#/socials" class="'+(s.live?"live":"")+'">'+s.name+'</a>'; }).join("")+
+        SOCIALS.map(function(s){
+          return '<a href="'+s.url+'" target="_blank" rel="noopener noreferrer" class="'+(s.live?"live":"")+'" aria-label="'+s.name+'">'+socialIconSVG(s.id)+'</a>';
+        }).join("")+
       '</div></div>'+
       '<div class="footer-bottom"><span>'+t("footCopy")+'</span><span>'+t("footWines")+'</span></div>';
     var fb = document.getElementById("footer-brand");
@@ -4307,12 +4439,12 @@
   }
   function pageLive(){
     var feed = posts.map(function(p){ return '<div class="feed-row"><span><b>'+p.who+'</b> — '+p.text+'</span></div>'; }).join("");
-    return pageHero(t("liveK"), t("liveH"), t("liveP")) +
+    return pageHero("Live","The locker is on 18 apps.", t("liveP")) +
       '<section>'+roomsHTML()+'</section>'+
-      '<section><div class="section-head"><span class="kicker">HALL FEED</span><h2>Post it while it\'s hot.</h2></div>'+
+      '<section><div class="section-head"><span class="kicker">Hall feed</span><h2>Post it while it\'s hot.</h2></div>'+
         '<form class="composer" id="post-form"><input id="post-text" maxlength="140" placeholder="Drop a line for the hall..." required><button class="btn btn-primary" type="submit">Post · +20</button></form>'+
         '<div class="board" style="max-width:800px;">'+feed+'</div></section>'+
-      '<section><div style="text-align:center;"><a class="btn btn-primary" href="#/party">Open the jukebox party</a></div></section>';
+      '<section><div style="text-align:center;"><a class="btn btn-primary" href="#/party">Open the jukebox</a></div></section>';
   }
   function pageParty(){
     var tr = findTrack(nowPlayingId);
@@ -4331,19 +4463,19 @@
     var kq = karaokeQueue.map(function(k){
       return '<div class="feed-row"><span><b>'+esc(k.who)+'</b> — '+esc(k.song)+'</span></div>';
     }).join("");
-    return pageHero("DETENTION RADIO","The whole hall is one party.","Superboy (First Person) plus original house loops. Pay points to bump the jukebox. Grab the mic for karaoke livestream (demo).")+
+    return pageHero("Party","The whole hall is one party.","Superboy plus original house loops. Bump the jukebox. Grab the mic (demo).")+
       '<section>'+
         '<div class="play-head">'+
           '<div class="play-art" aria-hidden="true"></div>'+
           '<div>'+
-            '<div class="kicker" style="color:#fff;">NOW PLAYING · EVERYONE HEARS THIS</div>'+
+            '<div class="kicker">Now playing</div>'+
             '<h2>'+esc(tr.title)+'</h2>'+
             '<p>'+esc(tr.artist)+' — '+esc(tr.album)+'</p>'+
             '<div class="play-actions">'+
-              '<button class="btn btn-dark" type="button" id="play-prev">Previous</button>'+
-              '<button class="btn btn-primary" type="button" id="play-now">'+(musicOn?"Pause the party":"Play for the hall")+'</button>'+
+              '<button class="btn btn-dark" type="button" id="play-prev">Prev</button>'+
+              '<button class="btn btn-primary" type="button" id="play-now">'+(musicOn?"Pause":"Play")+'</button>'+
               '<button class="btn btn-dark" type="button" id="play-next">Next</button>'+
-              '<button class="btn btn-dark" type="button" data-req="'+tr.id+'">Bump this · 40 pts</button>'+
+              '<button class="btn btn-dark" type="button" data-req="'+tr.id+'">Bump · 40</button>'+
             '</div>'+
             '<p style="margin-top:10px;font-size:13px;opacity:.85;">'+ (tr.src ? "Playing the original Superboy cut." : "Browser-made house loop.") +' No licensed catalog.</p>'+
           '</div>'+
@@ -4351,7 +4483,7 @@
         '<div class="track-list">'+rows+'</div>'+
       '</section>'+
       '<section class="why-alt">'+
-        '<div class="section-head"><span class="kicker">KARAOKE LIVE</span><h2>Go on stage.</h2><p>Same energy as a Whatnot booth — you, a mic, the hall watching.</p></div>'+
+        '<div class="section-head"><span class="kicker">Karaoke live</span><h2>Go on stage.</h2><p>Same energy as a Whatnot booth — you, a mic, the hall watching.</p></div>'+
         '<div class="stage">'+
           '<div class="live-dot" style="margin:0 auto 12px;">LIVE KARAOKE</div>'+
           '<div class="stage-pulse"></div>'+
@@ -4519,18 +4651,18 @@
     }).join("");
     return '<div class="content-block" style="max-width:1120px;">'+giftNavHTML("shop")+
       '<div class="gifts-hero">'+
-        '<div><span class="kicker">WINE DETENTION GIFTS</span><h1>Gift cards</h1>'+
+        '<div><span class="kicker">Gifts</span><h1>Gift cards</h1>'+
         '<p>Choose a design. Add an amount, a name, a note, and a Detention Radio song. They get a countdown, fireworks, and '+giftOddsNote()+'</p>'+
         '<a class="btn btn-primary" href="#/gifts/new/'+featured[0].id+'">Customize a card</a></div>'+
         '<div class="gifts-stack">'+featured.map(function(d){ return giftCardHTML(d); }).join("")+'</div>'+
       '</div>'+
       '<div class="gpills">'+pills+'</div>'+rows+
-      '<div class="section-head"><span class="kicker">HOW TO REDEEM</span><h2>Open it like a locker.</h2></div>'+
+      '<div class="section-head"><span class="kicker">How to redeem</span><h2>Open it like a locker.</h2></div>'+
       '<div class="faq-list">'+
         '<div class="faq-item open"><button class="faq-q" type="button">Redeem on your phone<span class="plus">+</span></button><div class="faq-a"><p>Tap the share link. Hit Record &amp; unveil. Screenshot the slam. Credit stays in this browser demo.</p></div></div>'+
         '<div class="faq-item"><button class="faq-q" type="button">Redeem on a computer<span class="plus">+</span></button><div class="faq-a"><p>Paste the code on Redeem gift card, then run the countdown.</p></div></div>'+
       '</div>'+
-      '<div class="section-head" style="margin-top:28px;"><span class="kicker">MORE WAYS</span><h2>Send it how they party.</h2></div>'+
+      '<div class="section-head" style="margin-top:28px;"><span class="kicker">More ways</span><h2>Send it how they party.</h2></div>'+
       '<div class="how-buy">'+
         '<article><h3>Purchase for your crew</h3><p>Demo bulk: send more than one from My gifts. A live version would open a corporate portal at 10+ cards.</p></article>'+
         '<article><h3>Buy from stores</h3><p>Physical cards are a sketch — we do not mail plastic or alcohol. Digital is instant.</p></article>'+
@@ -4918,6 +5050,7 @@
     document.body.classList.toggle("shop-flow", shopOn);
     document.body.classList.toggle("store-flow", storeOn);
     document.body.classList.toggle("pro-flow", proOn);
+    document.body.classList.toggle("party-flow", view==="/party");
     if (shopOn){
       var toast = document.getElementById("toast");
       if (toast) toast.classList.remove("show");
