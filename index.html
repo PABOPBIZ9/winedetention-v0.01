@@ -1811,6 +1811,40 @@
   .pay-pills{flex-wrap:wrap;}
   .gifts-hero{gap:16px;}
   .gift-nav a.on,.gift-nav a:hover{border-bottom-color:var(--champagne) !important;color:#000 !important;}
+  .lane,.quest,.board-row,.prize,.step-card{
+    background:#fff !important;border:1px solid #E8E8E8 !important;border-radius:16px !important;
+  }
+  .quest{min-height:56px;padding:14px 16px !important;}
+  .quest.done{border-color:#06C167 !important;}
+  .pill{
+    font-family:var(--font-body) !important;letter-spacing:0 !important;font-size:12px !important;
+    border-color:#E8E8E8 !important;color:#000 !important;background:#fff !important;
+  }
+  .pill.lime{background:#E8F8EF !important;border-color:#06C167 !important;color:#137333 !important;}
+  .board-row .rk{
+    font-family:var(--font-body) !important;font-size:14px !important;font-weight:800 !important;
+    color:#6B6B6B !important;
+  }
+  .faq-list{background:transparent !important;gap:8px !important;}
+  .faq-item{border:1px solid #E8E8E8;border-radius:16px;padding:0 16px;background:#fff;}
+  .faq-q{font-family:var(--font-body);min-height:48px;gap:12px;}
+  .faq-q .plus{font-family:var(--font-body) !important;color:#000 !important;}
+  .step-num{
+    background:var(--champagne) !important;color:var(--champagne-ink) !important;
+    font-family:var(--font-body) !important;border-radius:500px !important;font-size:14px !important;font-weight:800 !important;
+  }
+  .form-row label{font-family:var(--font-body) !important;font-size:12px !important;font-weight:700 !important;color:#73747B !important;}
+  .form-row input,.form-row textarea{
+    font-size:16px !important;border:1px solid #E8E8EA !important;border-radius:12px !important;
+    background:#F6F7F8 !important;padding:12px 14px !important;font-family:var(--font-body) !important;
+  }
+  #contact-form .btn{min-height:48px;width:100%;}
+  #contact-msg{font-family:var(--font-body) !important;color:#137333 !important;}
+  .social-lane{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:inherit;padding:16px;}
+  .social-lane-ico{width:36px;height:36px;border-radius:500px;background:#F6F6F6;display:grid;place-items:center;}
+  .social-lane-ico svg{width:16px;height:16px;fill:currentColor;}
+  .social-lane p{margin:0;font-size:13px;color:#6B6B6B;}
+  .social-lane.live .social-lane-ico{box-shadow:0 0 0 2px #06C167;}
 </style>
 </head>
 <body>
@@ -2122,19 +2156,19 @@
       newsBtn:"Sign Up", newsOk:"You're on the list. Check your inbox for a code (demo — no email sent).",
       emailPh:"you@example.com", emailAria:"Email address",
       footBlurb:"Full-price wine, guaranteed-value upgrades, zero discount-bin shame. Run by Vine & Recess Co.",
-      footSite:"SITE", footShop:"SHOP", footLegal:"LEGAL",
+      footSite:"Site", footShop:"Shop", footLegal:"Legal",
       footAbout:"About Us", footContact:"Contact Us", footAll:"All Collections", footCart:"Cart",
       footPrivacy:"Privacy Policy", footTerms:"Terms of Service",
       footCopy:"© 2026 Wine Detention. Demo site — not a real store. You must be 21+.",
       footWines:"Wines sold by participating fictional wineries.",
-      colHeroK:"FULL ROSTER", colHeroH:"All Collections",
+      colHeroK:"Shop", colHeroH:"All Collections",
       colHeroP:"Every deal currently posted on the detention board. One flat price each, three bottles assigned at checkout.",
       notFound:"Assignment not found", notFoundP:"That collection doesn't exist.", backCols:"Back to all collections",
       allCols:"← ALL COLLECTIONS", realSrp:"Real suggested retail value:",
       neverLess:"— you'll never pay less than sticker, only get more.",
       collectionsWord:"collection(s)", viewPass:"View Hall Pass", possible:"Possible Assignments",
       added:"Added to your hall pass:",
-      howK:"THE SYLLABUS", howH:"How Wine Detention Works",
+      howK:"How it works", howH:"How the whole party works",
       howP:"From browsing to bottle, here's the full path a collection takes before it reaches your door.",
       j1t:"Browse curated collections", j1b:"Skip scrolling through hundreds of individual bottles. Every collection is built around a region, varietal, or theme, so you shop by what excites you.",
       j2t:"Purchase at one flat price", j2b:"Every bottle in a collection shares the same buy-in price. The only decision is which collection to pick.",
@@ -2142,18 +2176,18 @@
       j4t:"See your reveal instantly", j4b:"You find out exactly which bottles you got — and their real market value — the moment your order is placed.",
       j5t:"Carefully packed and shipped", j5b:"In a live version of this concept, orders would ship hand-packed with seasonally appropriate insulation.",
       j6t:"Drink now or hold for later", j6b:"Pull a cork tonight, or set a bold red aside for an occasion worth waiting for.",
-      aboutK:"DETENTION FILE", aboutH:"About Wine Detention",
+      aboutK:"About", aboutH:"We stream the cellar",
       aboutP:"A concept wine club built on one rule: never discount the bottle, always upgrade the buyer.",
       a1t:"Why we exist", a1b:"Wine Detention started as a simple complaint: buying wine online usually means either overpaying for a single bottle you already know, or digging through a discount bin that makes a winery's brand feel cheap. We wanted a third option — one where the winery's pricing stays untouched, and the thrill comes from what you might be assigned rather than how much was slashed off the sticker.",
       a2t:"How the model works", a2b:"We never discount wine. Every bottle in every collection is sold at its full suggested retail price. Instead of moving inventory through markdowns, we build collections where every outcome already clears the price you paid, and let some outcomes run well past it. Wineries keep their pricing integrity intact, and buyers get a real shot at a meaningful upgrade.",
       a3t:"Run by Vine & Recess Co.", a3b:"Wine Detention is operated by Vine & Recess Co., a fictional wine-industry group created for this concept. In a live version of this brand, that kind of parent company would bring the operational backbone — sourcing, storage, and fulfillment — while Wine Detention handles the front-of-house experience.",
       a4t:"A note on this demo", a4b:"This site is a design and product concept, not a functioning retailer. No real wine is sold, no real payment is processed, and the wineries and bottlings referenced throughout are fictional.",
-      faqK:"READ BEFORE YOU RAISE YOUR HAND", faqH:"Frequently Asked Questions",
-      contactK:"NOTE TO THE OFFICE", contactH:"Contact Us",
+      faqK:"FAQ", faqH:"Frequently asked questions",
+      contactK:"Contact", contactH:"Ping the hall monitors",
       contactP:"Questions about a collection, a reveal, or anything else — send a note below.",
       name:"Name", email:"Email", message:"Message", send:"Send Message",
       contactOk:"Message received. In a live version, our office would reply within 1–2 business days.",
-      privacyH:"Privacy Policy", termsH:"Terms of Service", legalK:"LEGAL",
+      privacyH:"Privacy Policy", termsH:"Terms of Service", legalK:"Legal",
       privacyB:"This is a placeholder privacy policy for the Wine Detention concept demo. A live version of this site would explain what information is collected at checkout, how it is stored, and how customers can request its removal. No real personal data is collected, stored, or transmitted by this demo. Any information entered into forms on this page stays in your browser session only.",
       termsB:"This is a placeholder terms of service for the Wine Detention concept demo. A live version would cover eligibility (21+), order fulfillment, shipping restrictions by state, and dispute resolution. This demo does not process real orders or real payments.",
       emptyH:"Your hall pass is empty.", emptyP:"Nothing's been assigned yet — go pick a collection.",
@@ -2631,18 +2665,18 @@
     feedK: "HALL MONITOR WIRE",
     feedH: "Someone just got lucky.",
     navLive:"Live", navTrade:"Import / Export", navGive:"Giveaways", navQuests:"Quests", navBoard:"Leaderboard", navSocials:"Socials",
-    liveK:"STREAMING IN PUBLIC", liveH:"The locker is live on 18 apps.",
+    liveK:"Live", liveH:"The locker is on 18 apps.",
     liveP:"Whatnot energy. Douyin night market. TikTok shop hosts. Same drop, different time zones.",
-    tradeK:"NAPA → THE WORLD", tradeH:"Import / export lanes are open.",
+    tradeK:"Import / Export", tradeH:"Import / export lanes are open.",
     tradeP:"We show the route from Napa Valley lockers to Hong Kong, mainland China, Russia, and the rest of the night.",
-    giveK:"HUGE GIVEAWAYS", giveH:"The whole hall is poppin'.",
+    giveK:"Giveaways", giveH:"The whole hall is poppin'.",
     giveP:"Enter with detention points. Weekly cellar raids, 1-of-1 icons, and crew prizes.",
-    questK:"DAILY QUESTS", questH:"Farm points for every move.",
+    questK:"Quests", questH:"Farm points for every move.",
     questP:"Scroll. Share. Post. Buy. Sit in a live. Crush grapes. The board never sleeps.",
-    boardK:"HALL OF FAME", boardH:"Who's farming the loudest.",
-    socialsK:"BUILD IN PUBLIC", socialsH:"18 networks. Same sentence.",
+    boardK:"Leaderboard", boardH:"Who's farming the loudest.",
+    socialsK:"Socials", socialsH:"The locker is on 18 apps.",
     socialsP:"We stream the drop everywhere the party already is.",
-    groupK:"CREW BUY", groupH:"Fill the locker together.",
+    groupK:"Crew buy", groupH:"Fill the locker together.",
     groupP:"Hit the crew cap and unlock a bonus bottle for everyone in the room.",
     pointsWord:"PTS",
     partyOn:"PARTY",
@@ -4518,7 +4552,7 @@
   }
   function pageGiveaways(){
     var cards = GIVEAWAYS.map(function(g){
-      return '<div class="prize"><h3>'+g.name+'</h3><p style="margin:10px 0;">'+g.prize+'</p><p style="font-family:var(--font-type);color:var(--gold);">'+g.cost+' pts · ends '+g.ends+'</p>'+
+      return '<div class="prize"><h3>'+g.name+'</h3><p style="margin:10px 0;color:#6B6B6B;">'+g.prize+'</p><p style="font-size:13px;color:#6B6B6B;">'+g.cost+' pts · ends '+g.ends+'</p>'+
         '<button class="btn btn-primary" data-enter="'+g.id+'" style="margin-top:12px;">'+t("enterGive")+'</button></div>';
     }).join("");
     return pageHero(t("giveK"), t("giveH"), t("giveP")) +
@@ -4560,15 +4594,18 @@
   }
   function pageSocials(){
     var cards = SOCIALS.map(function(s){
-      return '<div class="lane"><h3>'+s.name+'</h3><p style="margin-top:8px;">'+(s.live?"LIVE now — we\'re building in public.":"Clip archive + drop alerts.")+'</p>'+
-        '<a class="btn btn-dark" href="#/live" style="margin-top:12px;display:inline-block;">Open room</a></div>';
+      return '<a class="lane social-lane'+(s.live?" live":"")+'" href="'+s.url+'" target="_blank" rel="noopener noreferrer">'+
+        '<span class="social-lane-ico">'+socialIconSVG(s.id)+'</span>'+
+        '<h3>'+s.name+'</h3>'+
+        '<p>'+(s.live?"Live now — building in public.":"Clip archive + drop alerts.")+'</p>'+
+      '</a>';
     }).join("");
     return pageHero(t("socialsK"), t("socialsH"), t("socialsP")) +
       '<section><div class="lane-grid">'+cards+'</div></section>';
   }
 
   function pageHowItWorks(){
-    return pageHero("THE SYLLABUS","How the whole party works","Drop. Stream. Farm points. Export the case. This is not a quiet wine club.") +
+    return pageHero(t("howK"), t("howH"), "Drop. Stream. Farm points. Export the case. This is not a quiet wine club.") +
       '<section><div class="steps">'+
         stepCard("1","Catch the live locker","Home and Live run the same daily sentence. Stock burns on a clock.")+
         stepCard("2","Sit the stream","Whatnot / Douyin / TikTok rooms. Sitting in one is a quest.")+
@@ -4581,7 +4618,7 @@
   function journeyStep(n,title,body){ return '<h2>'+n+'. '+title+'</h2><p>'+body+'</p>'; }
 
   function pageAbout(){
-    return pageHero("DETENTION FILE","We stream the cellar","Wine Detention is a Napa-born drop desk that refuses markdowns and refuses to be quiet.") +
+    return pageHero(t("aboutK"), t("aboutH"), t("aboutP")) +
       '<section><div class="lane-grid">'+
         '<div class="lane"><h3>Why we exist</h3><p style="margin-top:10px;">Buying wine online is either a known bottle at a sad markup or a discount bin that cheapens the winery. We keep sticker. The thrill is the assignment.</p></div>'+
         '<div class="lane"><h3>Build in public</h3><p style="margin-top:10px;">Eighteen networks. Same locker. If the hall is poppin\' on Douyin at 2am Hong Kong, Napa hears it.</p></div>'+
@@ -4608,7 +4645,7 @@
   }
 
   function pageContact(){
-    return pageHero("NOTE TO THE OFFICE","Ping the hall monitors","Press, importer partners, stream hosts, or a wild giveaway idea.") +
+    return pageHero(t("contactK"), t("contactH"), t("contactP")) +
       '<div class="content-block">' +
         '<p>Napa desk · HK night desk · Moscow VK desk. This form stays in your browser.</p>'+
         '<form id="contact-form">' +
