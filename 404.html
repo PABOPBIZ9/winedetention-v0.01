@@ -1368,12 +1368,11 @@
     border:1px solid #E8E8EA;border-radius:12px;background:#F6F7F8;padding:12px 14px;
   }
   .shop-dock{
-    position:fixed;left:var(--rail-w);right:0;bottom:0;z-index:170;
-    display:flex;align-items:center;gap:12px;
-    padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
+    position:fixed;left:var(--rail-w);right:0;bottom:0;z-index:190;
+    display:flex;align-items:center;flex-wrap:wrap;gap:12px;
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));
     background:#fff;border-top:1px solid #F1F1F2;
     box-shadow:0 -8px 24px rgba(22,24,35,.06);
-    z-index:190;
   }
   .shop-dock-meta{flex:1;min-width:0;}
   .shop-dock-meta span{display:block;font-size:11px;color:#73747B;font-weight:600;}
@@ -1845,6 +1844,138 @@
   .social-lane-ico svg{width:16px;height:16px;fill:currentColor;}
   .social-lane p{margin:0;font-size:13px;color:#6B6B6B;}
   .social-lane.live .social-lane-ico{box-shadow:0 0 0 2px #06C167;}
+
+  /* Checkout: Uber / TikTok Shop / Walmart bag */
+  body.shop-flow{scroll-padding-bottom:220px;}
+  .shop-page.chk-page{max-width:1080px;padding-bottom:188px;}
+  .chk-main .shop-card,.chk-main .chk-pills,.chk-express,.pay-pills,.chk-slots{
+    scroll-margin-bottom:220px;
+  }
+  .chk-express{
+    background:#F6F7F8;border-radius:20px;padding:14px;margin:0 0 14px;
+  }
+  .chk-express > p{margin:0 0 10px;font-size:13px;font-weight:800;}
+  .chk-express .pay-pills{grid-template-columns:1fr 1fr 1fr;}
+  .pay-pills [data-pay="apple"]{background:#111;color:#fff;border-color:#111;}
+  .pay-pills [data-pay="shop"]{background:#5A31F4;color:#fff;border-color:#5A31F4;}
+  .chk-or{
+    display:flex;align-items:center;gap:10px;margin:4px 0 12px;
+    color:#8A8B92;font-size:12px;font-weight:700;
+  }
+  .chk-or::before,.chk-or::after{content:"";flex:1;height:1px;background:#E8E8EA;}
+  .chk-steps{
+    display:flex;gap:8px;margin:0 0 16px;padding:0;
+    list-style:none;align-items:center;
+  }
+  .chk-steps li{
+    flex:1;display:flex;align-items:center;gap:8px;min-width:0;
+    font-size:12px;font-weight:700;color:#8A8B92;
+  }
+  .chk-steps li span{
+    width:22px;height:22px;border-radius:50%;flex-shrink:0;
+    display:grid;place-items:center;background:#F1F2F4;color:#73747B;font-size:11px;
+  }
+  .chk-steps li.on, .chk-steps li.done{color:#161823;}
+  .chk-steps li.on span{background:var(--champagne);color:var(--champagne-ink);}
+  .chk-steps li.done span{background:#06C167;color:#fff;}
+  .chk-banner{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    background:#111;color:#fff;border-radius:16px;padding:12px 14px;margin:0 0 12px;
+    font-size:13px;font-weight:600;
+  }
+  .chk-banner em{font-style:normal;color:#E8D4A8;}
+  .chk-pills{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px;}
+  .chk-pills button,.chk-slots button{
+    border:1.5px solid #E8E8EA;background:#fff;color:#161823;
+    border-radius:16px;padding:12px 10px;font-family:var(--font-body);
+    font-size:13px;font-weight:700;text-align:left;min-height:56px;
+  }
+  .chk-pills button b,.chk-slots button b{display:block;font-size:14px;}
+  .chk-pills button small,.chk-slots button small{display:block;margin-top:2px;font-weight:600;color:#73747B;font-size:12px;}
+  .chk-pills button.on,.chk-slots button.on{
+    border-color:#161823;background:#161823;color:#fff;box-shadow:none !important;
+  }
+  .chk-pills button.on small,.chk-slots button.on small{color:#bbb;}
+  .chk-slots{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:0 0 4px;}
+  @media(max-width:520px){.chk-slots{grid-template-columns:1fr;}}
+  .shop-item{grid-template-columns:88px 1fr;align-items:center;}
+  .shop-thumb{width:88px;height:88px;border-radius:14px;}
+  .shop-item-tools{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;}
+  .chk-promo{display:flex;gap:8px;margin:0;}
+  .chk-promo input{
+    flex:1;min-width:0;height:48px;border:1px solid #E8E8EA;border-radius:12px;
+    background:#F6F7F8;padding:0 14px;font-size:16px;font-family:var(--font-body);
+  }
+  .chk-promo button{
+    height:48px;padding:0 16px;border:0;border-radius:999px;
+    background:var(--platinum);color:var(--platinum-ink);font-weight:800;font-size:14px;
+  }
+  .chk-lines{display:flex;flex-direction:column;gap:10px;}
+  .chk-lines > div{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:#545454;}
+  .chk-lines .due{color:#161823;font-weight:800;font-size:16px;padding-top:8px;border-top:1px solid #F1F1F2;}
+  .chk-lines .save{color:#137333;font-weight:700;}
+  .chk-addr{
+    display:flex;align-items:flex-start;gap:12px;width:100%;
+    border:1.5px solid #E8E8EA;background:#F6F7F8;border-radius:16px;padding:14px;
+    text-align:left;font-family:var(--font-body);color:inherit;
+  }
+  .chk-addr.on{border-color:#161823;background:#fff;}
+  .chk-addr b{display:block;font-size:14px;}
+  .chk-addr span{display:block;margin-top:4px;font-size:13px;color:#545454;line-height:1.35;}
+  .chk-age{
+    display:flex;align-items:flex-start;gap:10px;margin:4px 0 0;font-size:13px;font-weight:600;line-height:1.35;
+  }
+  .chk-age input{width:20px;height:20px;margin-top:1px;accent-color:#161823;flex-shrink:0;}
+  .pay-pills{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .pay-pills button{min-height:48px;border-radius:16px !important;}
+  .pay-pills button.on{background:#161823 !important;border-color:#161823 !important;color:#fff !important;}
+  .chk-err{color:#CC3433;font-size:12px;font-weight:700;margin:6px 0 0;display:none;}
+  .chk-err.on{display:block;}
+  .shop-page .form-row input,.shop-page .form-row select{
+    height:48px;font-size:16px;width:100%;
+  }
+  .chk-track{
+    display:flex;gap:0;margin:0 0 14px;padding:6px 0 18px;list-style:none;position:relative;
+  }
+  .chk-track::before{
+    content:"";position:absolute;left:12px;right:12px;top:16px;height:3px;background:#E8E8EA;border-radius:99px;
+  }
+  .chk-track li{
+    flex:1;position:relative;z-index:1;text-align:center;font-size:11px;font-weight:700;color:#8A8B92;
+    padding-top:28px;
+  }
+  .chk-track li::before{
+    content:"";position:absolute;top:8px;left:50%;width:16px;height:16px;margin-left:-8px;
+    border-radius:50%;background:#E8E8EA;border:3px solid #fff;box-sizing:border-box;
+  }
+  .chk-track li.done{color:#137333;}
+  .chk-track li.done::before{background:#06C167;}
+  .chk-track li.on{color:#161823;}
+  .chk-track li.on::before{background:var(--champagne);box-shadow:0 0 0 4px rgba(232,212,168,.45);}
+  .chk-check{
+    width:56px;height:56px;border-radius:50%;background:#06C167;color:#fff;
+    display:grid;place-items:center;margin:4px auto 10px;font-size:28px;font-weight:800;
+  }
+  .oid-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;}
+  .oid-row button{
+    border:0;background:#F1F2F4;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:800;
+  }
+  .shop-dock .chk-age{width:100%;order:-2;margin:0 0 8px;color:#161823;}
+  .shop-dock .chk-dock-note{width:100%;font-size:11px;color:#8A8B92;font-weight:600;order:-1;margin:0 0 4px;}
+  .shop-pay{min-height:52px;font-size:16px;}
+  @media(min-width:900px){
+    .chk-layout{
+      display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start;
+    }
+    .chk-layout .chk-side{
+      position:sticky;top:80px;
+    }
+    .chk-layout .shop-dock{
+      position:static;left:auto;right:auto;border:0;box-shadow:none;padding:12px 0 0;background:transparent;
+    }
+    .chk-page{padding-bottom:40px;}
+    .chk-slots{grid-template-columns:repeat(3,1fr);}
+  }
 </style>
 </head>
 <body>
@@ -2855,6 +2986,10 @@
 
   var cart = [];
   var lastOrder = null;
+  var checkoutDraft = {
+    fulfill:"delivery", slot:"today", pay:"card", promo:"", promoOn:false,
+    first:"", last:"", email:"", phone:"", address:"", city:"", zip:"", state:"CA", age:false
+  };
   var gateShown = false;
   var gateRejected = false;
   var lang = "en";
@@ -2896,6 +3031,43 @@
       else { var p=findProduct(i.slug); if(p) tot+=p.price*i.qty; }
     });
     return tot;
+  }
+  function cartDiscount(){
+    return checkoutDraft.promoOn ? Math.round(cartTotal() * 0.1) : 0;
+  }
+  function cartDue(){ return Math.max(0, cartTotal() - cartDiscount()); }
+  function cartEta(){
+    for (var i=0;i<cart.length;i++){
+      if (cart[i].kind==="gift") continue;
+      var p = findProduct(cart[i].slug);
+      if (p && p.eta) return p.eta;
+    }
+    return "15–25 min";
+  }
+  function bottleCount(){
+    var n=0;
+    cart.forEach(function(i){ if (i.kind!=="gift") n += 3*i.qty; });
+    return n;
+  }
+  function saveCart(){
+    try { localStorage.setItem("wd-cart", JSON.stringify(cart)); } catch(e){}
+  }
+  function loadCart(){
+    try {
+      var c = JSON.parse(localStorage.getItem("wd-cart")||"[]");
+      if (Array.isArray(c)) cart = c;
+    } catch(e){}
+  }
+  function saveCheckoutDraft(){
+    try { sessionStorage.setItem("wd-checkout", JSON.stringify(checkoutDraft)); } catch(e){}
+  }
+  function loadCheckoutDraft(){
+    try {
+      var d = JSON.parse(sessionStorage.getItem("wd-checkout")||"null");
+      if (d && typeof d==="object"){
+        Object.keys(checkoutDraft).forEach(function(k){ if (d[k]!=null) checkoutDraft[k]=d[k]; });
+      }
+    } catch(e){}
   }
   function loadGifts(){
     try { gifts = JSON.parse(localStorage.getItem("wd-gifts")||"[]")||[]; } catch(e){ gifts=[]; }
@@ -3049,6 +3221,7 @@
     boughtExtra[slug] = (boughtExtra[slug]||0) + qty;
     addPoints(80, "buy");
     renderCartCount();
+    saveCart();
     showToast(t("added") + " " + locProduct(findProduct(slug)).name);
     updateLiveChrome();
     renderHud();
@@ -3323,6 +3496,7 @@
   function removeFromCart(slug){
     cart = cart.filter(function(i){ return i.slug!==slug; });
     renderCartCount();
+    saveCart();
     render();
   }
   function addGiftToCart(){
@@ -3340,6 +3514,7 @@
     });
     addPoints(80, "buy");
     renderCartCount();
+    saveCart();
     showToast("Gift card added to your hall pass.");
     updateLiveChrome();
     renderHud();
@@ -3479,6 +3654,7 @@
   }
   function setQty(slug, qty){
     cart.forEach(function(i){ if(i.slug===slug) i.qty = Math.max(1, qty); });
+    saveCart();
     render();
   }
   function renderCartCount(){
@@ -4862,11 +5038,12 @@
   }
 
   function shopSteps(active){
-    return '<div class="shop-steps" aria-hidden="true">'+
-      '<i class="'+(active>=1?"on":"")+(active>1?" done":"")+'"></i>'+
-      '<i class="'+(active>=2?"on":"")+(active>2?" done":"")+'"></i>'+
-      '<i class="'+(active>=3?"on":"")+'"></i>'+
-    '</div>';
+    var labels = ["Bag","Checkout","Reveal"];
+    return '<ol class="chk-steps">'+labels.map(function(lab,i){
+      var n = i+1;
+      var cls = active>n ? "done" : (active===n ? "on" : "");
+      return '<li class="'+cls+'"><span>'+(active>n?"✓":n)+'</span>'+lab+'</li>';
+    }).join("")+'</ol>';
   }
   function shopThumbHTML(item){
     if (item.kind==="gift"){
@@ -4885,9 +5062,9 @@
         return '<div class="shop-item">'+shopThumbHTML(item)+
           '<div class="shop-item-body"><h3>'+esc(gd.title)+'</h3>'+
           '<p>Gift card · '+money(item.amount)+' · '+(item.who==="me"?"For me":"For "+esc(item.to||"a friend"))+'</p>'+
-          '<div class="shop-item-row"><span></span><b>'+money(item.amount)+'</b></div></div>'+
+          '<div class="shop-item-tools"><b>'+money(item.amount)+'</b>'+
           (opts.edit?'<button class="shop-x" type="button" data-remove="'+item.slug+'">Remove</button>':'')+
-        '</div>';
+          '</div></div></div>';
       }
       var p = locProduct(findProduct(item.slug));
       var qty = opts.edit
@@ -4895,83 +5072,180 @@
         : '<span class="shop-note">× '+item.qty+'</span>';
       return '<div class="shop-item">'+shopThumbHTML(item)+
         '<div class="shop-item-body"><h3>'+esc(p.name)+'</h3>'+
-        '<p>3 bottles · floor '+money(p.price)+' · '+upgradeChance(p)+'% upgrades</p>'+
-        '<div class="shop-item-row">'+qty+'<b>'+money(p.price*item.qty)+'</b></div></div>'+
+        '<p>3 bottles · floor '+money(p.price)+' · '+(p.eta||"20–30 min")+'</p>'+
+        '<div class="shop-item-tools">'+qty+'<b>'+money(p.price*item.qty)+'</b>'+
         (opts.edit?'<button class="shop-x" type="button" data-remove="'+p.slug+'">Remove</button>':'')+
-      '</div>';
+        '</div></div></div>';
     }).join("");
+  }
+  function chkSummaryHTML(){
+    var tot = cartTotal();
+    var off = cartDiscount();
+    var due = cartDue();
+    var bottles = bottleCount();
+    return '<div class="chk-lines">'+
+      '<div><span>Subtotal'+(bottles?(" · "+bottles+" bottles"):"")+'</span><b>'+money(tot)+'</b></div>'+
+      (off?'<div class="save"><span>Hall pass · 10% off</span><b>−'+money(off)+'</b></div>':'')+
+      '<div><span>Shipping</span><span>Free · demo</span></div>'+
+      '<div><span>Tax</span><span>Included · demo</span></div>'+
+      '<div class="due"><span>Total</span><b>'+money(due)+'</b></div>'+
+    '</div>';
+  }
+  function chkPromoHTML(){
+    return '<div class="chk-promo">'+
+      '<label class="visually-hidden" for="chk-promo">Promo code</label>'+
+      '<input id="chk-promo" maxlength="20" placeholder="Promo code" value="'+esc(checkoutDraft.promo)+'" autocomplete="off">'+
+      '<button type="button" id="chk-promo-btn">'+(checkoutDraft.promoOn?"Applied":"Apply")+'</button>'+
+    '</div>'+
+    '<p class="chk-err" id="promo-err"></p>'+
+    (checkoutDraft.promoOn?'<p class="shop-note">HALLPASS took 10% off. Demo only — nothing is billed.</p>':'');
+  }
+  function applyPromoCode(code){
+    code = String(code||"").trim().toUpperCase().replace(/\s+/g,"");
+    checkoutDraft.promo = code;
+    var ok = {HALLPASS:1, DETENTION:1, WD10:1, POP:1};
+    checkoutDraft.promoOn = !!ok[code];
+    saveCheckoutDraft();
+    return checkoutDraft.promoOn;
   }
   function pageCart(){
     if (cart.length===0){
-      return '<div class="shop-page">'+
+      return '<div class="shop-page chk-page">'+
         '<div class="shop-top"><a class="shop-back" href="#/collections" aria-label="Back">‹</a><h1>Bag</h1></div>'+
         shopSteps(1)+
         '<div class="shop-empty"><h2>Your bag is empty</h2><p>Grab a locker. Three bottles land at checkout.</p>'+
         '<a class="shop-pay" href="#/collections" style="display:inline-grid;min-width:180px;margin:0 auto;">Shop lockers</a></div>'+
       '</div>';
     }
-    var total = cartTotal();
     var n = cartCount();
-    return '<div class="shop-page">'+
-      '<div class="shop-top"><a class="shop-back" href="#/collections" aria-label="Back">‹</a><h1>Bag</h1><span>'+n+' item'+(n===1?"":"s")+'</span></div>'+
-      shopSteps(1)+
-      '<div class="shop-card">'+shopBagRows({edit:true})+'</div>'+
-      '<div class="shop-card"><h2>Summary</h2>'+
-        '<div class="shop-item-row"><span class="shop-note">Subtotal</span><b>'+money(total)+'</b></div>'+
-        '<div class="shop-item-row" style="margin-top:8px;"><span class="shop-note">Shipping</span><span class="shop-note">Demo · not billed</span></div>'+
+    var due = cartDue();
+    var pickup = checkoutDraft.fulfill==="pickup";
+    return '<div class="shop-page chk-page chk-layout">'+
+      '<div class="chk-main">'+
+        '<div class="shop-top"><a class="shop-back" href="#/collections" aria-label="Back">‹</a><h1>Bag</h1><span>'+n+' item'+(n===1?"":"s")+'</span></div>'+
+        shopSteps(1)+
+        '<div class="chk-banner">'+
+          '<em>'+(pickup?"Pickup":"Delivery")+'</em>'+
+          '<span>'+esc(cartEta())+' · demo drop</span>'+
+          '<span>21+</span>'+
+        '</div>'+
+        '<div class="chk-pills">'+
+          '<button type="button" class="'+(pickup?"":"on")+'" data-fulfill="delivery"><b>Delivery</b><small>To your door · demo</small></button>'+
+          '<button type="button" class="'+(pickup?"on":"")+'" data-fulfill="pickup"><b>Pickup</b><small>Napa locker · today</small></button>'+
+        '</div>'+
+        '<div class="shop-card">'+shopBagRows({edit:true})+'</div>'+
+        '<div class="shop-card"><h2>Promo</h2>'+chkPromoHTML()+'</div>'+
       '</div>'+
-      '<div class="shop-dock">'+
-        '<div class="shop-dock-meta"><span>Total</span><b>'+money(total)+'</b></div>'+
-        '<a class="shop-pay" href="#/checkout">Checkout</a>'+
-      '</div>'+
+      '<aside class="chk-side">'+
+        '<div class="shop-card"><h2>Summary</h2>'+chkSummaryHTML()+'</div>'+
+        '<div class="shop-dock">'+
+          '<p class="chk-dock-note">Demo checkout · no charge · 21+ only</p>'+
+          '<div class="shop-dock-meta"><span>Total</span><b>'+money(due)+'</b></div>'+
+          '<a class="shop-pay" href="#/checkout">Go to checkout</a>'+
+        '</div>'+
+      '</aside>'+
     '</div>';
   }
 
   function pageCheckout(){
     if (cart.length===0){
-      return '<div class="shop-page">'+
+      return '<div class="shop-page chk-page">'+
         '<div class="shop-top"><a class="shop-back" href="#/cart" aria-label="Back">‹</a><h1>Checkout</h1></div>'+
         '<div class="shop-empty"><h2>Nothing to pay</h2><p>Add a locker first.</p>'+
         '<a class="shop-pay" href="#/collections" style="display:inline-grid;min-width:180px;margin:0 auto;">Shop lockers</a></div></div>';
     }
-    var total = cartTotal();
-    return '<form class="shop-page" id="checkout-form">'+
-      '<div class="shop-top"><a class="shop-back" href="#/cart" aria-label="Back">‹</a><h1>Checkout</h1></div>'+
-      shopSteps(2)+
-      '<div class="shop-card"><h2>Bag</h2>'+shopBagRows({edit:false})+'</div>'+
-      '<div class="shop-card"><h2>Deliver to</h2>'+
-        '<div class="form-grid2">'+
-          '<div class="form-row"><label for="ch-first">First name</label><input id="ch-first" required autocomplete="given-name"></div>'+
-          '<div class="form-row"><label for="ch-last">Last name</label><input id="ch-last" required autocomplete="family-name"></div>'+
+    var d = checkoutDraft;
+    var pickup = d.fulfill==="pickup";
+    var due = cartDue();
+    var slots = [
+      {id:"today", b:"Today, 4–7pm", s:cartEta()},
+      {id:"tonight", b:"Tonight, 8–10pm", s:"Night drop"},
+      {id:"tomorrow", b:"Tomorrow, 10–1", s:"Next locker"}
+    ];
+    var pays = [
+      {id:"card", label:"Card"},
+      {id:"apple", label:"Apple Pay"},
+      {id:"shop", label:"Shop Pay"},
+      {id:"wallet", label:"Wallet"}
+    ];
+    return '<form class="shop-page chk-page chk-layout" id="checkout-form">'+
+      '<div class="chk-main">'+
+        '<div class="shop-top"><a class="shop-back" href="#/cart" aria-label="Back">‹</a><h1>Checkout</h1></div>'+
+        shopSteps(2)+
+        '<div class="chk-pills">'+
+          '<button type="button" class="'+(pickup?"":"on")+'" data-fulfill="delivery"><b>Delivery</b><small>Adult signature · 21+</small></button>'+
+          '<button type="button" class="'+(pickup?"on":"")+'" data-fulfill="pickup"><b>Pickup</b><small>Napa locker · ID check</small></button>'+
         '</div>'+
-        '<div class="form-row"><label for="ch-email">Email</label><input id="ch-email" type="email" required autocomplete="email"></div>'+
-        '<div class="form-row"><label for="ch-address">Street</label><input id="ch-address" required autocomplete="street-address"></div>'+
-        '<div class="form-grid2">'+
-          '<div class="form-row"><label for="ch-city">City</label><input id="ch-city" required autocomplete="address-level2"></div>'+
-          '<div class="form-row"><label for="ch-zip">ZIP</label><input id="ch-zip" required autocomplete="postal-code" inputmode="numeric"></div>'+
+        '<div class="chk-express">'+
+          '<p>Express checkout</p>'+
+          '<div class="pay-pills">'+pays.filter(function(p){ return p.id!=="card"; }).map(function(p){
+            return '<button type="button" class="'+(d.pay===p.id?"on":"")+'" data-pay="'+p.id+'">'+p.label+'</button>';
+          }).join("")+'</div>'+
+          '<p class="shop-note" style="margin:10px 0 0;">Tap a wallet, then Place order. Demo — nothing is charged.</p>'+
         '</div>'+
-        '<p class="shop-note">Demo only. We do not ship alcohol or take a real payment.</p>'+
-      '</div>'+
-      '<div class="shop-card"><h2>Pay</h2>'+
-        '<div class="pay-pills">'+
-          '<button type="button" class="on" data-pay="card">Card</button>'+
-          '<button type="button" data-pay="apple">Apple Pay</button>'+
-          '<button type="button" data-pay="shop">Shop Pay</button>'+
+        '<p class="chk-or">or pay with card below</p>'+
+        (pickup
+          ? '<div class="shop-card"><h2>Pickup locker</h2>'+
+            '<div class="chk-addr on"><div><b>Wine Detention · St. Helena</b><span>1230 Main St, St. Helena, CA 94574<br>Bring ID. Demo — nothing ships.</span></div></div></div>'
+          : '<div class="shop-card"><h2>Deliver to</h2>'+
+            '<button type="button" class="chk-addr '+(d.address?"on":"")+'" id="chk-fill-demo">'+
+              '<div><b>'+(d.address ? esc((d.first||"")+" "+(d.last||"")).trim() || "Saved address" : "Use a demo address")+'</b>'+
+              '<span>'+(d.address ? esc(d.address+", "+d.city+" "+d.state+" "+d.zip) : "One tap fills a 21+ California locker address. You can edit it.")+'</span></div></button>'+
+            '<div class="form-grid2" style="margin-top:12px;">'+
+              '<div class="form-row"><label for="ch-first">First name</label><input id="ch-first" required autocomplete="given-name" value="'+esc(d.first)+'"></div>'+
+              '<div class="form-row"><label for="ch-last">Last name</label><input id="ch-last" required autocomplete="family-name" value="'+esc(d.last)+'"></div>'+
+            '</div>'+
+            '<div class="form-row"><label for="ch-email">Email</label><input id="ch-email" type="email" required autocomplete="email" value="'+esc(d.email)+'"></div>'+
+            '<div class="form-row"><label for="ch-phone">Phone</label><input id="ch-phone" type="tel" autocomplete="tel" inputmode="tel" value="'+esc(d.phone)+'" placeholder="(707) 555-0121"></div>'+
+            '<div class="form-row"><label for="ch-address">Street</label><input id="ch-address" required autocomplete="street-address" value="'+esc(d.address)+'"></div>'+
+            '<div class="form-grid2">'+
+              '<div class="form-row"><label for="ch-city">City</label><input id="ch-city" required autocomplete="address-level2" value="'+esc(d.city)+'"></div>'+
+              '<div class="form-row"><label for="ch-zip">ZIP</label><input id="ch-zip" required autocomplete="postal-code" inputmode="numeric" value="'+esc(d.zip)+'"></div>'+
+            '</div>'+
+            '<div class="form-row"><label for="ch-state">State</label>'+
+              '<select id="ch-state">'+["CA","NY","IL","TX","FL","WA"].map(function(st){
+                return '<option'+(d.state===st?" selected":"")+'>'+st+'</option>';
+              }).join("")+'</select></div>'+
+            '<p class="shop-note">Eligible demo states only. We do not ship alcohol.</p></div>'
+        )+
+        '<div class="shop-card"><h2>'+(pickup?"Pickup window":"Arrival window")+'</h2>'+
+          '<div class="chk-slots">'+slots.map(function(s){
+            return '<button type="button" class="'+(d.slot===s.id?"on":"")+'" data-slot="'+s.id+'"><b>'+s.b+'</b><small>'+s.s+'</small></button>';
+          }).join("")+'</div></div>'+
+        '<div class="shop-card"><h2>Pay</h2>'+
+          '<div class="pay-pills">'+pays.map(function(p){
+            return '<button type="button" class="'+(d.pay===p.id?"on":"")+'" data-pay="'+p.id+'">'+p.label+'</button>';
+          }).join("")+'</div>'+
+          '<div class="form-row" id="card-field"'+(d.pay==="card"?"":' style="display:none;"')+'>'+
+            '<label for="ch-card">Card number</label>'+
+            '<input id="ch-card" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" '+(d.pay==="card"?"required":"")+'>'+
+          '</div>'+
+          '<div class="form-grid2" id="card-extra"'+(d.pay==="card"?"":' style="display:none;"')+'>'+
+            '<div class="form-row"><label for="ch-exp">Expiry</label><input id="ch-exp" placeholder="12 / 28" inputmode="numeric" autocomplete="cc-exp"></div>'+
+            '<div class="form-row"><label for="ch-cvc">CVC</label><input id="ch-cvc" placeholder="123" inputmode="numeric" autocomplete="cc-csc" maxlength="4"></div>'+
+          '</div>'+
+          '<p class="shop-note" id="pay-note">'+(d.pay==="card"?"Use 4242… — nothing is charged.":"Demo wallet. We still slam the locker — no charge.")+'</p>'+
+          '<p class="chk-err" id="chk-err"></p>'+
         '</div>'+
-        '<div class="form-row" id="card-field"><label for="ch-card">Card</label><input id="ch-card" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" required></div>'+
-        '<p class="shop-note" id="pay-note">Use 4242… — nothing is charged.</p>'+
       '</div>'+
-      '<div class="shop-dock">'+
-        '<div class="shop-dock-meta"><span>You pay</span><b>'+money(total)+'</b></div>'+
-        '<button class="shop-pay" type="submit">Pay &amp; reveal</button>'+
-      '</div>'+
+      '<aside class="chk-side">'+
+        '<div class="shop-card"><h2>In your bag</h2>'+shopBagRows({edit:false})+'</div>'+
+        '<div class="shop-card"><h2>Promo</h2>'+chkPromoHTML()+'</div>'+
+        '<div class="shop-card">'+chkSummaryHTML()+'</div>'+
+        '<div class="shop-dock">'+
+          '<label class="chk-age"><input type="checkbox" id="ch-age" required '+(d.age?"checked":"")+'> I am 21 or older. Demo only — no charge, no alcohol ships.</label>'+
+          '<p class="chk-dock-note">Place order slams the locker</p>'+
+          '<div class="shop-dock-meta"><span>You pay</span><b>'+money(due)+'</b></div>'+
+          '<button class="shop-pay" type="submit" id="chk-place">Place order</button>'+
+        '</div>'+
+      '</aside>'+
     '</form>';
   }
 
   function pageConfirmation(){
     if (!lastOrder){
-      return '<div class="shop-page">'+
-        '<div class="shop-top"><a class="shop-back" href="#/collections" aria-label="Back">‹</a><h1>Reveal</h1></div>'+
+      return '<div class="shop-page chk-page">'+
+        '<div class="shop-top"><a class="shop-back" href="#/collections" aria-label="Back">‹</a><h1>Order</h1></div>'+
         '<div class="shop-empty"><h2>No drop to open</h2><p>Place an order to slam the locker.</p>'+
         '<a class="shop-pay" href="#/collections" style="display:inline-grid;min-width:180px;margin:0 auto;">Shop lockers</a></div></div>';
     }
@@ -4991,24 +5265,50 @@
       }).join("");
       return '<div class="shop-card"><h2>'+esc(g.name)+'</h2>'+bottles+'</div>';
     }).join("");
-    return '<div class="shop-page">'+
-      '<div class="shop-top"><a class="shop-back" href="#/collections" aria-label="Back">‹</a><h1>You hit</h1><span>'+lastOrder.orderId+'</span></div>'+
-      shopSteps(3)+
-      '<div class="hit-banner">'+
-        '<span>Paid '+money(lastOrder.paid)+'</span>'+
-        '<b>'+money(lastOrder.value)+' retail</b>'+
-        '<em>'+(extra>0?("+"+money(extra)+" over buy-in"):"Floor hit — still full SRP")+'</em>'+
+    var ship = lastOrder.ship || {};
+    var fulfill = lastOrder.fulfill || "delivery";
+    var slotLabel = lastOrder.slotLabel || "Today";
+    return '<div class="shop-page chk-page chk-layout">'+
+      '<div class="chk-main">'+
+        '<div class="shop-top"><a class="shop-back" href="#/collections" aria-label="Back">‹</a><h1>Order placed</h1></div>'+
+        shopSteps(3)+
+        '<div class="chk-check" aria-hidden="true">✓</div>'+
+        '<p style="text-align:center;font-weight:800;font-size:22px;margin:0;">Locker slammed</p>'+
+        '<div class="oid-row"><span class="shop-note">'+esc(lastOrder.orderId)+'</span>'+
+          '<button type="button" id="copy-oid" data-oid="'+esc(lastOrder.orderId)+'">Copy</button></div>'+
+        '<ol class="chk-track">'+
+          '<li class="done">Placed</li>'+
+          '<li class="on">Packed</li>'+
+          '<li>On the way</li>'+
+          '<li>Slam</li>'+
+        '</ol>'+
+        '<div class="shop-card"><h2>'+(fulfill==="pickup"?"Pickup":"Delivery")+'</h2>'+
+          '<p style="margin:0;font-size:14px;font-weight:700;">'+esc(slotLabel)+'</p>'+
+          '<p class="shop-note">'+(fulfill==="pickup"
+            ? "Wine Detention · 1230 Main St, St. Helena, CA 94574. Bring ID."
+            : esc((ship.name||"")+(ship.line?(" · "+ship.line):"")))+'</p>'+
+          '<p class="shop-note">Paid with '+(lastOrder.payLabel||"Card")+' · '+money(lastOrder.paid)+' · demo, not billed.</p>'+
+        '</div>'+
+        '<div class="hit-banner">'+
+          '<span>Paid '+money(lastOrder.paid)+'</span>'+
+          '<b>'+money(lastOrder.value)+' retail</b>'+
+          '<em>'+(extra>0?("+"+money(extra)+" over buy-in"):"Floor hit — still full SRP")+'</em>'+
+        '</div>'+
+        groups+
+        (lastOrder.gifts && lastOrder.gifts.length
+          ? '<div class="shop-card"><h2>Gifts sent</h2><p class="shop-note">'+lastOrder.gifts.map(function(g){
+              return esc(g.code)+' → '+esc(g.to);
+            }).join(" · ")+'</p><a href="#/gifts/mine">Open My gifts</a></div>'
+          : '')+
       '</div>'+
-      groups+
-      (lastOrder.gifts && lastOrder.gifts.length
-        ? '<div class="shop-card"><h2>Gifts sent</h2><p class="shop-note">'+lastOrder.gifts.map(function(g){
-            return esc(g.code)+' → '+esc(g.to);
-          }).join(" · ")+'</p><a href="#/gifts/mine">Open My gifts</a></div>'
-        : '')+
-      '<div class="shop-dock">'+
-        '<div class="shop-dock-meta"><span>Locker slammed</span><b>'+money(lastOrder.value)+'</b></div>'+
-        '<a class="shop-pay ghost" href="#/collections">Shop again</a>'+
-      '</div>'+
+      '<aside class="chk-side">'+
+        '<div class="shop-card"><h2>Next</h2><p class="shop-note">Screenshot the slam. Share it. Come back for tomorrow\'s locker.</p></div>'+
+        '<div class="shop-dock">'+
+          '<p class="chk-dock-note">Demo order · nothing ships</p>'+
+          '<div class="shop-dock-meta"><span>Retail hit</span><b>'+money(lastOrder.value)+'</b></div>'+
+          '<a class="shop-pay" href="#/collections">Shop again</a>'+
+        '</div>'+
+      '</aside>'+
     '</div>';
   }
 
@@ -5210,7 +5510,7 @@
         if (q) q.addEventListener("click", function(){ item.classList.toggle("open"); });
       });
     }
-    if (route === "/cart"){
+    if (route === "/cart" || route === "/checkout"){
       document.querySelectorAll("[data-remove]").forEach(function(btn){
         btn.addEventListener("click", function(){ removeFromCart(btn.getAttribute("data-remove")); });
       });
@@ -5218,44 +5518,123 @@
         btn.addEventListener("click", function(){
           var s = btn.getAttribute("data-inc");
           var item = cart.find(function(i){return i.slug===s;});
-          setQty(s, item.qty+1);
+          if (item) setQty(s, item.qty+1);
         });
       });
       document.querySelectorAll("[data-dec]").forEach(function(btn){
         btn.addEventListener("click", function(){
           var s = btn.getAttribute("data-dec");
           var item = cart.find(function(i){return i.slug===s;});
-          setQty(s, item.qty-1);
+          if (item) setQty(s, item.qty-1);
         });
       });
+      document.querySelectorAll("[data-fulfill]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          checkoutDraft.fulfill = btn.getAttribute("data-fulfill");
+          saveCheckoutDraft();
+          render();
+        });
+      });
+      document.querySelectorAll("[data-slot]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          checkoutDraft.slot = btn.getAttribute("data-slot");
+          saveCheckoutDraft();
+          render();
+        });
+      });
+      var promoBtn = document.getElementById("chk-promo-btn");
+      var promoIn = document.getElementById("chk-promo");
+      if (promoBtn && promoIn){
+        promoBtn.addEventListener("click", function(){
+          readCheckoutFields();
+          var ok = applyPromoCode(promoIn.value);
+          var err = document.getElementById("promo-err");
+          if (err){
+            err.textContent = ok ? "" : "Try HALLPASS";
+            err.classList.toggle("on", !ok);
+          }
+          if (ok) showToast("10% hall pass applied.");
+          render();
+        });
+      }
     }
     if (route === "/checkout"){
       var form = document.getElementById("checkout-form");
-      if (form) form.addEventListener("submit", function(e){ e.preventDefault(); processOrder(); });
+      if (form) form.addEventListener("submit", function(e){
+        e.preventDefault();
+        if (!readCheckoutForm()) return;
+        processOrder();
+      });
       if (currentUser){
         var em = document.getElementById("ch-email");
         var fn = document.getElementById("ch-first");
-        if (em && !em.value) em.value = currentUser.email;
+        if (em && !em.value) em.value = currentUser.email || "";
         if (fn && !fn.value) fn.value = (currentUser.name||"").split(" ")[0];
       }
+      var fill = document.getElementById("chk-fill-demo");
+      if (fill) fill.addEventListener("click", function(){
+        checkoutDraft.first = checkoutDraft.first || "Mei";
+        checkoutDraft.last = checkoutDraft.last || "Hall";
+        checkoutDraft.email = checkoutDraft.email || (currentUser && currentUser.email) || "mei@winedetention.demo";
+        checkoutDraft.phone = checkoutDraft.phone || "(707) 555-0121";
+        checkoutDraft.address = "1230 Main St";
+        checkoutDraft.city = "St. Helena";
+        checkoutDraft.zip = "94574";
+        checkoutDraft.state = "CA";
+        saveCheckoutDraft();
+        render();
+      });
+      ["ch-first","ch-last","ch-email","ch-phone","ch-address","ch-city","ch-zip","ch-state"].forEach(function(id){
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener("input", function(){ readCheckoutFields(); });
+        el.addEventListener("change", function(){ readCheckoutFields(); });
+      });
+      var age = document.getElementById("ch-age");
+      if (age) age.addEventListener("change", function(){
+        checkoutDraft.age = !!age.checked;
+        saveCheckoutDraft();
+      });
+      var cardIn = document.getElementById("ch-card");
+      if (cardIn) cardIn.addEventListener("input", function(){
+        var d = cardIn.value.replace(/\D/g,"").slice(0,16);
+        cardIn.value = d.replace(/(\d{4})(?=\d)/g,"$1 ").trim();
+      });
+      var expIn = document.getElementById("ch-exp");
+      if (expIn) expIn.addEventListener("input", function(){
+        var d = expIn.value.replace(/\D/g,"").slice(0,4);
+        expIn.value = d.length>2 ? d.slice(0,2)+" / "+d.slice(2) : d;
+      });
       document.querySelectorAll("[data-pay]").forEach(function(btn){
         btn.addEventListener("click", function(){
-          document.querySelectorAll("[data-pay]").forEach(function(b){ b.classList.remove("on"); });
-          btn.classList.add("on");
+          checkoutDraft.pay = btn.getAttribute("data-pay");
+          saveCheckoutDraft();
+          var kind = checkoutDraft.pay;
+          document.querySelectorAll("[data-pay]").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-pay")===kind); });
           var card = document.getElementById("card-field");
+          var extra = document.getElementById("card-extra");
           var note = document.getElementById("pay-note");
           var input = document.getElementById("ch-card");
-          var kind = btn.getAttribute("data-pay");
           if (kind==="card"){
             if (card) card.style.display = "";
+            if (extra) extra.style.display = "";
             if (input) input.required = true;
             if (note) note.textContent = "Use 4242… — nothing is charged.";
           } else {
             if (card) card.style.display = "none";
-            if (input){ input.required = false; input.value = input.value || "4242424242424242"; }
+            if (extra) extra.style.display = "none";
+            if (input){ input.required = false; }
             if (note) note.textContent = "Demo wallet. We still slam the locker — no charge.";
           }
         });
+      });
+    }
+    if (route === "/confirmation"){
+      var copy = document.getElementById("copy-oid");
+      if (copy) copy.addEventListener("click", function(){
+        var id = copy.getAttribute("data-oid")||"";
+        if (navigator.clipboard) navigator.clipboard.writeText(id).catch(function(){});
+        copy.textContent = "Copied";
       });
     }
     if (route === "/account" || route.indexOf("/u/")===0){
@@ -5430,6 +5809,50 @@
     if (ur) ur.addEventListener("click", function(){ startUnveil(ur.getAttribute("data-code"), true); });
   }
 
+  function valOf(id){
+    var el = document.getElementById(id);
+    return el ? String(el.value||"").trim() : "";
+  }
+  function readCheckoutFields(){
+    if (document.getElementById("ch-first")) checkoutDraft.first = valOf("ch-first");
+    if (document.getElementById("ch-last")) checkoutDraft.last = valOf("ch-last");
+    if (document.getElementById("ch-email")) checkoutDraft.email = valOf("ch-email");
+    if (document.getElementById("ch-phone")) checkoutDraft.phone = valOf("ch-phone");
+    if (document.getElementById("ch-address")) checkoutDraft.address = valOf("ch-address");
+    if (document.getElementById("ch-city")) checkoutDraft.city = valOf("ch-city");
+    if (document.getElementById("ch-zip")) checkoutDraft.zip = valOf("ch-zip");
+    if (document.getElementById("ch-state")) checkoutDraft.state = valOf("ch-state") || "CA";
+    var age = document.getElementById("ch-age");
+    if (age) checkoutDraft.age = !!age.checked;
+    saveCheckoutDraft();
+  }
+  function readCheckoutForm(){
+    readCheckoutFields();
+    var err = document.getElementById("chk-err");
+    function fail(msg){
+      if (err){ err.textContent = msg; err.classList.add("on"); }
+      showToast(msg);
+      return false;
+    }
+    if (!checkoutDraft.age) return fail("Confirm you are 21 or older.");
+    if (checkoutDraft.fulfill!=="pickup"){
+      if (!checkoutDraft.first || !checkoutDraft.last) return fail("Add your name.");
+      if (!checkoutDraft.email) return fail("Add an email.");
+      if (!checkoutDraft.address || !checkoutDraft.city || !checkoutDraft.zip) return fail("Add a delivery address.");
+    }
+    if (checkoutDraft.pay==="card"){
+      var digits = valOf("ch-card").replace(/\D/g,"");
+      if (digits.length < 13) return fail("Enter a demo card — 4242 works.");
+    }
+    if (err){ err.textContent = ""; err.classList.remove("on"); }
+    return true;
+  }
+  function slotLabel(){
+    return ({today:"Today, 4–7pm", tonight:"Tonight, 8–10pm", tomorrow:"Tomorrow, 10–1"})[checkoutDraft.slot] || "Today, 4–7pm";
+  }
+  function payLabel(){
+    return ({card:"Card", apple:"Apple Pay", shop:"Shop Pay", wallet:"Wallet"})[checkoutDraft.pay] || "Card";
+  }
   function processOrder(){
     var giftItems = cart.filter(function(i){ return i.kind==="gift"; });
     var wineItems = cart.filter(function(i){ return i.kind!=="gift"; });
@@ -5437,6 +5860,7 @@
     if (!wineItems.length){
       cart = [];
       renderCartCount();
+      saveCart();
       if (made.length===1) navigate("/gifts/sent/"+made[0].code);
       else navigate("/gifts/mine");
       return;
@@ -5453,13 +5877,22 @@
     groups.forEach(function(g){ g.bottles.forEach(function(b){ value += b.value; }); });
     lastOrder = {
       orderId: "WD-" + Math.floor(100000 + Math.random()*899999),
-      paid: cartTotal(),
+      paid: cartDue(),
       value: value,
       groups: groups,
-      gifts: made
+      gifts: made,
+      fulfill: checkoutDraft.fulfill,
+      pay: checkoutDraft.pay,
+      payLabel: payLabel(),
+      slot: checkoutDraft.slot,
+      slotLabel: slotLabel(),
+      ship: checkoutDraft.fulfill==="pickup"
+        ? { name:"Wine Detention locker", line:"1230 Main St, St. Helena, CA 94574" }
+        : { name:(checkoutDraft.first+" "+checkoutDraft.last).trim(), line:[checkoutDraft.address, checkoutDraft.city, checkoutDraft.state, checkoutDraft.zip].filter(Boolean).join(", ") }
     };
     cart = [];
     renderCartCount();
+    saveCart();
     saveLastOrder();
     navigate("/confirmation");
   }
@@ -5499,6 +5932,8 @@
       }
     } catch (e) {}
     loadGifts();
+    loadCart();
+    loadCheckoutDraft();
     loadLastOrder();
   }
 
